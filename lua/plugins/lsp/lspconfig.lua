@@ -64,7 +64,7 @@ return {
         "dockerls", -- LSP for Dockerfile
         "docker_compose_language_service", -- LSP for Docker-compose
         "bashls", -- LSP for Bash
-        "denols", -- LSP for deno
+        -- "denols", -- LSP for deno
         "yamlls", -- LSP yaml
         "rust_analyzer", -- LSP Rust rust_analyzer
         "jsonls", -- LSP json
