@@ -63,7 +63,6 @@ return {
         "marksman", -- LSP for Markdown
         "dockerls", -- LSP for Dockerfile
         "docker_compose_language_service", -- LSP for Docker-compose
-        "bashls", -- LSP for Bash
         -- "denols", -- LSP for deno
         "yamlls", -- LSP yaml
         "rust_analyzer", -- LSP Rust rust_analyzer
@@ -81,6 +80,7 @@ return {
       function(server_name)
         if server_name == "gopls" then
           lspconfig.gopls.setup({
+            on_attach = require("go.lsp").gopls_on_attac,
             capabilities = lsp_zero.get_capabilities(),
             filetypes = { "go", "gomod" },
             fillstruct = "gopls",
