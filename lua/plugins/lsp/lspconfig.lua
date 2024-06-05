@@ -121,10 +121,17 @@ return {
       io.close(file)
       lspconfig.solargraph.setup({
         cmd = { solargraphLocation, "stdio" },
+        capabilities = lsp_zero.get_capabilities(),
         root_dir = lspconfig.util.root_pattern("Gemfile", ".git", "."),
+        handlers = {
+          ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+            virtual_text = true,
+          }),
+        },
         settings = {
           solargraph = {
             autoformat = false,
+            formatting = false,
             completion = true,
             diagnostic = true,
             folding = true,
@@ -133,6 +140,7 @@ return {
             symbols = true,
           },
         },
+        filetypes = { "ruby" },
       })
     end
 

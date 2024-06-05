@@ -15,7 +15,8 @@ return {
         "go-debug-adapter",
         "js-debug-adapter",
         "node-debug2-adapter",
-        "svelte-langauage-server",
+        "svelte-language-server",
+        -- "typos",
 
         -- Formatters
         "stylua",
