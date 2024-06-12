@@ -8,7 +8,7 @@ return {
   font = "JetBrainsMonoNL Nerd Font",
   ------------------------------- base46 -------------------------------------
   theme_toggle = { "catppuccin-frappe", "catppuccin-macchiato" },
-  theme = "catppuccin", -- default theme
+  theme = "tokyonight-storm", -- default theme
   transparency = false,
   lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
   termguicolors = true,
