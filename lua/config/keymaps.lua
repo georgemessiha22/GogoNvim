@@ -282,10 +282,16 @@ M.telescope = {
 M.trouble = {
   plugin = true,
   n = {
-    ["<leader>xx"] = { "<CMD>TroubleToggle<CR>", "Show Trouble" },
-    ["<leader>xw"] = { "<CMD>TroubleToggle workspace_diagnostics<CR>", "Show trouble workspace_diagnostics" },
-    ["<leader>xd"] = { "<CMD>TroubleToggle document_diagnostics<CR>", "Show trouble document_diagnostics" },
-    ["<leader>xq"] = { "<CMD>TroubleToggle quickfix<CR>", "Show trouble quickfixes" },
+    ["<leader>xx"] = { "<CMD>Trouble toggle<CR>", "Show Trouble" },
+    ["<leader>xw"] = { "<CMD>Trouble diagnostics toggle<CR>", "Show trouble diagnostics" },
+    ["<leader>xd"] = { "<CMD>Trouble diagnostics toggle filter.buf=0<CR>", "Show trouble document_diagnostics" },
+    ["<leader>xq"] = { "<CMD>Trouble quickfix<CR>", "Show trouble quickfixes" },
+    ["<leader>xt"] = { "<CMD>Trouble todo<CR>", "Show trouble todo list" },
+    ["<leader>xs"] = { "<CMD>Trouble  symbols toggle focus=true<CR>", "show trouble symbol" },
+    ["<leader>xl"] = {
+      "<CMD>Trouble lsp toggle focus=false win.position=right<CR>",
+      "show trouble LSP Definitions / references / ...",
+    },
     ["[q"] = {
       function()
         if require("trouble").is_open() then
