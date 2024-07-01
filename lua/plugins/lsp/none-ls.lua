@@ -5,39 +5,45 @@
 --]]
 
 return {
-	"nvimtools/none-ls.nvim",
-	branch = "main",
-	config = function()
-		local null_ls = require("null-ls")
+  "nvimtools/none-ls.nvim",
+  branch = "main",
+  config = function()
+    local null_ls = require("null-ls")
+    local codespellConfig = null_ls.builtins.diagnostics.codespell.with({
+      args = {
+        "--ignore-words=" .. vim.fn.expand("~/.config/nvim/spell/codespell-ignore"),
+        "-",
+      },
+    })
 
-		null_ls.setup({
-			autostart = true,
-			sources = {
-				-- formatters
-				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.formatting.rubocop,
-				null_ls.builtins.formatting.sqlfmt,
-				null_ls.builtins.formatting.shellharden,
-				null_ls.builtins.formatting.shfmt,
-				null_ls.builtins.formatting.fish_indent,
+    null_ls.setup({
+      autostart = true,
+      sources = {
+        -- formatters
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.rubocop,
+        null_ls.builtins.formatting.sqlfmt,
+        null_ls.builtins.formatting.shellharden,
+        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.fish_indent,
 
-				-- Diagnostics
-				null_ls.builtins.diagnostics.golangci_lint,
-				null_ls.builtins.diagnostics.zsh,
-				null_ls.builtins.diagnostics.codespell,
-				null_ls.builtins.diagnostics.commitlint,
-				null_ls.builtins.diagnostics.dotenv_linter,
-				null_ls.builtins.diagnostics.fish,
-				null_ls.builtins.diagnostics.rubocop,
+        -- Diagnostics
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.diagnostics.zsh,
+        codespellConfig,
+        null_ls.builtins.diagnostics.commitlint,
+        null_ls.builtins.diagnostics.dotenv_linter,
+        null_ls.builtins.diagnostics.fish,
+        null_ls.builtins.diagnostics.rubocop,
 
-				-- Code Actions
-				null_ls.builtins.code_actions.gomodifytags,
-				null_ls.builtins.code_actions.gitsigns,
-				null_ls.builtins.code_actions.impl,
+        -- Code Actions
+        null_ls.builtins.code_actions.gomodifytags,
+        null_ls.builtins.code_actions.gitsigns,
+        null_ls.builtins.code_actions.impl,
 
-				-- completion
-				null_ls.builtins.completion.spell,
-			},
-		})
-	end,
+        -- completion
+        null_ls.builtins.completion.spell,
+      },
+    })
+  end,
 }
