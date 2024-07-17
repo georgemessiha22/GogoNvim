@@ -130,7 +130,7 @@ return {
           clear_on_cursor_move = true,
         },
         smart_rename = {
-          enable = true,
+          enable = false,
           -- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
           keymaps = {
             smart_rename = "grr",

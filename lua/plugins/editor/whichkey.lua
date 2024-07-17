@@ -7,17 +7,25 @@ return {
   "folke/which-key.nvim",
   event = "VeryLazy",
   keys = { "<leader>", '"', "'", "`", "c", "v", "g", "f", "c", "<C>", "t" },
+  dependencies = {
+    { "echasnovski/mini.nvim", version = false },
+  },
   opts = {
     plugins = { spelling = true },
     defaults = {
-      mode = { "n", "v" },
-      ["g"] = { name = "+goto" },
-      ["gs"] = { name = "+surround" },
-      ["z"] = { name = "+fold" },
-      ["]"] = { name = "+next" },
-      ["["] = { name = "+prev" },
-      ["<leader><tab>"] = { name = "+tabs" },
-      ["<leader>n"] = { name = "+NeoTree" },
+      {
+        mode = { "n", "v" },
+        { "<leader><leader>", group = "IconPicker" },
+        { "<leader><tab>", group = "tabs" },
+        { "<leader>n", group = "NeoTree" },
+        { "<leader>sn", group = "Noice" },
+        { "[", group = "prev" },
+        { "]", group = "next" },
+        { "g", group = "goto" },
+        { "gs", group = "surround" },
+        { "z", group = "fold" },
+        { "gc", group = "Comment" },
+      },
       -- ["<leader>b"] = { name = "+buffer" },
       -- ["<leader>c"] = { name = "+code" },
       -- ["<leader>f"] = { name = "+file/find" },
@@ -32,10 +40,9 @@ return {
   },
   config = function(_, opts)
     if GogoVIM.has("noice.nvim") then
-      opts.defaults["<leader>sn"] = { name = "+noice" }
+      opts.defaults["<leader>sn"] = { name = "+Noice" }
     end
     require("which-key").setup(opts)
-    require("which-key").register(opts.defaults)
     require("config").load_mapping("whichkey")
   end,
 }
