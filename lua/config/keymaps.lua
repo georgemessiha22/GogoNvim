@@ -424,4 +424,12 @@ M.minisurround = {
   -- configured only in plugins.installer.minisurround
 }
 
+M.minifiles = {
+  plugin = true,
+  n = {
+
+    ["<leader>nf"] = { MiniFiles.open, "Open/Close explorer float" },
+  },
+}
+
 return M
