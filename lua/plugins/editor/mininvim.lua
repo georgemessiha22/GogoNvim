@@ -10,7 +10,7 @@ return {
     require("mini.statusline").setup()
     require("mini.tabline").setup()
     require("mini.files").setup()
-    require("mini.completion").setup()
+    -- require("mini.completion").setup()
     require("config").load_mapping("minifiles")
     require("mini.comment").setup()
     local hipatterns = require("mini.hipatterns")
@@ -21,6 +21,7 @@ return {
         hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
         todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
         note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+        ie = { pattern = "%f[%w]()I.E()%f[%W]", group = "MiniHipatternsNote" },
 
         -- Highlight hex color strings (`#rrggbb`) using that color
         hex_color = hipatterns.gen_highlighter.hex_color(),
