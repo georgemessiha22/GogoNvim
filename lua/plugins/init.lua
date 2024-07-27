@@ -11,9 +11,9 @@ return {
   require("plugins.code.luasnip"),
   require("plugins.code.autopairs"),
   require("plugins.code.cmp"),
-  require("plugins.code.comment"),
+  -- require("plugins.code.comment"),
   require("plugins.code.iconpicker"),
-  require("plugins.code.todo-comment"),
+  -- require("plugins.code.todo-comment"),
   require("plugins.code.indentscope"),
   -- }}}
 
@@ -47,7 +47,7 @@ return {
   require("plugins.editor.blankline"),
   require("plugins.editor.dressing"),
   require("plugins.editor.noice"),
-  -- require("plugins.editor.notify"),
+  require("plugins.editor.notify"),
   -- require("plugins.editor.codeshot"),
   { "MunifTanjim/nui.nvim", lazy = true },
   require("plugins.editor.whichkey"),
