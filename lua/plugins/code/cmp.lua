@@ -52,7 +52,7 @@ return {
           end
         end, { "i", "s" }),
       }),
-      sources = cmp.config.sources({
+      sources = {
         { name = "nvim_lsp" }, -- LSP
         { name = "nvim_lsp_signature_help" }, -- LSP for parameters in functions
         { name = "luasnip" },
@@ -65,12 +65,10 @@ return {
             end,
           },
         }, -- LuaSnip
-      }, {
         { name = "buffer" }, -- Buffer words
         { name = "emoji" }, -- Emojis
         { name = "path" }, -- Paths
-        -- Spell
-      }),
+      },
       formatting = {
         format = function(_, item)
           local icons = GogoUI.icons.kinds
@@ -98,6 +96,9 @@ return {
     for _, source in ipairs(opts.sources) do
       source.group_index = source.group_index or 1
     end
+    -- Add snippets from Friendly Snippets
+    require("luasnip/loaders/from_vscode").lazy_load()
+
     local cmp = require("cmp")
     cmp.setup(opts)
 
@@ -119,9 +120,6 @@ return {
     })
 
     -- If you want insert `(` after select function or method item
-    cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
-
-    -- Add snippets from Friendly Snippets
-    require("luasnip/loaders/from_vscode").lazy_load()
+    -- cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
   end,
 }

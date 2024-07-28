@@ -38,7 +38,6 @@ return {
   },
   config = function(_)
     local lsp_zero = require("lsp-zero")
-    -- lsp_zero.extend_lspconfig()
     local on_attach = function(client, bufnr)
       lsp_zero.default_keymaps({ buffer = bufnr })
       if client.server_capabilities.documentSymbolProvider then
@@ -46,6 +45,7 @@ return {
       end
     end
     lsp_zero.on_attach(on_attach)
+    lsp_zero.extend_lspconfig()
     local mason_lspconfig = require("mason-lspconfig")
     local lspconfig = require("lspconfig")
 
@@ -73,45 +73,45 @@ return {
         "texlab",
         "taplo", -- LSP TOML
       },
-      handlers = { lsp_zero.default_setup },
-    })
-
-    mason_lspconfig.setup_handlers({
-      function(server_name)
-        if server_name == "gopls" then
-          lspconfig.gopls.setup({
-            on_attach = require("go.lsp").gopls_on_attac,
-            capabilities = lsp_zero.get_capabilities(),
-            filetypes = { "go", "gomod" },
-            fillstruct = "gopls",
-            settings = {
-              gopls = {
-                analyses = {
-                  unusedparams = true,
-                },
-                staticcheck = true,
-                gofumpt = true,
-                buildFlags = { "-tags=functional,integration,unit" },
-              },
-            },
-          })
-        elseif server_name == "lua_ls" and GogoVIM.has("cmp_nvim_lsp") then
+      handlers = {
+        function(server_name)
           local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-          lspconfig.lua_ls.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            settings = {
-              Lua = {
-                completion = {
-                  callSnippet = "Replace",
+          if server_name == "gopls" then
+            lspconfig.gopls.setup({
+              -- on_attach = require("go.lsp").gopls_on_attac,
+              on_attach = on_attach,
+              capabilities = lsp_zero.get_capabilities(),
+              filetypes = { "go", "gomod" },
+              fillstruct = "gopls",
+              settings = {
+                gopls = {
+                  analyses = {
+                    unusedparams = true,
+                  },
+                  staticcheck = true,
+                  gofumpt = true,
+                  buildFlags = { "-tags=functional,integration,unit" },
                 },
               },
-            },
-          })
-        else
-          lsp_zero.default_setup(server_name)
-        end
-      end,
+            })
+          elseif server_name == "lua_ls" and GogoVIM.has("cmp_nvim_lsp") then
+            lspconfig.lua_ls.setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+              settings = {
+                Lua = {
+                  completion = {
+                    callSnippet = "Replace",
+                  },
+                },
+              },
+            })
+          else
+            -- lspconfig[server_name].setup({})
+            lsp_zero.default_setup(server_name)
+          end
+        end,
+      },
     })
 
     -- Check if solargraph is installed and run the configurations.

@@ -3,18 +3,18 @@ return {
   { "nvim-lua/plenary.nvim" },
   -- colors{{{
   require("plugins.colors.colorscheme"),
-  require("plugins.colors.colorizer"),
-  require("plugins.colors.illuminate"),
+  -- require("plugins.colors.colorizer"),
+  -- require("plugins.colors.illuminate"),
   -- }}}
 
   -- Code {{{
   require("plugins.code.luasnip"),
-  require("plugins.code.autopairs"),
+  -- require("plugins.code.autopairs"),
   require("plugins.code.cmp"),
   -- require("plugins.code.comment"),
   require("plugins.code.iconpicker"),
-  -- require("plugins.code.todo-comment"),
-  require("plugins.code.indentscope"),
+  require("plugins.code.todo-comment"),
+  -- require("plugins.code.indentscope"),
   -- }}}
 
   -- LSP {{{
@@ -28,13 +28,8 @@ return {
 
   -- Editor View {{{
   require("plugins.editor.mininvim"),
-  -- require("plugins.editor.mini-animate"),
-  -- require("plugins.editor.minibufremove"),
-  -- require("plugins.code.minisurround"),
-  -- require("plugins.code.minipairs"),
-  -- require("plugins.code.miniai"),
-  require("plugins.editor.startuptime"),
-  require("plugins.editor.persistence"),
+  -- require("plugins.editor.startuptime"),
+  -- require("plugins.editor.persistence"),
   require("plugins.editor.flash"),
   require("plugins.editor.fzf"),
   require("plugins.editor.trouble"),

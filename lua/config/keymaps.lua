@@ -419,6 +419,28 @@ M.bufferline = {
   },
 }
 
+M.flash = {
+  plugin = true,
+  x = {
+    ["S"] = { '<cmd>lua require("flash").jump()<CR>', "Flash" },
+    ["ts"] = { '<cmd>lua require("flash").treesitter()<CR>', "Flash Treesitter" },
+    ["R"] = { '<Cmd>lua require("flash").treesitter_search()<CR>', "Remote flash" },
+  },
+  o = {
+    ["S"] = { '<cmd>lua require("flash").jump()<CR>', "Flash" },
+    ["ts"] = { '<cmd>lua require("flash").treesitter()<CR>', "Flash Treesitter" },
+    ["r"] = { '<Cmd>lua require("flash").remote()<CR>', "Remote flash" },
+    ["R"] = { '<Cmd>lua require("flash").treesitter_search()<CR>', "Remote flash" },
+  },
+  n = {
+    ["S"] = { '<cmd>lua require("flash").jump()<CR>', "Flash" },
+    ["ts"] = { '<cmd>lua require("flash").treesitter()<CR>', "Flash Treesitter" },
+  },
+  c = {
+    ["<c-s>"] = { '<cmd> lua require("flash").toggle()<CR>', "Toggle Flash Search" },
+  },
+}
+
 M.minisurround = {
   plugin = true,
   -- configured only in plugins.installer.minisurround
