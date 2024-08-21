@@ -40,6 +40,7 @@ return {
         -- null_ls.builtins.diagnostics.dotenv_linter,
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.rubocop,
+        null_ls.builtins.diagnostics.yamllint,
 
         -- Code Actions
         null_ls.builtins.code_actions.gomodifytags,

@@ -39,7 +39,7 @@ return {
   -- require("plugins.editor.neotree"),
   -- require("plugins.editor.lualine"),
   -- require("plugins.editor.bufferline"),
-  require("plugins.editor.blankline"),
+  -- require("plugins.editor.blankline"),
   require("plugins.editor.dressing"),
   require("plugins.editor.noice"),
   require("plugins.editor.notify"),

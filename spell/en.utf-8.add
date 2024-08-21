@@ -69,3 +69,10 @@ skaffold
 pubsub
 spotify
 BackOffice
+ArgoCD
+BackStage
+pkgs
+grafana
+istio
+Trafeik
+Kubectl
