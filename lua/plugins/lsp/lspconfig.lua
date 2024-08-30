@@ -77,35 +77,37 @@ return {
 				function(server_name)
 					local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 					if server_name == "gopls" then
-						lspconfig.gopls.setup({
-							on_attach = on_attach,
-							capabilities = lsp_zero.get_capabilities(),
-							filetypes = { "go", "gomod", "go.work" },
-							fillstruct = "gopls",
-							settings = {
-								gopls = {
-									analyses = {
-										unusedparams = true,
-										unusedwrite=true,
-										shadow = true,
-										unusedvariable = true,
-										useany = true,
-									},
-									staticcheck = true,
-									gofumpt = true,
-									buildFlags = { "-tags=functional,integration,unit" },
-									hints = {
-										assignVariableTypes = true,
-										compositeLiteralFields = true,
-										compositeLiteralTypes = true,
-										constantValues = true,
-										functionTypeParameters = true,
-										parameterNames = true,
-										rangeVariableTypes = true,
-									},
-								},
-							},
-						})
+						-- NOTE: configured on plugins/lsp/lang/go
+						--
+						-- lspconfig.gopls.setup({
+						-- 	on_attach = on_attach,
+						-- 	capabilities = lsp_zero.get_capabilities(),
+						-- 	filetypes = { "go", "gomod", "go.work" },
+						-- 	fillstruct = "gopls",
+						-- 	settings = {
+						-- 		gopls = {
+						-- 			analyses = {
+						-- 				unusedparams = true,
+						-- 				unusedwrite=true,
+						-- 				shadow = true,
+						-- 				unusedvariable = true,
+						-- 				useany = true,
+						-- 			},
+						-- 			staticcheck = true,
+						-- 			gofumpt = true,
+						-- 			buildFlags = { "-tags=functional,integration,unit" },
+						-- 			hints = {
+						-- 				assignVariableTypes = true,
+						-- 				compositeLiteralFields = true,
+						-- 				compositeLiteralTypes = true,
+						-- 				constantValues = true,
+						-- 				functionTypeParameters = true,
+						-- 				parameterNames = true,
+						-- 				rangeVariableTypes = true,
+						-- 			},
+						-- 		},
+						-- 	},
+						-- })
 					elseif server_name == "lua_ls" and GogoVIM.has("cmp_nvim_lsp") then
 						lspconfig.lua_ls.setup({
 							on_attach = on_attach,

@@ -11,6 +11,6 @@ return {
 
   -- Lang Spec {{{
   -- require("plugins.lsp.lang.rustacean"),
-  -- require("plugins.lsp.lang.go"),
+  require("plugins.lsp.lang.go"),
   -- }}}
 }

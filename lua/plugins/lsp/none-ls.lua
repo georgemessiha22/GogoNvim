@@ -19,6 +19,7 @@ return {
     null_ls.setup({
       autostart = true,
       sources = {
+
         -- formatters
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.rubocop,
@@ -28,22 +29,16 @@ return {
         null_ls.builtins.formatting.fish_indent,
         null_ls.builtins.formatting.yamlfmt,
         null_ls.builtins.formatting.yamlfix,
-        null_ls.builtins.formatting.golines,
-        null_ls.builtins.formatting.goimports,
-        null_ls.builtins.formatting.gofumpt,
 
         -- Diagnostics
-        null_ls.builtins.diagnostics.golangci_lint,
         null_ls.builtins.diagnostics.zsh,
         codespellConfig,
         null_ls.builtins.diagnostics.commitlint,
-        -- null_ls.builtins.diagnostics.dotenv_linter,
         null_ls.builtins.diagnostics.fish,
         null_ls.builtins.diagnostics.rubocop,
         null_ls.builtins.diagnostics.yamllint,
 
         -- Code Actions
-        null_ls.builtins.code_actions.gomodifytags,
         null_ls.builtins.code_actions.gitsigns,
         null_ls.builtins.code_actions.impl,
 

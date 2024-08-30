@@ -5,79 +5,109 @@
 --]]
 
 return {
-  "ray-x/go.nvim",
-  dependencies = { -- optional packages
-    "ray-x/guihua.lua",
-    "neovim/nvim-lspconfig",
-    "nvim-treesitter/nvim-treesitter",
-    "hrsh7th/cmp-nvim-lsp",
-  },
-  config = function()
-    local on_attach = require("go.lsp").gopls_on_attach
-    local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-    require("go").setup({
-      luasnip = true,
-      trouble = true,
-      gofmt = "gofumpt",
-      goimports = "gopls",
-      lsp_cfg = {
-        capabilities = capabilities,
-        filetypes = { "go", "gomod" },
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-            },
-            staticcheck = true,
-            buildFlags = { "-tags=functional,integration,unit" },
-          },
-        },
-      },
-      lsp_inlay_hints = {
-        enable = true,
+	"ray-x/go.nvim",
+	dependencies = { -- optional packages
+		"ray-x/guihua.lua",
+		"neovim/nvim-lspconfig",
+		"nvim-treesitter/nvim-treesitter",
+		"hrsh7th/cmp-nvim-lsp",
+	},
+	config = function()
+		local on_attach = require("go.lsp").gopls_on_attach
+		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+		require("go").setup({
+			luasnip = true,
+			trouble = true,
+			gofmt = "golines",
+			goimports = "gopls",
+			max_line_len = 80,
+			lsp_cfg = {
+				capabilities = capabilities,
+				filetypes = { "go", "gomod", "go.work" },
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+							unusedwrite = true,
+							shadow = true,
+							unusedvariable = true,
+							useany = true,
+						},
+						staticcheck = true,
+						buildFlags = { "-tags=functional,integration,unit" },
+						gofumpt = true,
+						hints = {
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							constantValues = true,
+							functionTypeParameters = true,
+							parameterNames = true,
+							rangeVariableTypes = true,
+						},
+						codelenses = {
+							gc_details = true,
+							generate = true,
+							regenerate_cgo = true,
+							run_govulncheck = false,
+							tidy = true,
+							upgrade_dependency = true,
+							vendor = true,
+						},
+					},
+				},
+			},
+			lsp_inlay_hints = {
+				enable = true,
 
-        -- Only show inlay hints for the current line
-        only_current_line = false,
+				-- Only show inlay hints for the current line
+				only_current_line = true,
 
-        -- Event which triggers a refersh of the inlay hints.
-        -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
-        -- not that this may cause higher CPU usage.
-        -- This option is only respected when only_current_line and
-        -- autoSetHints both are true.
-        only_current_line_autocmd = "CursorHold",
+				-- Event which triggers a refersh of the inlay hints.
+				-- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+				-- not that this may cause higher CPU usage.
+				-- This option is only respected when only_current_line and
+				-- autoSetHints both are true.
+				only_current_line_autocmd = "CursorHold",
 
-        -- whether to show variable name before type hints with the inlay hints or not
-        -- default: false
-        show_variable_name = true,
+				-- whether to show variable name before type hints with the inlay hints or not
+				-- default: false
+				show_variable_name = true,
 
-        -- prefix for parameter hints
-        parameter_hints_prefix = "󰊕 ",
-        show_parameter_hints = true,
+				-- prefix for parameter hints
+				parameter_hints_prefix = "󰊕 ",
+				show_parameter_hints = true,
 
-        -- prefix for all the other hints (type, chaining)
-        other_hints_prefix = "=> ",
+				-- prefix for all the other hints (type, chaining)
+				other_hints_prefix = "=> ",
 
-        -- whether to align to the length of the longest line in the file
-        max_len_align = false,
+				-- whether to align to the length of the longest line in the file
+				max_len_align = false,
 
-        -- padding from the left if max_len_align is true
-        max_len_align_padding = 1,
+				-- padding from the left if max_len_align is true
+				max_len_align_padding = 1,
 
-        -- whether to align to the extreme right or not
-        right_align = false,
+				-- whether to align to the extreme right or not
+				right_align = true,
 
-        -- padding from the right if right_align is true
-        right_align_padding = 6,
+				-- padding from the right if right_align is true
+				right_align_padding = 6,
 
-        -- The color of the hints
-        highlight = "Comment",
-      },
-      lsp_gofumpt = true,
-      lsp_on_attach = on_attach,
-      dap_debug_keymap = false,
-    })
-  end,
-  event = { "CmdlineEnter" },
-  ft = { "go", "gomod" },
-  build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+				-- The color of the hints
+				highlight = "Comment",
+			},
+			lsp_gofumpt = true,
+			lsp_on_attach = on_attach,
+			dap_debug_keymap = false,
+		})
+
+		local null_ls = require("null-ls")
+
+		null_ls.register(require("go.null_ls").gotest())
+		null_ls.register(require("go.null_ls").gotest_action())
+		null_ls.register(require("go.null_ls").golangci_lint())
+	end,
+	event = { "CmdlineEnter" },
+	ft = { "go", "gomod", "go.work" },
+	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 }

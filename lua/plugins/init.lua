@@ -43,7 +43,7 @@ return {
   require("plugins.editor.dressing"),
   require("plugins.editor.noice"),
   require("plugins.editor.notify"),
-  -- require("plugins.editor.codeshot"),
+  require("plugins.editor.codeshot"),
   { "MunifTanjim/nui.nvim", lazy = true },
   require("plugins.editor.whichkey"),
   require("plugins.editor.dashboard"),
