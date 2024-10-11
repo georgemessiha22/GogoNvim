@@ -10,11 +10,10 @@ return {
 		"ray-x/guihua.lua",
 		"neovim/nvim-lspconfig",
 		"nvim-treesitter/nvim-treesitter",
-		"hrsh7th/cmp-nvim-lsp",
+		-- "hrsh7th/cmp-nvim-lsp",
 	},
 	config = function()
 		local on_attach = require("go.lsp").gopls_on_attach
-		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 		require("go").setup({
 			luasnip = true,
 			trouble = true,
@@ -22,7 +21,7 @@ return {
 			goimports = "gopls",
 			max_line_len = 80,
 			lsp_cfg = {
-				capabilities = capabilities,
+				capabilities = require("lsp-zero").get_capabilities(),
 				filetypes = { "go", "gomod", "go.work" },
 				settings = {
 					gopls = {

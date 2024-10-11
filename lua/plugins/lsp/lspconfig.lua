@@ -75,7 +75,7 @@ return {
 			},
 			handlers = {
 				function(server_name)
-					local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+					-- local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 					if server_name == "gopls" then
 						-- NOTE: configured on plugins/lsp/lang/go
 						--
@@ -108,10 +108,10 @@ return {
 						-- 		},
 						-- 	},
 						-- })
-					elseif server_name == "lua_ls" and GogoVIM.has("cmp_nvim_lsp") then
+					elseif server_name == "lua_ls" and GogoVIM.has("lsp-zero") then
 						lspconfig.lua_ls.setup({
 							on_attach = on_attach,
-							capabilities = capabilities,
+							capabilities = lsp_zero.get_capabilities(),
 							settings = {
 								Lua = {
 									completion = {
