@@ -10,8 +10,8 @@ return {
   -- Code {{{
   require("plugins.code.luasnip"),
   -- require("plugins.code.autopairs"),
-  -- require("plugins.code.cmp"),
-  require("plugins.code.blink"),
+  require("plugins.code.cmp"),
+  -- require("plugins.code.blink"),
   -- require("plugins.code.comment"),
   require("plugins.code.iconpicker"),
   require("plugins.code.todo-comment"),
