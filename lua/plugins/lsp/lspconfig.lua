@@ -53,10 +53,10 @@ return {
 			ensure_installed = {
 				"bashls",                          -- LSP for bash shell
 				"lua_ls",                          -- LSP for Lua language
-				"ts_ls",                        -- LSP for Typescript and Javascript
+				"ts_ls",                           -- LSP for Typescript and Javascript
 				"emmet_ls",                        -- LSP for Emmet (Vue, HTML, CSS)
 				"cssls",                           -- LSP for CSS
-				"ruff_lsp",                        -- LSP for Python
+				"ruff",                            -- LSP for Python
 				"gopls",                           -- LSP for Go
 				"svelte",                          -- LSP for Svelte
 				"tailwindcss",                     -- LSP for TailWindCss

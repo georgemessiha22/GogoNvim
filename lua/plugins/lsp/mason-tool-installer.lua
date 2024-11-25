@@ -6,6 +6,7 @@ return {
     opts = vim.tbl_deep_extend("force", opts, {
       ensure_installed = {
         "lua-language-server", -- LSP Lua
+				"yaml-language-server",
         "luacheck",
         "misspell",
         "revive",
