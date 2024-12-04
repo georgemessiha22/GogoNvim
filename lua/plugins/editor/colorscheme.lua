@@ -46,33 +46,6 @@ return {
   },
   -- }}}
 
-  -- Theme: Sonokai {{{
-  {
-    "sainnhe/sonokai",
-    lazy = true,
-  },
-  -- }}}
-
-  -- Theme: Neon {{{
-  {
-    "rafamadriz/neon",
-    lazy = true,
-    config = function()
-      vim.g.neon_italic_keyword = true
-      vim.g.neon_italic_function = true
-    end,
-    opts = {},
-  },
-  -- }}}
-
-  {
-    "ray-x/starry.nvim",
-    lazy = true,
-    config = function()
-      vim.g.starry_italic_comments = true
-      require("starry").setup()
-    end,
-  },
   -- Theme: Tokyonight {{{
   {
     "folke/tokyonight.nvim",
@@ -84,7 +57,4 @@ return {
     end,
   },
   -- }}}
-  {
-    "shaunsingh/nord.nvim",
-  },
 }

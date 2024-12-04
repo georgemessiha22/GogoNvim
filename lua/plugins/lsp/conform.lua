@@ -6,7 +6,7 @@ return {
     cmd = "ConformInfo",
     keys = {
       {
-        "<leader>cF",
+        "<leader>fm",
         function()
           require("conform").format({ formatters = { "injected" }, timeout_ms = 3000 })
         end,

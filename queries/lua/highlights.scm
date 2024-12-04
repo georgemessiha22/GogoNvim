@@ -1,4 +1,4 @@
 ;; extends
 
 ((identifier) @namespace.builtin
-  (#eq? @namespace.builtin "vim"))
+	      (#eq? @namespace.builtin "vim"))

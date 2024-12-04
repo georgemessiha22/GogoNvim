@@ -22,9 +22,6 @@ M.general = {
     ["<C-l>"] = { "<Right>", "Move right" },
     ["<C-j>"] = { "<Down>", "Move down" },
     ["<C-k>"] = { "<Up>", "Move up" },
-
-    -- save
-    ["<C-s>"] = { "<ESC><CR> <cmd>w<CR>", "Save file" },
   },
 
   n = {
@@ -32,7 +29,7 @@ M.general = {
     --  vim.notify("HI")
     -- end, "SayHI" },
 
-    ["<Esc>"] = { ":noh <CR>", "Clear highlights" },
+    ["<Esc>"] = { "<cmd> noh <CR>", "Clear highlights" },
 
     -- switch between windows
     ["<C-h>"] = { "<C-w>h", "Window left" },
@@ -40,11 +37,8 @@ M.general = {
     ["<C-j>"] = { "<C-w>j", "Window down" },
     ["<C-k>"] = { "<C-w>k", "Window up" },
 
-    -- save
-    ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
-
     -- Copy all
-    ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
+    -- ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
 
     -- line numbers
     ["<Leader>ln"] = { "<cmd> set nu! <CR>", "Toggle line number" },
@@ -56,8 +50,6 @@ M.general = {
     -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
     ["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
     ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
 
     -- new buffer
     ["<Leader>bn"] = { "<cmd> enew <CR>", "New buffer" },
@@ -82,27 +74,12 @@ M.general = {
     },
 
     -- tab movements
-    -- ["tl"] = {'', "Move to left tab"},
-    -- ["th"] = {'', "Move to right tab"},
     ["<leader>tn"] = { "<cmd>bNext<CR>", "Move to next tab" },
     ["<leader>tp"] = { "<cmd>bprevious<CR>", "Move to previous tab" },
   },
 
   t = {
     ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
-  },
-
-  v = {
-    ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
-  },
-
-  x = {
-    ["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
-    ["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
-    -- Don't copy the replaced text after pasting in visual mode
-    -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
-    ["p"] = { 'p:let @+=@0<CR>:let @"=@0<CR>', "Dont copy replaced text", opts = { silent = true } },
   },
 }
 
@@ -385,9 +362,13 @@ M.cmp = {
 M.iconpicker = {
   plugin = true,
   n = {
-    ["<leader><leader>i"] = { "<CMD>IconPickerInsert<CR>", "Icon Picker" },
+    ["<Leader><Leader>i"] = { "<CMD> IconPickerInsert<CR>", "Icon Picker" },
     ["<Leader><Leader>y"] = { "<CMD> IconPickerYank <CR>", "Icon Picker yank" },
   },
+
+	-- i = {
+	-- 	["<C-i>"] = { "<CMD> IconPickerInsert<CR>", "Icon Picker"},
+	-- },
 }
 
 M.todo = {
@@ -449,8 +430,7 @@ M.minisurround = {
 M.minifiles = {
   plugin = true,
   n = {
-
-    ["<leader>nf"] = { MiniFiles.open, "Open/Close explorer float" },
+    ["<leader>nf"] = { "<cmd> lua MiniFiles.open() <CR>", "Open/Close explorer float" },
   },
 }
 

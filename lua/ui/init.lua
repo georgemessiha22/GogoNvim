@@ -6,9 +6,9 @@ return {
   leader = " ",
   localleader = "\\",
   font = "JetBrainsMonoNL Nerd Font",
+
   ------------------------------- base46 -------------------------------------
-  theme_toggle = { "catppuccin-frappe", "catppuccin-macchiato" },
-  theme = "tokyonight-storm", -- default theme
+  theme = "default", -- default theme
   transparency = false,
   lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
   termguicolors = true,
@@ -100,8 +100,8 @@ return {
     "zipPlugin",
     "tar",
     "tarPlugin",
-    "getscript",
-    "getscriptPlugin",
+    -- "getscript",
+    -- "getscriptPlugin",
     "vimball",
     "vimballPlugin",
     -- "2html_plugin",
