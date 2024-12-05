@@ -11,33 +11,33 @@ return {
 		-- require("mini.basics").setup()
 		-- require("mini.bracketed").setup()
 		-- require("mini.bufremove").setup()
-		local miniclue = require("mini.clue") -- replacement to whichKey
-		miniclue.setup({
-			triggers = {
-				{ mode = 'n', keys = '<leader>' },
-				{ mode = 'i', keys = '<C>' },
-				{ mode = 'n', keys = '`' },
-				{ mode = 'n', keys = '"' },
-				{ mode = 'n', keys = "'" },
-				{ mode = 'n', keys = 'c' },
-				{ mode = 'n', keys = 'v' },
-				{ mode = 'n', keys = 'g' },
-				{ mode = 'n', keys = 'f' },
-				{ mode = 'n', keys = 't' },
-				{ mode = 'n', keys = '<C>' },
-			},
-			clues = { -- Enhance this by adding descriptions for <Leader> mapping groups
-				miniclue.gen_clues.builtin_completion(),
-				-- miniclue.gen_clues.g(),
-				miniclue.gen_clues.marks(),
-				miniclue.gen_clues.registers(),
-				miniclue.gen_clues.windows(),
-				miniclue.gen_clues.z(),
-			},
-			windows = {
-				delay = 100,
-			},
-		})
+		-- local miniclue = require("mini.clue") -- replacement to whichKey
+		-- miniclue.setup({
+		-- 	triggers = {
+		-- 		{ mode = 'n', keys = '<leader>' },
+		-- 		{ mode = 'i', keys = '<C>' },
+		-- 		{ mode = 'n', keys = '`' },
+		-- 		{ mode = 'n', keys = '"' },
+		-- 		{ mode = 'n', keys = "'" },
+		-- 		{ mode = 'n', keys = 'c' },
+		-- 		{ mode = 'n', keys = 'v' },
+		-- 		{ mode = 'n', keys = 'g' },
+		-- 		{ mode = 'n', keys = 'f' },
+		-- 		{ mode = 'n', keys = 't' },
+		-- 		{ mode = 'n', keys = '<C>' },
+		-- 	},
+		-- 	clues = { -- Enhance this by adding descriptions for <Leader> mapping groups
+		-- 		miniclue.gen_clues.builtin_completion(),
+		-- 		-- miniclue.gen_clues.g(),
+		-- 		miniclue.gen_clues.marks(),
+		-- 		miniclue.gen_clues.registers(),
+		-- 		miniclue.gen_clues.windows(),
+		-- 		miniclue.gen_clues.z(),
+		-- 	},
+		-- 	windows = {
+		-- 		delay = 100,
+		-- 	},
+		-- })
 		-- require("mini.comment").setup()
 		-- require("mini.completion").setup({ set_vim_settings = true })
 		require("mini.cursorword").setup() -- highlight words under cursor
@@ -50,21 +50,21 @@ return {
 		require("mini.git").setup()
 		--
 		-- replaced with todo-comment
-		local hipatterns = require("mini.hipatterns")
-		hipatterns.setup({
-			highlighters = {
-				-- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-				fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
-				hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
-				todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
-				note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
-				ie = { pattern = "%f[%w]()I.E()%f[%W]", group = "MiniHipatternsNote" },
-				ies = { pattern = "%f[%w]()i.e()%f[%W]", group = "MiniHipatternsNote" },
-
-				-- Highlight hex color strings (`#rrggbb`) using that color
-				hex_color = hipatterns.gen_highlighter.hex_color(),
-			},
-		})
+		-- local hipatterns = require("mini.hipatterns")
+		-- hipatterns.setup({
+		-- 	highlighters = {
+		-- 		-- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+		-- 		fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+		-- 		hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+		-- 		todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+		-- 		note = { pattern = "%f[%w]()NOTE()%f[%W]", group = "MiniHipatternsNote" },
+		-- 		ie = { pattern = "%f[%w]()I.E()%f[%W]", group = "MiniHipatternsNote" },
+		-- 		ies = { pattern = "%f[%w]()i.e()%f[%W]", group = "MiniHipatternsNote" },
+		--
+		-- 		-- Highlight hex color strings (`#rrggbb`) using that color
+		-- 		hex_color = hipatterns.gen_highlighter.hex_color(),
+		-- 	},
+		-- })
 
 		require("mini.icons").setup()
 		require("mini.indentscope").setup()

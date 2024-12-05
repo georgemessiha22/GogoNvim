@@ -7,9 +7,9 @@ return {
 
 	-- Code {{{
 	require("plugins.code.luasnip"),
-	-- require("plugins.code.cmp"),
 	require("plugins.code.blink"),
 	require("plugins.code.iconpicker"),
+	require("plugins.code.todo-comment"),
 	-- }}}
 
 	-- LSP {{{

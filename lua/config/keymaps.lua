@@ -219,6 +219,7 @@ M.telescope = {
     ["<leader>lco"] = { "<cmd> Telescope lsp_incoming_calls <CR>", "Show LSP incoming calls" },
     ["<leader>ltd"] = { "<cmd> Telescope lsp_type_defentions <CR>", "Show LSP type definition" },
     ["<leader>lr"] = { "<cmd> Telescope lsp_references <CR>", "Show LSP references" },
+
     -- find
     ["<leader>F"] = { "<cmd> Telescope find_files <CR>", "Find files", opts = { noremap = true } },
     ["<leader>fa"] = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "Find all" },
@@ -252,7 +253,7 @@ M.telescope = {
     ["<leader>tc"] = { "<cmd>Telescope command_history<cr>", "Command History" },
     ["<leader>sa"] = { "<cmd>Telescope autocommands<cr>", "Auto Commands" },
     ["<leader>sk"] = { "<cmd>Telescope keymaps<cr>", "Key Maps" },
-    ["<leader>sR"] = { "<cmd>Telescope resume<cr>", "Resume" },
+    ["<leader>sr"] = { "<cmd>Telescope resume<cr>", "Resume" },
   },
 }
 
