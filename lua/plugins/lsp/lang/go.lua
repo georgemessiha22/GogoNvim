@@ -14,6 +14,7 @@ return {
 	},
 	config = function()
 		local on_attach = require("go.lsp").gopls_on_attach
+
 		require("go").setup({
 			luasnip = true,
 			trouble = true,
@@ -21,8 +22,10 @@ return {
 			goimports = "gopls",
 			max_line_len = 80,
 			lsp_cfg = {
-				capabilities = require("lsp-zero").get_capabilities(),
-				filetypes = { "go", "gomod", "go.work" },
+				-- capabilites = capabilites,
+				-- on_attach = on_attach,
+				filetypes = { "go", "gomod", "gowork", "gotmpl" },
+				-- fillstruct = "gopls",
 				settings = {
 					gopls = {
 						analyses = {
@@ -33,8 +36,9 @@ return {
 							useany = true,
 						},
 						staticcheck = true,
-						buildFlags = { "-tags=functional,integration,unit" },
 						gofumpt = true,
+						buildFlags = { "-tags=functional,integration,unit" },
+						vulncheck = { "Imports" },
 						hints = {
 							assignVariableTypes = true,
 							compositeLiteralFields = true,
@@ -44,15 +48,15 @@ return {
 							parameterNames = true,
 							rangeVariableTypes = true,
 						},
-						codelenses = {
-							gc_details = true,
-							generate = true,
-							regenerate_cgo = true,
-							run_govulncheck = false,
-							tidy = true,
-							upgrade_dependency = true,
-							vendor = true,
-						},
+					},
+					codelenses = {
+						gc_details = true,
+						generate = true,
+						regenerate_cgo = true,
+						run_govulncheck = true,
+						tidy = true,
+						upgrade_dependency = true,
+						vendor = true,
 					},
 				},
 			},
@@ -100,13 +104,13 @@ return {
 			dap_debug_keymap = false,
 		})
 
-		local null_ls = require("null-ls")
-
-		null_ls.register(require("go.null_ls").gotest())
-		null_ls.register(require("go.null_ls").gotest_action())
-		null_ls.register(require("go.null_ls").golangci_lint())
+		-- local null_ls = require("null-ls")
+		--
+		-- null_ls.register(require("go.null_ls").gotest())
+		-- null_ls.register(require("go.null_ls").gotest_action())
+		-- null_ls.register(require("go.null_ls").golangci_lint())
 	end,
 	event = { "CmdlineEnter" },
-	ft = { "go", "gomod", "go.work" },
+	ft = { "go", "gomod", "gowork", "gotmpl" },
 	build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 }

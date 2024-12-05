@@ -6,54 +6,20 @@
 
 local M = {}
 
----Set the general configurations for neovim.
----@param opts ui
-function M.general(opts)
-	-------------------------------------- globals -----------------------------------------
-	vim.cmd.colorscheme(opts.theme)
-	vim.guifont = opts.font
-
-	vim.g.toggle_theme_icon = opts.toggle_theme_icon
-	vim.g.neon_transparent = opts.transparency
-	vim.g.neon_style = opts.theme_toggle[1]
-	vim.g.minipairs_disable = false
-
-	-- add binaries installed by mason.nvim to path
-	vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
-
-	-- disable some builtin packages
-	for _, plugin in pairs(opts.disabled_builtins) do
-		vim.g["loaded_" .. plugin] = 1
-	end
-
-	vim.o.formatexpr = "v:lua.require('util.format').formatexpr()"
-	-- Fix markdown indentation settings
-	vim.g.markdown_recommended_style = 0
-
-	vim.g.autoformat = true
-
-	vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
-
-	vim.g.lazygit_config = true
-
-	vim.g.loaded_perl_provider = false
-	vim.filetype = true
-end
-
 ---Set the options for neovim.
----@param opts ui
-function M.options(opts)
+function M.options()
 	local opt = vim.opt
 
 	-------------------------------------- options ------------------------------------------
 	opt.laststatus = 3  -- global statusline
 	opt.showmode = true -- Dont show mode since we have a statusline
-	opt.termguicolors = opts.termguicolors
+	opt.termguicolors = GogoUI.termguicolors
 	opt.colorcolumn = "120"
 
 	-- General {{{
 	opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 	opt.confirm = true   -- Confirm to save changes before exiting modified buffer
+	-- opt.spell = true
 	opt.spelllang = { "en" }
 	opt.timeoutlen = 500
 	opt.undofile = true
@@ -61,10 +27,8 @@ function M.options(opts)
 
 	opt.updatetime = 200 -- Save swap file and trigger CursorHold
 	opt.winminwidth = 5  -- Minimum window width
-	opt.fillchars = opts.icons.fillchars
-	if vim.fn.has("nvim-0.10") == 1 then
-		opt.smoothscroll = true
-	end
+	opt.fillchars = GogoUI.icons.fillchars
+	opt.smoothscroll = true
 	-- }}}
 
 	-- Clipboard {{{
@@ -78,40 +42,28 @@ function M.options(opts)
 	-- }}}
 
 	-- Indenting {{{
-	opt.expandtab = false  -- Use spaces instead of tabs
+	opt.expandtab = true   -- Use spaces instead of tabs
 	opt.shiftwidth = 2     -- Size of an indent
 	opt.shiftround = true  -- Round indent
 	opt.smartindent = true -- Insert indents automatically
 	opt.tabstop = 2        -- Number of spaces tabs count for
 	opt.softtabstop = 2
 
-	opt.ignorecase = true
 	opt.mouse = "a"       -- Enable mouse mode
 	opt.sidescrolloff = 8 -- Columns of context
 	-- }}}
 
 	-- Folding {{{
-	opt.foldmethod = "indent"
 	opt.foldlevelstart = 99
 	opt.foldlevel = 99
 	--
-	if vim.fn.has("nvim-0.9.0") == 1 then
-		opt.statuscolumn = [[%!v:lua.require('util.ui').statuscolumn()]]
-		opt.foldtext = "v:lua.require('util.ui').foldtext()"
-	end
 
-	-- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
-	if vim.fn.has("nvim-0.10") == 1 then
-		opt.foldmethod = "expr"
-		opt.foldexpr = "v:lua.require('util.ui').foldexpr()"
-		opt.foldtext = ""
-		-- opt.fillchars = "fold: "
+	opt.foldmethod = "expr"
+	opt.foldexpr = "v:lua.require('util.ui').foldexpr()"
+	opt.foldtext = ""
 
-		if vim.lsp.inlay_hint then
-			vim.lsp.inlay_hint.enable(true, { 0 })
-		end
-	else
-		opt.foldmethod = "indent"
+	if vim.lsp.inlay_hint then
+		vim.lsp.inlay_hint.enable(true, { 1 })
 	end
 	-- }}}
 
@@ -137,7 +89,7 @@ function M.options(opts)
 	opt.splitbelow = true  -- Put new windows below current
 	opt.splitright = true  -- Put new vertical splits to right
 	opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
-	opt.wrap = true        -- Disable line wrap
+	opt.wrap = true
 
 	-- go to previous/next line with h,l,left arrow and right arrow
 	-- when cursor reaches end/beginning of line
@@ -151,29 +103,18 @@ function M.options(opts)
 	opt.wildmenu = true
 	opt.wildmode = "longest:full,full" -- Command-line completion mode
 	-- disable nvim default complete
-	opt.completeopt = { "menu", "menuone", "noselect" }
+	-- opt.completeopt = { "menu", "menuone", "noselect" }
 	-- }}}
 
 	-- Unknown {{{
 	opt.formatoptions = "jcroqlnt" -- tcqj
 	opt.grepformat = "%f:%l:%c:%m"
-	opt.grepprg = "rg --vimgrep"
+	-- opt.grepprg = "rg --vimgrep"
 	opt.list = true    -- Show some invisible characters (tabs...
 	opt.pumblend = 10  -- Popup blend
 	opt.pumheight = 10 -- Maximum number of entries in a popup
-	opt.shortmess:append({ W = true, I = true, c = true, C = true })
+	opt.shortmess:append("w")
 	-- }}}
-end
-
----Set the mapleader; must be used before calling lazy.setup.
-function M.leader()
-	vim.g.mapleader = GogoUI.leader
-	vim.g.maplocalleader = GogoUI.localleader
-	vim.opt.termguicolors = GogoUI.termguicolors
-end
-
-function M.autocmds()
-	require("config.autocmds")
 end
 
 return M

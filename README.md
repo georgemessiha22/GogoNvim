@@ -1,128 +1,131 @@
-<!--toc:start-->
-- [GoGo NeoVim](#gogo-neovim)
-  - [Structure](#structure)
-- [Lazy Plugins](#lazy-plugins)
-<!--toc:end-->
+# GogoNvim/
 
-# GoGo NeoVim
-![image](https://user-images.githubusercontent.com/101672047/235722220-dbf567c4-4e8f-4bb1-8f9a-1d6a221cda33.png)
+<a href="https://dotfyle.com/georgemessiha22/gogonvim"><img src="https://dotfyle.com/georgemessiha22/gogonvim/badges/plugins?style=flat" /></a>
+<a href="https://dotfyle.com/georgemessiha22/gogonvim"><img src="https://dotfyle.com/georgemessiha22/gogonvim/badges/leaderkey?style=flat" /></a>
+<a href="https://dotfyle.com/georgemessiha22/gogonvim"><img src="https://dotfyle.com/georgemessiha22/gogonvim/badges/plugin-manager?style=flat" /></a>
 
-This repo is highly inspired by NvChad and LazyVIM, the only reason of creating my own repo, i didn't like the idea of learning curve; 
-constrains/needs to setup things in their way, so i built this Repo that have everything directly connected and you can just edit it.
-Installing new plugin is simple just use whatever mentioned in their github, and add the new plugin file to `plugins/init.lua` with required.
 
-**NOTE** only plugins mentioned in `plugins/init.lua` will be included. This way i can play around with switching on and off some plugins.
+## Install Instructions
 
-Basic setup idea
+ > Install requires Neovim 0.9+. Always review the code before installing a configuration.
 
-* config
-    - `init.lua` have functions to load.
-    - `settings.lua`
+Clone the repository and install the plugins:
 
-* UI
-    - To make it reusable, everything you think it might be reusable in different scenarios can be placed in `ui.lua`
-
-* Plugins
-    - all plugins are in `plugins/installer` but that does not auto install.
-    - you must include the plugin file in `plugins/init.lua`.
-    - all the plugin setup goes in attribute `conifg` as function.
-
-## Structure
-
-```bash
-./
-├── init.lua
-├── LICENSE
-├── lua/
-│   ├── config/
-│   │   ├── autocmds.lua
-│   │   ├── init.lua
-│   │   ├── keymaps.lua
-│   │   └── loader.lua
-│   ├── plugins/
-│   │   ├── code/
-│   │   │   ├── cmp.lua
-│   │   │   ├── comment.lua
-│   │   │   ├── iconpicker.lua
-│   │   │   ├── indentscope.lua
-│   │   │   ├── luasnip.lua
-│   │   │   ├── miniai.lua
-│   │   │   ├── minipairs.lua
-│   │   │   ├── minisurround.lua
-│   │   │   └── todo-comment.lua
-│   │   ├── colors/
-│   │   │   ├── colorizer.lua
-│   │   │   ├── colorscheme.lua
-│   │   │   └── illuminate.lua
-│   │   ├── editor/
-│   │   │   ├── blankline.lua
-│   │   │   ├── bufferline.lua
-│   │   │   ├── dashboard.lua
-│   │   │   ├── dressing.lua
-│   │   │   ├── flash.lua
-│   │   │   ├── fzf.lua
-│   │   │   ├── harpoon2.lua
-│   │   │   ├── lualine.lua
-│   │   │   ├── mini-animate.lua
-│   │   │   ├── minibufremove.lua
-│   │   │   ├── neotree.lua
-│   │   │   ├── noice.lua
-│   │   │   ├── notify.lua
-│   │   │   ├── persistence.lua
-│   │   │   ├── spectre.lua
-│   │   │   ├── startuptime.lua
-│   │   │   ├── telescope.lua
-│   │   │   ├── trouble.lua
-│   │   │   └── whichkey.lua
-│   │   ├── git/
-│   │   │   ├── gitsigns.lua
-│   │   │   └── lazygit.lua
-│   │   ├── init.lua
-│   │   └── lsp/
-│   │       ├── conform.lua
-│   │       ├── init.lua
-│   │       ├── lang/
-│   │       ├── lsp_kind.lua
-│   │       ├── lspconfig.lua
-│   │       ├── mason.lua
-│   │       ├── none-ls.lua
-│   │       ├── nvim-lint.lua
-│   │       └── treesitter.lua
-│   ├── ui/
-│   │   ├── icons.lua
-│   │   └── init.lua
-│   └── util/
-│       ├── format.lua
-│       ├── init.lua
-│       ├── inject.lua
-│       ├── lsp.lua
-│       └── ui.lua
-├── queries/
-│   └── lua/
-│       └── highlights.scm
-├── README.md
-├── spell/
-│   ├── en.utf-8.add
-│   └── en.utf-8.add.spl
-└── stylua.toml
+```sh
+git clone git@github.com:georgemessiha22/GogoNvim ~/.config/georgemessiha22/GogoNvim
 ```
 
-# Lazy Plugins
+Open Neovim with this config:
 
-- [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
-- [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
-- [onsails/lspkind-nvim](https://github.com/onsails/lspkind-nvim)
-- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
-- [nvim-neo-tree/neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
-- [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
-- [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
-- [folke/trouble.nvim](https://github.com/folke/trouble.nvim)
-- [lukas-reineke/indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
-- [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim)
-- [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
-- [ojroques/nvim-hardline](https://github.com/ojroques/nvim-hardline)
-- [folke/which-key.nvim](https://github.com/folke/which-key.nvim)
-- [rcarriga/nvim-notify](https://github.com/rcarriga/nvim-notify)
-- [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
-- [junegunn/fzf](https://github.com/junegunn/fzf)
+```sh
+NVIM_APPNAME=georgemessiha22/GogoNvim/ nvim
+```
 
+## Plugins
+
+### bars-and-lines
+
++ [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
+### colorscheme
+
++ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
++ [folke/tokyonight.nvim](https://dotfyle.com/plugins/folke/tokyonight.nvim)
++ [rose-pine/neovim](https://dotfyle.com/plugins/rose-pine/neovim)
+### comment
+
++ [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
+### completion
+
++ [Saghen/blink.cmp](https://dotfyle.com/plugins/Saghen/blink.cmp)
+### diagnostics
+
++ [folke/trouble.nvim](https://dotfyle.com/plugins/folke/trouble.nvim)
+### editing-support
+
++ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
++ [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
++ [windwp/nvim-ts-autotag](https://dotfyle.com/plugins/windwp/nvim-ts-autotag)
+### fuzzy-finder
+
++ [nvim-telescope/telescope.nvim](https://dotfyle.com/plugins/nvim-telescope/telescope.nvim)
+### git
+
++ [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
+### golang
+
++ [ray-x/go.nvim](https://dotfyle.com/plugins/ray-x/go.nvim)
+### icon
+
++ [nvim-tree/nvim-web-devicons](https://dotfyle.com/plugins/nvim-tree/nvim-web-devicons)
+### keybinding
+
++ [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
+### lsp
+
++ [mrcjkb/rustaceanvim](https://dotfyle.com/plugins/mrcjkb/rustaceanvim)
++ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
++ [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
+### lsp-installer
+
++ [williamboman/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
+### marks
+
++ [ThePrimeagen/harpoon](https://dotfyle.com/plugins/ThePrimeagen/harpoon)
+### motion
+
++ [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
+### nvim-dev
+
++ [folke/lazydev.nvim](https://dotfyle.com/plugins/folke/lazydev.nvim)
++ [ray-x/guihua.lua](https://dotfyle.com/plugins/ray-x/guihua.lua)
++ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
++ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
+### plugin-manager
+
++ [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
+### programming-languages-support
+
++ [akinsho/flutter-tools.nvim](https://dotfyle.com/plugins/akinsho/flutter-tools.nvim)
+### snippet
+
++ [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
++ [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
+### startup
+
++ [nvimdev/dashboard-nvim](https://dotfyle.com/plugins/nvimdev/dashboard-nvim)
+### syntax
+
++ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
++ [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
+### utility
+
++ [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
++ [stevearc/dressing.nvim](https://dotfyle.com/plugins/stevearc/dressing.nvim)
++ [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
+## Language Servers
+
++ astro
++ bashls
++ cssls
++ denols
++ docker_compose_language_service
++ dockerls
++ emmet_ls
++ eslint
++ golangci_lint_ls
++ gopls
++ html
++ jsonls
++ lua_ls
++ marksman
++ rust_analyzer
++ sqlls
++ svelte
++ tailwindcss
++ taplo
++ texlab
++ volar
++ yamlls
+
+
+ This readme was generated by [Dotfyle](https://dotfyle.com)
