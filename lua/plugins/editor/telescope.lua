@@ -11,25 +11,12 @@
 -- Telescope {{{
 return {
 	"nvim-telescope/telescope.nvim",
-	tag = "0.1.6",
+	dependencies = {
+		"nvim-telescope/telescope-symbols.nvim",
+	},
+	tag = "0.1.8",
 	cmd = "Telescope",
 	lazy = false,
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-treesitter/nvim-treesitter",
---------	{
---------		"nvim-telescope/telescope-fzf-native.nvim",
---------		build = vim.fn.executable("make") == 1 and "make"
---------				or
---------				"cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
---------		enabled = vim.fn.executable("make") == 1 or vim.fn.executable("cmake") == 1,
---------		config = function()
---------			GogoVIM.on_load("telescope.nvim", function()
---------				require("telescope").load_extension("fzf")
---------			end)
---------		end,
---------	},
-	},
 	config = function(_, opts)
 		local opts_extend = {
 			pickers = {
@@ -67,9 +54,11 @@ return {
 					case_mode = "smart_case",
 				},
 			},
+
 			picker = GogoUI.telescope,
 		}
 		opts_extend = vim.tbl_deep_extend("error", opts, opts_extend)
+
 		local flash = function(prompt_bufnr)
 			require("flash").jump({
 				pattern = "^",
@@ -91,6 +80,7 @@ return {
 		opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
 			mappings = { n = { s = flash }, i = { ["<c-s>"] = flash } },
 		})
+
 		require("telescope").setup(opts_extend)
 		require("config").load_mapping("telescope")
 	end,
@@ -98,21 +88,8 @@ return {
 	opts = function()
 		local actions = require("telescope.actions")
 
-		local open_with_trouble = function(...)
-			return require("trouble.providers.telescope").open_with_trouble(...)
-		end
 		local open_selected_with_trouble = function(...)
 			return require("trouble.providers.telescope").open_selected_with_trouble(...)
-		end
-		local find_files_no_ignore = function()
-			local action_state = require("telescope.actions.state")
-			local line = action_state.get_current_line()
-			GogoVIM.telescope("find_files", { no_ignore = true, default_text = line })()
-		end
-		local find_files_with_hidden = function()
-			local action_state = require("telescope.actions.state")
-			local line = action_state.get_current_line()
-			GogoVIM.telescope("find_files", { hidden = true, default_text = line })()
 		end
 
 		return {
@@ -134,10 +111,7 @@ return {
 				end,
 				mappings = {
 					i = {
-						["<c-t>"] = open_with_trouble,
-						["<a-t>"] = open_selected_with_trouble,
-						["<a-i>"] = find_files_no_ignore,
-						["<a-h>"] = find_files_with_hidden,
+						["<C-t>"] = open_selected_with_trouble,
 						["<C-Down>"] = actions.cycle_history_next,
 						["<C-Up>"] = actions.cycle_history_prev,
 						["<C-f>"] = actions.preview_scrolling_down,

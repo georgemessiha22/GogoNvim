@@ -30,9 +30,15 @@ Basic setup idea
 ## Structure
 
 ```bash
+
 ./
+├── after/
+│   └── ftplugin/
+│       └── terraform.lua
 ├── init.lua
+├── lazy-lock.json
 ├── LICENSE
+├── lsd
 ├── lua/
 │   ├── config/
 │   │   ├── autocmds.lua
@@ -41,67 +47,47 @@ Basic setup idea
 │   │   └── loader.lua
 │   ├── plugins/
 │   │   ├── code/
-│   │   │   ├── cmp.lua
-│   │   │   ├── comment.lua
+│   │   │   ├── blink.lua
+│   │   │   ├── gitsigns.lua
 │   │   │   ├── iconpicker.lua
-│   │   │   ├── indentscope.lua
 │   │   │   ├── luasnip.lua
-│   │   │   ├── miniai.lua
-│   │   │   ├── minipairs.lua
-│   │   │   ├── minisurround.lua
 │   │   │   └── todo-comment.lua
-│   │   ├── colors/
-│   │   │   ├── colorizer.lua
-│   │   │   ├── colorscheme.lua
-│   │   │   └── illuminate.lua
 │   │   ├── editor/
-│   │   │   ├── blankline.lua
-│   │   │   ├── bufferline.lua
+│   │   │   ├── colorscheme.lua
 │   │   │   ├── dashboard.lua
 │   │   │   ├── dressing.lua
 │   │   │   ├── flash.lua
-│   │   │   ├── fzf.lua
 │   │   │   ├── harpoon2.lua
-│   │   │   ├── lualine.lua
-│   │   │   ├── mini-animate.lua
-│   │   │   ├── minibufremove.lua
-│   │   │   ├── neotree.lua
+│   │   │   ├── mininvim.lua
 │   │   │   ├── noice.lua
-│   │   │   ├── notify.lua
-│   │   │   ├── persistence.lua
-│   │   │   ├── spectre.lua
-│   │   │   ├── startuptime.lua
 │   │   │   ├── telescope.lua
 │   │   │   ├── trouble.lua
 │   │   │   └── whichkey.lua
-│   │   ├── git/
-│   │   │   ├── gitsigns.lua
-│   │   │   └── lazygit.lua
 │   │   ├── init.lua
 │   │   └── lsp/
-│   │       ├── conform.lua
 │   │       ├── init.lua
 │   │       ├── lang/
+│   │       │   ├── flutter.lua
+│   │       │   ├── go.lua
+│   │       │   └── rustacean.lua
 │   │       ├── lsp_kind.lua
 │   │       ├── lspconfig.lua
 │   │       ├── mason.lua
-│   │       ├── none-ls.lua
 │   │       ├── nvim-lint.lua
 │   │       └── treesitter.lua
 │   ├── ui/
 │   │   ├── icons.lua
 │   │   └── init.lua
 │   └── util/
-│       ├── format.lua
 │       ├── init.lua
 │       ├── inject.lua
-│       ├── lsp.lua
 │       └── ui.lua
 ├── queries/
 │   └── lua/
 │       └── highlights.scm
 ├── README.md
 ├── spell/
+│   ├── codespell-ignore
 │   ├── en.utf-8.add
 │   └── en.utf-8.add.spl
 └── stylua.toml
@@ -113,16 +99,9 @@ Basic setup idea
 - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 - [onsails/lspkind-nvim](https://github.com/onsails/lspkind-nvim)
 - [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
-- [nvim-neo-tree/neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
 - [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
 - [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 - [folke/trouble.nvim](https://github.com/folke/trouble.nvim)
-- [lukas-reineke/indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
-- [numToStr/Comment.nvim](https://github.com/numToStr/Comment.nvim)
-- [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
-- [ojroques/nvim-hardline](https://github.com/ojroques/nvim-hardline)
-- [folke/which-key.nvim](https://github.com/folke/which-key.nvim)
-- [rcarriga/nvim-notify](https://github.com/rcarriga/nvim-notify)
 - [windwp/nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag)
 - [junegunn/fzf](https://github.com/junegunn/fzf)
 

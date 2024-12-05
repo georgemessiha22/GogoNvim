@@ -100,11 +100,11 @@ return {
 			dap_debug_keymap = false,
 		})
 
-		local null_ls = require("null-ls")
-
-		null_ls.register(require("go.null_ls").gotest())
-		null_ls.register(require("go.null_ls").gotest_action())
-		null_ls.register(require("go.null_ls").golangci_lint())
+		-- local null_ls = require("null-ls")
+		--
+		-- null_ls.register(require("go.null_ls").gotest())
+		-- null_ls.register(require("go.null_ls").gotest_action())
+		-- null_ls.register(require("go.null_ls").golangci_lint())
 	end,
 	event = { "CmdlineEnter" },
 	ft = { "go", "gomod", "go.work" },

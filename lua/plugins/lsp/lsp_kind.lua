@@ -6,7 +6,7 @@
 -- LSP Kind {{{
 return {
   "onsails/lspkind-nvim",
-  lazy = true,
+  lazy = false,
   config = function()
     require("lspkind").init({
       mode = "symbol",
