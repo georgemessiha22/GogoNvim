@@ -115,6 +115,11 @@ function M.options()
 	opt.pumheight = 10 -- Maximum number of entries in a popup
 	opt.shortmess:append("w")
 	-- }}}
+
+  -- ftplugin {{{
+  vim.filetype.filetype = true
+  vim.filetype.ftplugin = true
+  -- }}}
 end
 
 return M
