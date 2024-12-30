@@ -59,35 +59,35 @@ return {
   -- }}}
 
   -- Theme Rose-pine {{{
-  -- {
-  --   "rose-pine/neovim",
-  --   lazy = false
-  -- },
+  {
+    "rose-pine/neovim",
+    lazy = false
+  },
   -- }}}
   -- Theme Flow {{{
-  {
-    "0xstepit/flow.nvim",
-    lazy = false,
-    priority = 1000,
-    tag = "v2.0.0",
-    opts = {
-      theme = {
-        style = "dark",       --  "dark" | "light"
-        contrast = "default", -- "default" | "high"
-        transparent = false,  -- true | false
-      },
-      colors = {
-        mode = "default", -- "default" | "dark" | "light"
-        fluo = "cyan",    -- "pink" | "cyan" | "yellow" | "orange" | "green"
-      },
-      ui = {
-        borders = "theme",        -- "theme" | "inverse" | "fluo" | "none"
-        aggressive_spell = true, -- true | false
-      },
-    },
-    config = function(_, opts)
-      require("flow").setup(opts)
-    end,
-  },
+  -- {
+  --   "0xstepit/flow.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   tag = "v2.0.0",
+  --   opts = {
+  --     theme = {
+  --       style = "dark",       --  "dark" | "light"
+  --       contrast = "default", -- "default" | "high"
+  --       transparent = false,  -- true | false
+  --     },
+  --     colors = {
+  --       mode = "default", -- "default" | "dark" | "light"
+  --       fluo = "cyan",    -- "pink" | "cyan" | "yellow" | "orange" | "green"
+  --     },
+  --     ui = {
+  --       borders = "theme",        -- "theme" | "inverse" | "fluo" | "none"
+  --       aggressive_spell = true, -- true | false
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     require("flow").setup(opts)
+  --   end,
+  -- },
   -- }}}
 }

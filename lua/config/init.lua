@@ -97,7 +97,7 @@ function M.load_mapping(section)
 
       for mode, mode_values in pairs(values) do -- first layer is modes i, v, t, x
         for keybind, mapping_info in pairs(mode_values) do -- second layer is key = {command, description}
-          local opts = vim.tbl_deep_extend("force", { desc = mapping_info[2], noremap = true }, mapping_info.opts or {})
+          local opts = vim.tbl_deep_extend("force", { desc = mapping_info[2], remap = false }, mapping_info.opts or {})
           vim.keymap.set(mode, keybind, mapping_info[1], opts)
         end
       end

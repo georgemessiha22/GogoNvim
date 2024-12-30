@@ -79,16 +79,6 @@ return {
     disable_mode = false,
   },
 
-  -- cheatsheet = { theme = "grid" }, -- simple/grid
-
-  lsp = {
-    -- show function signatures i.e args as you type
-    signature = {
-      disabled = true,
-      silent = true, -- silences 'no signature help available' message from appearing
-    },
-  },
-
   -- Default Plugins {{{
   disabled_builtins = {
     --	"netrw",
