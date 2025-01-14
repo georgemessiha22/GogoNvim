@@ -5,7 +5,7 @@ return {
   opts = {
     dashboard = { enabled = true },
     dim = { enabled = true },
-    indent = { enabled = true },
+    indent = { enabled = false },
     input = { enabled = true },
     bigfile = { enabled = true },
     notify = { enabled = true },
