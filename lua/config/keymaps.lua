@@ -24,7 +24,7 @@ M.general = {
     ["<C-k>"] = { "<Up>", "Move up" },
 
     -- Save file
-    ["<C-s>"] = { "<ESC> <CMD> write <CR>", "Save file" },
+    -- ["<C-s>"] = { "<ESC> <CMD> write <CR>", "Save file" },
   },
 
   n = {
