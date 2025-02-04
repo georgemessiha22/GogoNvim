@@ -17,7 +17,8 @@ return {
                 api_key_name = "",
                 -- api_key = "ollama",
                 endpoint = "http://127.0.0.1:11434/v1",
-                model = "codegemma",
+                model = "qwen2.5-coder:1.5b",
+
             },
         },
         ---Specify the special dual_boost mode
