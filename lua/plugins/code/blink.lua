@@ -1,94 +1,31 @@
 return {
     "saghen/blink.cmp",
+    dependencies = {
+        {
+            "saghen/blink.compat",
+            lazy = true,
+            opts = {},
+            config = function()
+                -- monkeypatch cmp.ConfirmBehavior for Avante
+                require("cmp").ConfirmBehavior = {
+                    Insert = "insert",
+                    Replace = "replace",
+                }
+            end,
+        },
+    },
     lazy = false, -- lazy loading handled internally
 
     -- use a release tag to download pre-built binaries
-    version = "v0.7.3",
+    version = "v0.*",
     -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
     -- build = 'cargo build --release',
     -- On musl libc based systems you need to add this flag
     -- build = 'RUSTFLAGS="-C target-feature=-crt-static" cargo build --release',
 
-    -- @module 'blink.cmp'
-    -- @type blink.cmp.Config
+    --- @module 'blink.cmp'
+    --- @type blink.cmp.Config
     opts = {
-        -- When specifying 'preset' in the keymap table, the custom key mappings are merged with the preset,
-        -- and any conflicting keys will overwrite the preset mappings.
-        -- The "fallback" command will run the next non blink keymap.
-        --
-        -- Example:
-        --
-        -- keymap = {
-        --   preset = 'default',
-        --   ['<Up>'] = { 'select_prev', 'fallback' },
-        --   ['<Down>'] = { 'select_next', 'fallback' },
-        --
-        --   -- disable a keymap from the preset
-        --   ['<C-e>'] = {},
-        -- },
-        --
-        -- When defining your own keymaps without a preset, no keybinds will be assigned automatically.
-        --
-        -- Available commands:
-        --   show, hide, cancel, accept, select_and_accept, select_prev, select_next, show_documentation, hide_documentation,
-        --   scroll_documentation_up, scroll_documentation_down, snippet_forward, snippet_backward, fallback
-        --
-        -- "default" keymap
-        --   ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        --   ['<C-e>'] = { 'hide' },
-        --   ['<C-y>'] = { 'select_and_accept' },
-        --
-        --   ['<C-p>'] = { 'select_prev', 'fallback' },
-        --   ['<C-n>'] = { 'select_next', 'fallback' },
-        --
-        --   ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-        --   ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-        --
-        --   ['<Tab>'] = { 'snippet_forward', 'fallback' },
-        --   ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-        --
-        -- "super-tab" keymap
-        --   you may want to set `completion.trigger.show_in_snippet = false`
-        --   or use `completion.list.selection = "manual" | "auto_insert"`
-        --
-        --   ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        --   ['<C-e>'] = { 'hide', 'fallback' },
-        --
-        --   ['<Tab>'] = {
-        --     function(cmp)
-        --       if cmp.snippet_active() then return cmp.accept()
-        --       else return cmp.select_and_accept() end
-        --     end,
-        --     'snippet_forward',
-        --     'fallback'
-        --   },
-        --   ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-        --
-        --   ['<Up>'] = { 'select_prev', 'fallback' },
-        --   ['<Down>'] = { 'select_next', 'fallback' },
-        --   ['<C-p>'] = { 'select_prev', 'fallback' },
-        --   ['<C-n>'] = { 'select_next', 'fallback' },
-        --
-        --   ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-        --   ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-        --
-        -- "enter" keymap
-        --   you may want to set `completion.list.selection = "manual" | "auto_insert"`
-        --
-        --   ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        --   ['<C-e>'] = { 'hide', 'fallback' },
-        --   ['<CR>'] = { 'accept', 'fallback' },
-        --
-        --   ['<Tab>'] = { 'snippet_forward', 'fallback' },
-        --   ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-        --
-        --   ['<Up>'] = { 'select_prev', 'fallback' },
-        --   ['<Down>'] = { 'select_next', 'fallback' },
-        --   ['<C-p>'] = { 'select_prev', 'fallback' },
-        --   ['<C-n>'] = { 'select_next', 'fallback' },
-        --
-        --   ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-        --   ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
         keymap = {
             ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
             ['<C-e>'] = { 'hide' },
@@ -104,11 +41,7 @@ return {
             ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
         },
 
-        -- Disables keymaps, completions and signature help for these filetypes
-        blocked_filetypes = {},
-
         snippets = {
-            -- Function to use when expanding LSP provided snippets
             expand = function(snippet)
                 -- vim.snippet.expand(snippet)
                 require('luasnip').lsp_expand(snippet)
@@ -121,7 +54,6 @@ return {
                 return require('luasnip').in_snippet()
                 -- return vim.snippet.active(filter)
             end,
-            -- Function to use when jumping between tab stops in a snippet, where direction can be negative or positive
             jump = function(direction)
                 -- vim.snippet.jump(direction)
                 require('luasnip').jump(direction)
@@ -130,14 +62,7 @@ return {
 
         completion = {
             keyword = {
-                -- 'prefix' will fuzzy match on the text before the cursor
-                -- 'full' will fuzzy match on the text before *and* after the cursor
-                -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
                 range = "prefix",
-                -- Regex used to get the text when fuzzy matching
-                regex = "[%w_\\-]",
-                -- After matching with regex, any characters matching this regex at the prefix will be excluded
-                exclude_from_prefix_regex = "[\\-]",
             },
 
             trigger = {
@@ -163,26 +88,15 @@ return {
                 show_on_x_blocked_trigger_characters = { "'", '"', "(" },
             },
 
+            --- @type blink.cmp.CompletionListConfig
             list = {
-                -- Maximum number of items to display
-                max_items = 200,
-                -- Controls if completion items will be selected automatically,
-                -- and whether selection automatically inserts
-                selection = "preselect",
-                -- Controls how the completion items are selected
-                -- 'preselect' will automatically select the first item in the completion list
-                -- 'manual' will not select any item by default
-                -- 'auto_insert' will not select any item by default, and insert the completion items automatically
-                -- when selecting them
-                --
-                -- You may want to bind a key to the `cancel` command, which will undo the selection
-                -- when using 'auto_insert'
+                max_items = 10,
+                selection = {
+                    preselect = false,
+                    auto_insert = true,
+                },
                 cycle = {
-                    -- When `true`, calling `select_next` at the *bottom* of the completion list
-                    -- will select the *first* completion item.
                     from_bottom = true,
-                    -- When `true`, calling `select_prev` at the *top* of the completion list
-                    -- will select the *last* completion item.
                     from_top = true,
                 },
             },
@@ -216,7 +130,7 @@ return {
             menu = {
                 enabled = true,
                 min_width = 15,
-                max_height = 100,
+                max_height = 25,
                 border = "none",
                 winblend = 0,
                 winhighlight =
@@ -234,14 +148,12 @@ return {
 
                 -- Controls how the completion items are rendered on the popup window
                 draw = {
-                    -- Aligns the keyword you've typed to a component in the menu
-                    align_to_component = "label", -- or 'none' to disable
                     -- Left and right padding, optionally { left, right } for different padding on each side
                     padding = 1,
                     -- Gap between columns
                     gap = 1,
                     -- Use treesitter to highlight the label text
-                    treesitter = false,
+                    treesitter = {},
 
                     -- Components to render, grouped by column
                     columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" } },
@@ -359,7 +271,7 @@ return {
 
         -- Experimental signature help support
         signature = {
-            enabled = false,
+            enabled = true,
             trigger = {
                 blocked_trigger_characters = {},
                 blocked_retrigger_characters = {},
@@ -384,14 +296,10 @@ return {
         },
 
         fuzzy = {
-            -- when enabled, allows for a number of typos relative to the length of the query
-            -- disabling this matches the behavior of fzf
-            use_typo_resistance = true,
             -- frencency tracks the most recently/frequently used items and boosts the score of the item
             use_frecency = true,
             -- proximity bonus boosts the score of items matching nearby words
             use_proximity = true,
-            max_items = 200,
             -- controls which sorts to use and in which order, these three are currently the only allowed options
             sorts = { "label", "kind", "score" },
 
@@ -414,29 +322,30 @@ return {
         },
 
         sources = {
-            completion = {
-                -- Static list of providers to enable, or a function to dynamically enable/disable providers based on the context
-                -- enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev", "luasnip" },
-                -- Example dynamically picking providers based on the filetype and treesitter node:
-                enabled_providers = function(ctx)
-                    local node = vim.treesitter.get_node()
-                    if vim.bo.filetype == 'lua' then
-                        return { 'lsp', 'path', 'lazydev', "luasnip", "buffer" }
-                    elseif node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
-                        return { 'buffer' }
-                    else
-                        return { 'lsp', 'path', 'luasnip', 'buffer', 'avante_commands',
-                            'avante_mentions', 'avante_files', }
-                    end
+            default = function()
+                local _defaults = { 'lsp', 'path', 'snippets', "avante_commands", "avante_mentions", "avante_files", }
+
+                --- @type boolean, TSNode|nil
+                local isTreeSitter, node = pcall(vim.treesitter.get_node)
+                if not isTreeSitter then
+                    return _defaults
                 end
-            },
+
+                if vim.bo.filetype == 'lua' then
+                    return { 'lsp', 'path', 'lazydev', "snippets", }
+                elseif node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
+                    return { 'buffer', "path", "avante_commands", "avante_mentions", "avante_files", }
+                else
+                    return _defaults
+                end
+            end,
 
             -- Please see https://github.com/Saghen/blink.compat for using `nvim-cmp` sources
             providers = {
                 lsp = {
                     name = "LSP",
                     module = "blink.cmp.sources.lsp",
-
+                    fallbacks = { "buffer" },
                     --- *All* of the providers have the following options available
                     --- NOTE: All of these options may be functions to get dynamic behavior
                     --- See the type definitions for more information.
@@ -444,9 +353,8 @@ return {
                     enabled = true,           -- Whether or not to enable the provider
                     transform_items = nil,    -- Function to transform the items before they're returned
                     should_show_items = true, -- Whether or not to show the items
-                    max_items = nil,          -- Maximum number of items to display in the menu
+                    max_items = 25,           -- Maximum number of items to display in the menu
                     min_keyword_length = 0,   -- Minimum number of characters in the keyword to trigger the provider
-                    -- fallback_for = { "lazydev" }, -- If any of these providers return 0 items, it will fallback to this provider
                     score_offset = 0,         -- Boost/penalize the score of the items
                     override = nil,           -- Override the source's functions
                 },
@@ -477,16 +385,10 @@ return {
                             return vim.bo.filetype
                         end,
                     },
-
-                    --- Example usage for disabling the snippet provider after pressing trigger characters (i.e. ".")
-                    -- enabled = function(ctx)
-                    --   return ctx ~= nil and ctx.trigger.kind == vim.lsp.protocol.CompletionTriggerKind.TriggerCharacter
-                    -- end,
                 },
                 buffer = {
                     name = "Buffer",
                     module = "blink.cmp.sources.buffer",
-                    fallback_for = { "lsp" },
                     opts = {
                         -- default to all visible buffers
                         get_bufnrs = function()
@@ -502,7 +404,7 @@ return {
                         end,
                     },
                 },
-                lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
+                lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
                 avante_commands = {
                     name = "avante_commands",
                     module = "blink.compat.source",
@@ -510,7 +412,7 @@ return {
                     opts = {},
                 },
                 avante_files = {
-                    name = "avante_files",
+                    name = "avante_commands",
                     module = "blink.compat.source",
                     score_offset = 100, -- show at a higher priority than lsp
                     opts = {},
@@ -520,7 +422,7 @@ return {
                     module = "blink.compat.source",
                     score_offset = 1000, -- show at a higher priority than lsp
                     opts = {},
-                }
+                },
             },
         },
 
