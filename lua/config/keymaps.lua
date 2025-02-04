@@ -194,7 +194,7 @@ M.lspconfig = {
     },
 
     -- formatting
-    ["<leader>fm"] = {
+    ["<Leader>fm"] = {
       function()
         require("conform").format({
           timeout_ms=500,

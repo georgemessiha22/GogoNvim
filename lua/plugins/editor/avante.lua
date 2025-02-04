@@ -5,17 +5,21 @@ return {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
         ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-        provider = "copilot", -- Recommend using Claude
+        provider = "ollama", -- Recommend using Claude
         -- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
         -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
         -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
-        auto_suggestions_provider = "copilot",
-        -- claude = {
-        --     endpoint = "https://api.anthropic.com",
-        --     model = "claude-3-5-sonnet-20241022",
-        --     temperature = 0,
-        --     max_tokens = 4096,
-        -- },
+        auto_suggestions_provider = "ollama",
+        use_absolute_path = true,
+        vendors = {
+            ollama = {
+                __inherited_from = "openai",
+                api_key_name = "",
+                -- api_key = "ollama",
+                endpoint = "http://127.0.0.1:11434/v1",
+                model = "codegemma",
+            },
+        },
         ---Specify the special dual_boost mode
         ---1. enabled: Whether to enable dual_boost mode. Default to false.
         ---2. first_provider: The first provider to generate response. Default to "openai".
@@ -39,7 +43,7 @@ return {
             auto_set_keymaps = true,
             auto_apply_diff_after_generation = false,
             support_paste_from_clipboard = false,
-            minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+            minimize_diff = true,         -- Whether to remove unchanged lines when applying a code block
             enable_token_counting = true, -- Whether to enable token counting. Default to true.
         },
         mappings = {
@@ -77,11 +81,11 @@ return {
         hints = { enabled = true },
         windows = {
             ---@type "right" | "left" | "top" | "bottom"
-            position = "right", -- the position of the sidebar
-            wrap = true, -- similar to vim.o.wrap
-            width = 30, -- default % based on available width
+            position = "right",   -- the position of the sidebar
+            wrap = true,          -- similar to vim.o.wrap
+            width = 30,           -- default % based on available width
             sidebar_header = {
-                enabled = true, -- true, false to enable/disable the header
+                enabled = true,   -- true, false to enable/disable the header
                 align = "center", -- left, center, right for title
                 rounded = true,
             },
@@ -94,7 +98,7 @@ return {
                 start_insert = true, -- Start insert mode when opening the edit window
             },
             ask = {
-                floating = false, -- Open the 'AvanteAsk' prompt in a floating window
+                floating = false,    -- Open the 'AvanteAsk' prompt in a floating window
                 start_insert = true, -- Start insert mode when opening the ask window
                 border = "rounded",
                 ---@type "ours" | "theirs"
@@ -131,12 +135,12 @@ return {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
         --- The below dependencies are optional,
-        "echasnovski/mini.pick",     -- for file_selector provider mini.pick
+        "echasnovski/mini.pick",         -- for file_selector provider mini.pick
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-        "hrsh7th/nvim-cmp",          -- autocompletion for avante commands and mentions
-        "ibhagwan/fzf-lua",          -- for file_selector provider fzf
-        "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-        "zbirenbaum/copilot.lua",    -- for providers='copilot'
+        "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
+        "ibhagwan/fzf-lua",              -- for file_selector provider fzf
+        "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
+        -- "github/copilot.vim",            -- for providers='copilot'
         {
             -- support for image pasting
             "HakonHarnes/img-clip.nvim",
