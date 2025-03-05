@@ -49,6 +49,7 @@ return {
                 "eslint",                          -- LSP eslint
                 "texlab",                          -- LSP Latex
                 "taplo",                           -- LSP TOML
+                "pbls",                         -- LSP PROTO
             },
             handlers = {
                 function(server_name)
