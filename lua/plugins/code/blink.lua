@@ -93,7 +93,7 @@ return {
                 max_items = 10,
                 selection = {
                     preselect = false,
-                    auto_insert = true,
+                    auto_insert=true,
                 },
                 cycle = {
                     from_bottom = true,
@@ -172,8 +172,7 @@ return {
                                 return ctx.kind_icon .. ctx.icon_gap
                             end,
                             highlight = function(ctx)
-                                return require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx) or
-                                    "BlinkCmpKind" .. ctx.kind
+                                return "BlinkCmpKind" .. ctx.kind
                             end,
                         },
 
@@ -184,8 +183,7 @@ return {
                                 return ctx.kind
                             end,
                             highlight = function(ctx)
-                                return require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx) or
-                                    "BlinkCmpKind" .. ctx.kind
+                                return "BlinkCmpKind" .. ctx.kind
                             end,
                         },
 

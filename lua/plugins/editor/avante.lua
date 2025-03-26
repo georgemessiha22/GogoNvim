@@ -10,16 +10,12 @@ return {
         -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
         -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
         auto_suggestions_provider = "ollama",
+        ollama = {
+            endpoint = "http://127.0.0.1:11434/v1",
+            model = "qwen2.5-coder:1.5b",
+        },
         use_absolute_path = true,
         vendors = {
-            ollama = {
-                __inherited_from = "openai",
-                api_key_name = "",
-                -- api_key = "ollama",
-                endpoint = "http://127.0.0.1:11434/v1",
-                model = "qwen2.5-coder:1.5b",
-
-            },
         },
         ---Specify the special dual_boost mode
         ---1. enabled: Whether to enable dual_boost mode. Default to false.
