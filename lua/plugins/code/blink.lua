@@ -93,7 +93,7 @@ return {
                 max_items = 10,
                 selection = {
                     preselect = false,
-                    auto_insert=true,
+                    auto_insert = true,
                 },
                 cycle = {
                     from_bottom = true,
@@ -144,7 +144,7 @@ return {
                 direction_priority = { "s", "n" },
 
                 -- Whether to automatically show the window when new completion items are available
-                auto_show = true,
+                auto_show = false,
 
                 -- Controls how the completion items are rendered on the popup window
                 draw = {
@@ -263,7 +263,8 @@ return {
             },
             -- Displays a preview of the selected item on the current line
             ghost_text = {
-                enabled = false,
+                enabled = true,
+                show_with_menu = false,
             },
         },
 
