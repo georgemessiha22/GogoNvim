@@ -144,7 +144,7 @@ return {
                 direction_priority = { "s", "n" },
 
                 -- Whether to automatically show the window when new completion items are available
-                auto_show = false,
+                auto_show = true,
 
                 -- Controls how the completion items are rendered on the popup window
                 draw = {
