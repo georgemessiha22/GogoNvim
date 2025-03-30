@@ -44,7 +44,7 @@ M.general = {
     -- ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
 
     -- Save file
-    ["<C-s>"] = { "<ESC> <CMD> write <CR>", "Save file" },
+    -- ["<C-s>"] = { "<ESC> <CMD> write <CR>", "Save file" },
 
     -- line numbers
     ["<Leader>ln"] = { "<cmd> set nu! <CR>", "Toggle line number" },
@@ -102,12 +102,12 @@ M.lspconfig = {
       "LSP hover",
     },
 
-    ["gi"] = {
-      function()
-        vim.lsp.buf.implementation()
-      end,
-      "LSP implementation",
-    },
+    -- ["gi"] = {
+    --   function()
+    --     vim.lsp.buf.implementation()
+    --   end,
+    --   "LSP implementation",
+    -- },
 
     ["<leader>ls"] = {
       function()
@@ -123,26 +123,26 @@ M.lspconfig = {
       "LSP definition type",
     },
 
-    ["<leader>ra"] = {
-      function()
-        vim.lsp.buf.rename()
-      end,
-      "LSP rename",
-    },
+    -- ["<leader>ra"] = {
+    --   function()
+    --     vim.lsp.buf.rename()
+    --   end,
+    --   "LSP rename",
+    -- },
 
-    ["<leader>ca"] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      "LSP code action",
-    },
+    -- ["<leader>ca"] = {
+    --   function()
+    --     vim.lsp.buf.code_action()
+    --   end,
+    --   "LSP code action",
+    -- },
 
-    ["gr"] = {
-      function()
-        vim.lsp.buf.references()
-      end,
-      "LSP references",
-    },
+    -- ["gr"] = {
+    --   function()
+    --     vim.lsp.buf.references()
+    --   end,
+    --   "LSP references",
+    -- },
 
     ["<leader>d"] = {
       function()
@@ -151,26 +151,26 @@ M.lspconfig = {
       "Floating diagnostic",
     },
 
-    ["[d"] = {
-      function()
-        vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_prev({ float = { border = "rounded" } }) })
-      end,
-      "Goto prev",
-    },
+    -- ["[d"] = {
+    --   function()
+    --     vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_prev({ float = { border = "rounded" } }) })
+    --   end,
+    --   "Goto prev",
+    -- },
+    --
+    -- ["]d"] = {
+    --   function()
+    --     vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_next({ float = { border = "rounded" } }) })
+    --   end,
+    --   "Goto next",
+    -- },
 
-    ["]d"] = {
-      function()
-        vim.diagnostic.jump({ diagnostic = vim.diagnostic.get_next({ float = { border = "rounded" } }) })
-      end,
-      "Goto next",
-    },
-
-    ["<leader>ql"] = {
-      function()
-        vim.diagnostic.setloclist()
-      end,
-      "Diagnostic setloclist",
-    },
+    -- ["<leader>ql"] = {
+    --   function()
+    --     vim.diagnostic.setloclist()
+    --   end,
+    --   "Diagnostic setloclist",
+    -- },
 
     ["<leader>wa"] = {
       function()
@@ -188,13 +188,13 @@ M.lspconfig = {
 
     ["<leader>wl"] = {
       function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end,
       "List workspace folders",
     },
 
     -- formatting
-    ["<Leader>fm"] = {
+    ["<Leader>ff"] = {
       function()
         require("conform").format({
           timeout_ms=500,

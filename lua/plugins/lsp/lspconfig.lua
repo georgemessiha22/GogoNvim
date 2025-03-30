@@ -8,6 +8,7 @@ return {
         "j-hui/fidget.nvim",   -- Extensible UI for Neovim notifications and LSP progress messages.
     },
     config = function(_)
+        vim.diagnostic.config({ virtual_lines = true })
         local on_attach = function(client, bufnr)
             if client.server_capabilities.documentSymbolProvider then
                 -- A simple statusline/winbar component that uses LSP to show your current code context. Named after the Indian satellite navigation system.
@@ -49,7 +50,7 @@ return {
                 "eslint",                          -- LSP eslint
                 "texlab",                          -- LSP Latex
                 "taplo",                           -- LSP TOML
-                "pbls",                         -- LSP PROTO
+                "pbls",                            -- LSP PROTO
             },
             handlers = {
                 function(server_name)
@@ -148,7 +149,7 @@ return {
                 root_dir = lspconfig.util.root_pattern("Gemfile", ".git", "."),
                 handlers = {
                     ["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-                        virtual_text = true,
+                        virtual_lines = true,
                     }),
                 },
                 settings = {
