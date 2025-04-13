@@ -130,12 +130,12 @@ M.lspconfig = {
     --   "LSP rename",
     -- },
 
-    -- ["<leader>ca"] = {
-    --   function()
-    --     vim.lsp.buf.code_action()
-    --   end,
-    --   "LSP code action",
-    -- },
+    ["<leader>ca"] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      "LSP code action",
+    },
 
     -- ["gr"] = {
     --   function()
