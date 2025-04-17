@@ -71,7 +71,7 @@ return {
                                     },
                                     staticcheck = true,
                                     gofumpt = true,
-                                    buildFlags = { "-tags=functional,integration,unit" },
+                                    buildFlags = { "-tags=functional,integration,unit,functional_1" },
                                     vulncheck = { "Imports" },
                                     hints = {
                                         assignVariableTypes = true,

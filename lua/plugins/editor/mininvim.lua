@@ -2,7 +2,7 @@ return {
   "echasnovski/mini.nvim",
   version = "*",
   config = function()
-    require("mini.operators").setup()
+    -- require("mini.operators").setup()
     require("mini.surround").setup()
     require("mini.ai").setup()
 
