@@ -90,8 +90,8 @@ return {
     --   end,
     -- },
     -- }}}
-    {
-        "shaunsingh/moonlight.nvim",
-        lazy = false,
-    },
+    -- {
+    --     "shaunsingh/moonlight.nvim",
+    --     lazy = false,
+    -- },
 }

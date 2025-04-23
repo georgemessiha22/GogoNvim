@@ -71,7 +71,7 @@ return {
                                     },
                                     staticcheck = true,
                                     gofumpt = true,
-                                    buildFlags = { "-tags=functional,integration,unit,functional_1" },
+                                    buildFlags = { "-tags=functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6" },
                                     vulncheck = { "Imports" },
                                     hints = {
                                         assignVariableTypes = true,
@@ -112,12 +112,15 @@ return {
                             command = {
                                 "golangci-lint",
                                 "run",
-                                "--out-format", "json",
-                                "--tests",
+                                "--output.json.path",
+                                "stdout",
+                                "--show-stats=false",
                                 "--issues-exit-code", "1",
-                                "--build-tags", "unit,integration,functional",
+                                "--build-tags",
+                                "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
                                 "--timeout", "30s"
                             },
+                            filetypes = { ".go", "gomod" },
                         })
                     elseif server_name == "ruff" then
                         lspconfig.ruff.setup({
