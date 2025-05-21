@@ -90,7 +90,7 @@ return {
 
             --- @type blink.cmp.CompletionListConfig
             list = {
-                max_items = 10,
+                max_items = 200,
                 selection = {
                     preselect = false,
                     auto_insert = true,
@@ -300,7 +300,7 @@ return {
             -- proximity bonus boosts the score of items matching nearby words
             use_proximity = true,
             -- controls which sorts to use and in which order, these three are currently the only allowed options
-            sorts = { "label", "kind", "score" },
+            sorts = {"score", "exact", "sort_text", "kind", "label",},
 
             prebuilt_binaries = {
                 -- Whether or not to automatically download a prebuilt binary from github. If this is set to `false`

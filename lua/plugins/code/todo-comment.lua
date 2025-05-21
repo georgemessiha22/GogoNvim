@@ -7,7 +7,7 @@
 return {
 	"folke/todo-comments.nvim",
 	name = "todo-comments",
-	cmd = { "TodoTrouble", "TodoTelescope" },
+	cmd = { "TodoTrouble", "TodoFzfLua" },
 	dependencies = { "nvim-lua/plenary.nvim" },
 	event = "LazyFile",
 	config = function()
