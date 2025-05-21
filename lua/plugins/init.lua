@@ -25,13 +25,15 @@ return {
     require("plugins.editor.flash"),
     require("plugins.editor.trouble"),
     -- require("plugins.editor.harpoon2"),
-    require("plugins.editor.telescope"),
+    -- require("plugins.editor.telescope"),
+    require("plugins.editor.fzflua"),
     require("plugins.editor.dressing"),
     { "MunifTanjim/nui.nvim", lazy = true },
     require("plugins.editor.noice"),
     require("plugins.editor.whichkey"),
     require("plugins.editor.persistence"),
     -- require("plugins.editor.dashboard"),
+    require("plugins.editor.mcphub"),
     require("plugins.editor.avante"),
     -- }}}
 }

@@ -23,121 +23,41 @@ return {
             capabilites = require("blink.cmp").get_lsp_capabilities()
         end
 
-        local mason_lspconfig = require("mason-lspconfig")
-        mason_lspconfig.setup({
-            automatic_installation = false,
-            ensure_installed = {
-                "bashls",                          -- LSP for bash shell
-                "lua_ls",                          -- LSP for Lua language
-                "ts_ls",                           -- LSP for Typescript and Javascript
-                "emmet_ls",                        -- LSP for Emmet (Vue, HTML, CSS)
-                "cssls",                           -- LSP for CSS
-                "ruff",                            -- LSP for Python
-                "gopls",                           -- LSP for Go
-                "golangci_lint_ls",                -- LSP for golangci-lint
-                "svelte",                          -- LSP for Svelte
-                "volar",                           -- LSP Vue.JS
-                "tailwindcss",                     -- LSP for TailWindCss
-                "marksman",                        -- LSP for Markdown
-                "dockerls",                        -- LSP for Dockerfile
-                "docker_compose_language_service", -- LSP for Docker-compose
-                -- "denols", -- LSP for deno
-                "sqlls",                           -- LSP SQL
-                "yamlls",                          -- LSP yaml
-                "rust_analyzer",                   -- LSP Rust rust_analyzer
-                "jsonls",                          -- LSP json
-                "html",                            -- LSP html
-                "eslint",                          -- LSP eslint
-                "texlab",                          -- LSP Latex
-                "taplo",                           -- LSP TOML
-                "pbls",                            -- LSP PROTO
-            },
+        local lsp_servers = {
+            "bashls",                          -- LSP for bash shell
+            "ts_ls",                           -- LSP for Typescript and Javascript
+            "emmet_ls",                        -- LSP for Emmet (Vue, HTML, CSS)
+            "cssls",                           -- LSP for CSS
+            "ruff",                            -- LSP for Python
+            "svelte",                          -- LSP for Svelte
+            "tailwindcss",                     -- LSP for TailWindCss
+            "marksman",                        -- LSP for Markdown
+            "dockerls",                        -- LSP for Dockerfile
+            "docker_compose_language_service", -- LSP for Docker-compose
+            -- "denols", -- LSP for deno
+            "sqlls",                           -- LSP SQL
+            "yamlls",                          -- LSP yaml
+            "rust_analyzer",                   -- LSP Rust rust_analyzer
+            "jsonls",                          -- LSP json
+            "html",                            -- LSP html
+            "eslint",                          -- LSP eslint
+            "texlab",                          -- LSP Latex
+            "taplo",                           -- LSP TOML
+            "pbls",                            -- LSP PROTO
+            "pyright",                         -- LSP Python
+            "rust_analyzer",                   -- LSP Rust
+            "gopls",                           -- LSP GO
+        }
+
+        require("mason-lspconfig").setup({
+            automatic_enable = lsp_servers,
+            ensure_installed = lsp_servers,
             handlers = {
                 function(server_name)
-                    if server_name == "gopls" then
-                        lspconfig.gopls.setup({
-                            capabilites = capabilites,
-                            on_attach = on_attach,
-                            filetypes = { "go", "gomod", "gowork", "gotmpl" },
-                            fillstruct = "gopls",
-                            settings = {
-                                gopls = {
-                                    analyses = {
-                                        unusedparams = true,
-                                        unusedwrite = true,
-                                        shadow = true,
-                                        unusedvariable = true,
-                                        useany = true,
-                                    },
-                                    staticcheck = true,
-                                    gofumpt = true,
-                                    buildFlags = { "-tags=functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6" },
-                                    vulncheck = { "Imports" },
-                                    hints = {
-                                        assignVariableTypes = true,
-                                        compositeLiteralFields = true,
-                                        compositeLiteralTypes = true,
-                                        constantValues = true,
-                                        functionTypeParameters = true,
-                                        parameterNames = true,
-                                        rangeVariableTypes = true,
-                                    },
-                                },
-                                codelenses = {
-                                    gc_details = true,
-                                    generate = true,
-                                    regenerate_cgo = true,
-                                    run_govulncheck = true,
-                                    tidy = true,
-                                    upgrade_dependency = true,
-                                    vendor = true,
-                                },
-                            },
-                        })
-                    elseif server_name == "lua_ls" then
-                        lspconfig.lua_ls.setup({
-                            capabilites = capabilites,
-                            on_attach = on_attach,
-                            settings = {
-                                Lua = {
-                                    completion = {
-                                        callSnippet = "Replace",
-                                    },
-                                },
-                            },
-                        })
-                    elseif server_name == "golangci_lint_ls" then
-                        lspconfig.golangci_lint_ls.setup({
-                            capabilites = capabilites,
-                            command = {
-                                "golangci-lint",
-                                "run",
-                                "--output.json.path",
-                                "stdout",
-                                "--show-stats=false",
-                                "--issues-exit-code", "1",
-                                "--build-tags",
-                                "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
-                                "--timeout", "30s"
-                            },
-                            filetypes = { ".go", "gomod" },
-                        })
-                    elseif server_name == "ruff" then
-                        lspconfig.ruff.setup({
-                            capabilites = capabilites,
-                            on_attach = on_attach,
-                            init_options = {
-                                settings = {
-                                    interpreter = { './venv/bin/python' },
-                                }
-                            },
-                        })
-                    else
-                        lspconfig[server_name].setup({
-                            capabilites = capabilites,
-                            on_attach = on_attach,
-                        })
-                    end
+                    lspconfig[server_name].setup({
+                        capabilites = capabilites,
+                        on_attach = on_attach,
+                    })
                 end,
             },
         })
@@ -170,6 +90,84 @@ return {
                 filetypes = { "ruby" },
             })
         end
+
+        lspconfig.gopls.setup({
+            capabilites = capabilites,
+            on_attach = on_attach,
+            filetypes = { "go", "gomod", "gowork", "gotmpl" },
+            fillstruct = "gopls",
+            settings = {
+                gopls = {
+                    analyses = {
+                        unusedparams = true,
+                        unusedwrite = true,
+                        shadow = true,
+                        unusedvariable = true,
+                        useany = true,
+                    },
+                    staticcheck = true,
+                    gofumpt = true,
+                    buildFlags = { "-tags=functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6" },
+                    vulncheck = { "Imports" },
+                    hints = {
+                        assignVariableTypes = true,
+                        compositeLiteralFields = true,
+                        compositeLiteralTypes = true,
+                        constantValues = true,
+                        functionTypeParameters = true,
+                        parameterNames = true,
+                        rangeVariableTypes = true,
+                    },
+                },
+                codelenses = {
+                    gc_details = true,
+                    generate = true,
+                    regenerate_cgo = true,
+                    run_govulncheck = true,
+                    tidy = true,
+                    upgrade_dependency = true,
+                    vendor = true,
+                },
+            },
+        })
+
+        lspconfig.lua_ls.setup({
+            capabilites = capabilites,
+            on_attach = on_attach,
+            settings = {
+                Lua = {
+                    completion = {
+                        callSnippet = "Replace",
+                    },
+                },
+            },
+        })
+
+        lspconfig.golangci_lint_ls.setup({
+            capabilites = capabilites,
+            command = {
+                "golangci-lint",
+                "run",
+                "--output.json.path",
+                "stdout",
+                "--show-stats=false",
+                "--issues-exit-code", "1",
+                "--build-tags",
+                "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
+                "--timeout", "30s"
+            },
+            filetypes = { ".go", "gomod" },
+        })
+
+        lspconfig.ruff.setup({
+            capabilites = capabilites,
+            on_attach = on_attach,
+            init_options = {
+                settings = {
+                    interpreter = { './venv/bin/python' },
+                }
+            },
+        })
 
         require("config").load_mapping("lspconfig")
     end,

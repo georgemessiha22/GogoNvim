@@ -7,7 +7,6 @@
 return {
 	"folke/trouble.nvim",
 	lazy = false,
-	dependencies = "nvim-tree/nvim-web-devicons",
 	cmd = { "TroubleToggle", "Trouble" },
 	opts = { use_diagnostic_signs = true },
 	config = function(_, opts)

@@ -56,7 +56,6 @@ NVIM_APPNAME=georgemessiha22/GogoNvim/ nvim
 + [ray-x/go.nvim](https://dotfyle.com/plugins/ray-x/go.nvim)
 ### icon
 
-+ [nvim-tree/nvim-web-devicons](https://dotfyle.com/plugins/nvim-tree/nvim-web-devicons)
 ### keybinding
 
 + [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
