@@ -75,7 +75,7 @@ M.general = {
     },
 }
 
-M.lspconfig = {
+M.lspkeys = {
     plugin = true,
 
     -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
@@ -130,12 +130,12 @@ M.lspconfig = {
         --   "LSP rename",
         -- },
 
-        ["<leader>ca"] = {
-            function()
-                vim.lsp.buf.code_action()
-            end,
-            "LSP code action",
-        },
+        -- ["<leader>ca"] = {
+        --     function()
+        --         vim.lsp.buf.code_action()
+        --     end,
+        --     "LSP code action",
+        -- },
 
         -- ["gr"] = {
         --   function()
@@ -194,7 +194,7 @@ M.lspconfig = {
         },
 
         -- formatting
-        ["<leader>ff"] = {
+        ["<leader>lwf"] = {
             function()
                 require("conform").format({
                     timeout_ms = 500,
