@@ -36,7 +36,7 @@ return {
                             move[name] = function(q, ...)
                                 if vim.wo.diff then
                                     local config = configs.get_module("textobjects.move")
-                                    [name] ---@type table<string,string>
+                                        [name] ---@type table<string,string>
                                     for key, query in pairs(config or {}) do
                                         if q == query and key:find("[%]%[][cC]") then
                                             vim.cmd("normal! " .. key)
@@ -61,7 +61,7 @@ return {
             highlight = {
                 -- Enabling highlight for all files
                 enable = true,
-                disable = function (lang)
+                disable = function(lang)
                     if lang == "avanteinput" then
                         return true
                     end
@@ -93,6 +93,7 @@ return {
                 "xml",
                 "yaml",
                 "go",
+                "sql",
                 -- "astro",
                 "svelte",
                 -- "ruby",
@@ -132,7 +133,7 @@ return {
                 highlight_definitions = {
                     enable = true,
                     -- Set to false if you have an `updatetime` of ~100.
-                    clear_on_cursor_move = true,
+                    clear_on_cursor_move = false,
                 },
                 smart_rename = {
                     enable = false,
@@ -184,7 +185,7 @@ return {
                     -- mapping query_strings to modes.
                     selection_modes = {
                         ["@parameter.outer"] = "v", -- charwise
-                        ["@function.outer"] = "V", -- linewise
+                        ["@function.outer"] = "V",  -- linewise
                         ["@class.outer"] = "<c-v>", -- blockwise
                     },
                     -- If you set this to `true` (default is `false`) then any textobject is
@@ -234,10 +235,10 @@ return {
                 function()
                     local tsc = require("treesitter-context")
                     tsc.toggle()
-                    if GogoVIM.inject.get_upvalue(tsc.toggle, "enabled") then
-                        GogoVIM.info("Enabled Treesitter Context", { title = "Option" })
+                    if tsc.enabled() then
+                        vim.notify("Enabled Treesitter Context", vim.log.levels.INFO, { title = "TreeSitter" })
                     else
-                        GogoVIM.warn("Disabled Treesitter Context", { title = "Option" })
+                        vim.notify("Disabled Treesitter Context", vim.log.levels.WARN, { title = "TreeSitter" })
                     end
                 end,
                 desc = "Toggle Treesitter Context",
