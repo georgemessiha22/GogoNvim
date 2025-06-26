@@ -193,6 +193,18 @@ M.lspkeys = {
             "List workspace folders",
         },
 
+        ["<leader>e"] = {
+            "<cmd>lua vim.diagnostic.open_float()<CR>",
+            "Open Diagnostics",
+            opts = { remap = false, silent = true },
+        },
+    },
+}
+
+M.conform = {
+    plugin = true,
+    n = {
+
         -- formatting
         ["<leader>lwf"] = {
             function()
@@ -205,12 +217,6 @@ M.lspkeys = {
             end,
             "LSP formatting",
             opts = { buffer = true },
-        },
-
-        ["<leader>e"] = {
-            "<cmd>lua vim.diagnostic.open_float()<CR>",
-            "Open Diagnostics",
-            opts = { remap = false, silent = true },
         },
     },
 }

@@ -26,5 +26,8 @@ return {
             },
             notify_on_error = true,
         })
+
+
+        require("config").load_mapping("conform")
     end
 }
