@@ -82,7 +82,7 @@ return {
 		})
 
 		require("telescope").setup(opts_extend)
-		require("config").load_mapping("telescope")
+		GogoVIM.load_mapping("telescope")
 	end,
 
 	opts = function()

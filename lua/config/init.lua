@@ -83,44 +83,7 @@ function M.Reload()
     M.settings_loader.options()
 
     -- load default mappings as no section provided
-    M.load_mapping()
-end
-
----Load Mapping for special plugin name or general mappings, better call it after plugin config to with plugin name to load it's mapper.
----@param section any
-function M.load_mapping(section)
-    vim.schedule(function()
-        local function set_section_map(values)
-            if values.plugin then -- bypass plugins section
-                return
-            end
-            values.plugin = nil                                    -- this to garauntee all values are pair
-
-            for mode, mode_values in pairs(values) do              -- first layer is modes i, v, t, x
-                for keybind, mapping_info in pairs(mode_values) do -- second layer is key = {command, description}
-                    local opts = vim.tbl_deep_extend("force", { desc = mapping_info[2], remap = false },
-                        mapping_info.opts or {})
-                    vim.keymap.set(mode, keybind, mapping_info[1], opts)
-                end
-            end
-        end
-
-        local mappings = require("config.keymaps")
-
-        if type(section) == "string" then -- if section declared only load this section
-            mappings[section]["plugin"] = nil
-            mappings = { mappings[section] }
-        end
-
-        for _, sec in pairs(mappings) do
-            set_section_map(sec)
-        end
-    end)
-end
-
-function M.echo(msg)
-    vim.cmd("redraw")
-    vim.api.nvim_echo({ { msg, "Bold" } }, true, {})
+    GogoVIM.load_mapping()
 end
 
 function M.lsp_defentions()
@@ -267,7 +230,7 @@ function M.lsp_defentions()
     }
     vim.lsp.enable("ruff")
 
-    require("config").load_mapping("lspkeys")
+    GogoVIM.load_mapping("lspkeys")
 
     -- auto enable few servers.
     local auto_enable = {

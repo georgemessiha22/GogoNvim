@@ -502,4 +502,12 @@ M.minifiles = {
     },
 }
 
+M.snacks = {
+    plugin = true,
+    n = {
+        ["<leader>gl"] = { "<cmd> lua Snacks.lazygit.open() <CR>", "Open lazygit" },
+        ["<leader>nf"] = { "<cmd> lua Snacks.explorer() <CR>", "Open/Close explorer float" },
+    }
+}
+
 return M

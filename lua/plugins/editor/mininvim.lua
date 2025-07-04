@@ -44,8 +44,8 @@ return {
     -- require("mini.doc").setup()
     require("mini.diff").setup()
     -- require("mini.extra").setup()
-    require("mini.files").setup({ windows = { preview = true, width_preview = 80, }, })
-    require("config").load_mapping("minifiles")
+    -- require("mini.files").setup({ windows = { preview = true, width_preview = 80, }, })
+    -- GogoVIM.load_mapping("minifiles")
     -- require("mini.fuzzy").setup()
     require("mini.git").setup()
     --
@@ -67,7 +67,7 @@ return {
     -- })
 
     require("mini.icons").setup()
-    require("mini.indentscope").setup()
+    -- require("mini.indentscope").setup()
     -- require("mini.jump").setup()
     -- require("mini.jump2d").setup()
     -- require("mini.map").setup()
@@ -76,17 +76,18 @@ return {
     -- require("mini.notify").setup() -- Looks bad with lsp progress
     require("mini.pairs").setup()
     require("mini.pick").setup()
+
     -- Session read and write
     -- require("mini.sessions").setup({
     --   -- Whether to read latest session if Neovim opened without file arguments
-    --   autoread = true,
+    --   autoread = false,
     --
     --   -- Whether to write current session before quitting Neovim
     --   autowrite = true,
     --
     --   -- Directory where global sessions are stored (use `''` to disable)
     --   --minidoc_replace_start directory = --<"session" subdir of user data directory from |stdpath()|>,
-    --   directory = vim.fn.stdpath('data') .. '/session',
+    --   directory = ("%s%ssessions"):format(vim.fn.stdpath('data'), '/'),
     --   --minidoc_replace_end
     --
     --   -- File for local session (use `''` to disable)
@@ -109,43 +110,43 @@ return {
     -- })
     -- require("mini.splitjoin").setup()
     -- require("mini.starter").setup()
-    require("mini.statusline").setup({
-      use_icons = vim.g.have_nerd_font,
-      content = {
-        active = function()
-          local check_macro_recording = function()
-            if vim.fn.reg_recording() ~= "" then
-              return "Recording @" .. vim.fn.reg_recording()
-            else
-              return ""
-            end
-          end
-
-          local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
-          local git = MiniStatusline.section_git({ trunc_width = 40 })
-          local diff = MiniStatusline.section_diff({ trunc_width = 75 })
-          local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-          -- local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
-          local filename = MiniStatusline.section_filename({ trunc_width = 140 })
-          local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
-          local location = MiniStatusline.section_location({ trunc_width = 200 })
-          local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
-          local macro = check_macro_recording()
-
-          return MiniStatusline.combine_groups({
-            { hl = mode_hl,                 strings = { mode } },
-            { hl = "MiniStatuslineDevinfo", strings = { git, diff, diagnostics } },
-            "%<", -- Mark general truncate point
-            { hl = "MiniStatuslineFilename", strings = { filename } },
-            "%=", -- End left alignment
-            { hl = "MiniStatuslineFilename", strings = { macro } },
-            { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-            { hl = mode_hl,                  strings = { search, location } },
-          })
-        end,
-      },
-    }
-    )
+    -- require("mini.statusline").setup({
+    --   use_icons = vim.g.have_nerd_font,
+    --   content = {
+    --     active = function()
+    --       local check_macro_recording = function()
+    --         if vim.fn.reg_recording() ~= "" then
+    --           return "Recording @" .. vim.fn.reg_recording()
+    --         else
+    --           return ""
+    --         end
+    --       end
+    --
+    --       local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+    --       local git = MiniStatusline.section_git({ trunc_width = 40 })
+    --       local diff = MiniStatusline.section_diff({ trunc_width = 75 })
+    --       local diagnostics = MiniStatusline.section_diagnostics({ trunc_width = 75 })
+    --       -- local lsp = MiniStatusline.section_lsp({ trunc_width = 75 })
+    --       local filename = MiniStatusline.section_filename({ trunc_width = 140 })
+    --       local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
+    --       local location = MiniStatusline.section_location({ trunc_width = 200 })
+    --       local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
+    --       local macro = check_macro_recording()
+    --
+    --       return MiniStatusline.combine_groups({
+    --         { hl = mode_hl,                 strings = { mode } },
+    --         { hl = "MiniStatuslineDevinfo", strings = { git, diff, diagnostics } },
+    --         "%<", -- Mark general truncate point
+    --         { hl = "MiniStatuslineFilename", strings = { filename } },
+    --         "%=", -- End left alignment
+    --         { hl = "MiniStatuslineFilename", strings = { macro } },
+    --         { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+    --         { hl = mode_hl,                  strings = { search, location } },
+    --       })
+    --     end,
+    --   },
+    -- }
+    -- )
     -- Autocmd to track macro recording, And redraw statusline, which trigger
     -- macro function of mini.statusline
     vim.api.nvim_create_autocmd("RecordingEnter", {

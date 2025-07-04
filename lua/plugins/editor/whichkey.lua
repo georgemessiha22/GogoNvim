@@ -30,6 +30,6 @@ return {
       opts.defaults["<leader>sn"] = { name = "+Noice" }
     end
     require("which-key").setup(opts)
-    require("config").load_mapping("whichkey")
+    GogoVIM.load_mapping("whichkey")
   end,
 }

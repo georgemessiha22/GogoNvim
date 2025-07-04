@@ -9,6 +9,6 @@ return {
   keys = {},
   config = function()
     require("flash").setup()
-    require("config").load_mapping("flash")
+    GogoVIM.load_mapping("flash")
   end,
 }

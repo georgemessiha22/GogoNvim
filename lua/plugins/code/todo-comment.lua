@@ -34,6 +34,6 @@ return {
 				default = { "Identifier", "#7C3AED" },
 			},
 		})
-		require("config").load_mapping("todo")
+		GogoVIM.load_mapping("todo")
 	end,
 }

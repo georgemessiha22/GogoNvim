@@ -28,6 +28,6 @@ return {
         })
 
 
-        require("config").load_mapping("conform")
+        GogoVIM.load_mapping("conform")
     end
 }
