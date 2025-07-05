@@ -44,7 +44,7 @@ return {
     -- require("mini.doc").setup()
     require("mini.diff").setup()
     -- require("mini.extra").setup()
-    -- require("mini.files").setup({ windows = { preview = true, width_preview = 80, }, })
+    require("mini.files").setup({ windows = { preview = true, width_preview = 80, }, })
     -- GogoVIM.load_mapping("minifiles")
     -- require("mini.fuzzy").setup()
     require("mini.git").setup()
