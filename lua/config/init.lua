@@ -195,23 +195,22 @@ function M.lsp_defentions()
             '.golangci.yaml',
             '.golangci.toml',
             '.golangci.json',
-            'go.work',
-            'go.mod',
-            '.git',
         },
 
         capabilites = capabilites,
         on_attach = on_attach,
-        command = {
-            "golangci-lint",
-            "run",
-            "--output.json.path",
-            "stdout",
-            "--show-stats=false",
-            "--issues-exit-code", "1",
-            "--build-tags",
-            "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
-            "--timeout", "3s"
+        init_options = {
+            command = {
+                "golangci-lint",
+                "run",
+                "--output.text.path", "/dev/null",
+                "--output.json.path", "stdout",
+                "--show-stats=false",
+                "--issues-exit-code", "1",
+                "--build-tags",
+                "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
+                "--timeout", "3s"
+            },
         },
     }
     vim.lsp.enable("golangci_lint_ls")
@@ -255,7 +254,7 @@ function M.lsp_defentions()
         "pyright",                         -- LSP Python
         "rust_analyzer",                   -- LSP Rust
     }
-    for _,server in pairs(auto_enable) do
+    for _, server in pairs(auto_enable) do
         require("lspconfig")[server].setup({
             capabilites = capabilites,
             on_attach = on_attach,
