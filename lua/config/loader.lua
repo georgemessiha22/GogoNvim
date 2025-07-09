@@ -1,7 +1,7 @@
 --[[
   File: settings.lua
   Description: Base settings for neovim
-  Info: Use <zo> and <zc> to open and close foldings
+  Info: Use <zo> and <zc> to open and close folding
 ]]
 
 local M = {}
@@ -12,15 +12,16 @@ function M.options()
 
     -------------------------------------- options ------------------------------------------
     opt.laststatus = 3  -- global statusline
-    opt.showmode = true -- Dont show mode since we have a statusline
+    opt.showmode = true -- Don't show mode since we have a statusline
     opt.termguicolors = GogoUI.termguicolors
     opt.colorcolumn = "120"
 
     -- General {{{
     opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
     opt.confirm = true   -- Confirm to save changes before exiting modified buffer
-    -- opt.spell = true
-    opt.spelllang = { "en" }
+    opt.spell = true
+    opt.spelllang =  {"en", "de", "ar"}
+    opt.spelloptions = "camel,noplainbuffer"
     opt.timeoutlen = 500
     opt.undofile = true
     opt.undolevels = 10000
@@ -88,7 +89,7 @@ function M.options()
     opt.splitkeep = "screen"
     opt.splitbelow = true  -- Put new windows below current
     opt.splitright = true  -- Put new vertical splits to right
-    opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
+    opt.signcolumn = "yes" -- Always show the signColumn, otherwise it would shift the text each time
     opt.wrap = true
 
     -- go to previous/next line with h,l,left arrow and right arrow
@@ -103,13 +104,13 @@ function M.options()
     opt.wildmenu = true
     opt.wildmode = "longest:full,full" -- Command-line completion mode
     -- disable nvim default complete
-    -- opt.completeopt = { "menu", "menuone", "noselect" }
+    -- opt.completeopt = { "menu", "menuOne", "noSelect" }
     -- }}}
 
-    -- Unknown {{{
+    -- un-Grouped {{{
     opt.formatoptions = "jcroqlnt" -- tcqj
     opt.grepformat = "%f:%l:%c:%m"
-    -- opt.grepprg = "rg --vimgrep"
+    opt.grepprg = "rg --vimgrep"
     opt.list = true    -- Show some invisible characters (tabs...
     opt.pumblend = 10  -- Popup blend
     opt.pumheight = 10 -- Maximum number of entries in a popup

@@ -209,7 +209,7 @@ function M.lsp_defentions()
                 "--issues-exit-code", "1",
                 "--build-tags",
                 "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
-                "--timeout", "3s"
+                "--timeout", "5s"
             },
         },
     }
