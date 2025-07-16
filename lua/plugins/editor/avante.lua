@@ -5,7 +5,7 @@ return {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
         ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-        provider = "ollama",
+        provider = "copilot",
         providers = {
             ollama = {
                 endpoint = "http://127.0.0.1:11434",
@@ -15,7 +15,7 @@ return {
         -- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
         -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
         -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
-        auto_suggestions_provider = "ollama",
+        auto_suggestions_provider = "copilot",
         use_absolute_path = true,
         vendors = {
         },

@@ -20,7 +20,7 @@ function M.options()
     opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
     opt.confirm = true   -- Confirm to save changes before exiting modified buffer
     opt.spell = true
-    opt.spelllang =  {"en", "de", "ar"}
+    opt.spelllang =  {"en"}
     opt.spelloptions = "camel,noplainbuffer"
     opt.timeoutlen = 500
     opt.undofile = true

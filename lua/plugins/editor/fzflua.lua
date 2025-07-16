@@ -11,10 +11,12 @@ return {
                 rg_opts =
                 "--hidden --column --line-number --no-heading --sort-files --color=always --smart-case -g '!{.git,node_modules,vendor}/*'",
             },
-        })
+        }, true)
+
         -- require("fzf-lua").setup({"fzf-vim"})
         -- require("fzf-lua").setup({"telescope"})
         GogoVIM.load_mapping("fzflua")
+        require("fzf-lua.providers.ui_select").register()
     end
 }
 -- }}}
