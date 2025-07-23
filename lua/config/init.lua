@@ -92,13 +92,15 @@ function M.lsp_defentions()
     local on_attach = function(client, bufnr)
         if client.server_capabilities.documentSymbolProvider then
             -- A simple statusline/winbar component that uses LSP to show your current code context. Named after the Indian satellite navigation system.
-            require("nvim-navic").attach(client, bufnr)
+            if GogoVIM.has("nvim-navic") then
+                require("nvim-navic").attach(client, bufnr)
+            end
         end
     end
 
     local capabilites = vim.lsp.protocol.make_client_capabilities()
     if GogoVIM.has("blink") then
-        capabilites = require("blink.cmp").get_lsp_capabilities()
+        capabilites = require("blink.cmp").get_lsp_capabilities(nil, true)
     end
 
 
@@ -152,7 +154,7 @@ function M.lsp_defentions()
                 staticcheck = true,
                 gofumpt = true,
                 buildFlags = { "-tags=functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6" },
-                vulncheck = { "Imports" },
+                vulncheck = "Imports",
                 hints = {
                     assignVariableTypes = true,
                     compositeLiteralFields = true,
@@ -167,7 +169,7 @@ function M.lsp_defentions()
                 gc_details = true,
                 generate = true,
                 regenerate_cgo = true,
-                run_govulncheck = true,
+                -- run_govulncheck = true,
                 tidy = true,
                 upgrade_dependency = true,
                 vendor = true,

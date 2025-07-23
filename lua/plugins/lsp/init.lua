@@ -1,7 +1,7 @@
 return {
-  require("plugins.lsp.treesitter"),
   require("plugins.lsp.mason"),
   require("plugins.lsp.lspconfig"),
+  require("plugins.lsp.treesitter"),
   require("plugins.lsp.conform"),
 
   -- Lang Spec {{{

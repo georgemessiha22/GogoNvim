@@ -13,6 +13,7 @@ return {
                 }
             end,
         },
+        {'Kaiser-Yang/blink-cmp-avante'},
     },
     lazy = false, -- lazy loading handled internally
 
@@ -322,7 +323,7 @@ return {
 
         sources = {
             default = function()
-                local _defaults = { 'lsp', 'path', 'snippets', "avante_commands", "avante_mentions", "avante_files", }
+                local _defaults = { 'lsp', 'avante', 'path', 'omni', 'snippets', "cmdline"}
 
                 --- @type boolean, TSNode|nil
                 local isTreeSitter, node = pcall(vim.treesitter.get_node)
@@ -331,9 +332,9 @@ return {
                 end
 
                 if vim.bo.filetype == 'lua' then
-                    return { 'lsp', 'path', 'lazydev', "snippets", }
+                    return { 'lazydev', 'lsp', 'omni', 'path',"snippets", }
                 elseif node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
-                    return { 'buffer', "path", "avante_commands", "avante_mentions", "avante_files", }
+                    return { "avante", 'buffer', "path" }
                 else
                     return _defaults
                 end
@@ -404,23 +405,12 @@ return {
                     },
                 },
                 lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
-                avante_commands = {
-                    name = "avante_commands",
-                    module = "blink.compat.source",
-                    score_offset = 90, -- show at a higher priority than lsp
-                    opts = {},
-                },
-                avante_files = {
-                    name = "avante_commands",
-                    module = "blink.compat.source",
-                    score_offset = 100, -- show at a higher priority than lsp
-                    opts = {},
-                },
-                avante_mentions = {
-                    name = "avante_mentions",
-                    module = "blink.compat.source",
-                    score_offset = 1000, -- show at a higher priority than lsp
-                    opts = {},
+                avante = {
+                    module = 'blink-cmp-avante',
+                    name = 'Avante',
+                    opts = {
+                        -- options for blink-cmp-avante
+                    }
                 },
             },
         },

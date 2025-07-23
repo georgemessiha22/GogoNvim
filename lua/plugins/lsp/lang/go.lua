@@ -13,19 +13,6 @@ return {
         -- "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-        local on_attach = function(client, bufnr)
-            if client.server_capabilities.documentSymbolProvider then
-                -- A simple statusline/winbar component that uses LSP to show your current code context. Named after the Indian satellite navigation system.
-                require("nvim-navic").attach(client, bufnr)
-            end
-            require("go.lsp").gopls_on_attach(client, bufnr)
-        end
-
-        local capabilites = vim.lsp.protocol.make_client_capabilities()
-        if GogoVIM.has("blink") then
-            capabilites = require("blink.cmp").get_lsp_capabilities()
-        end
-
         require("go").setup({
             gotests_template_dir= vim.fn.stdpath('config') .. "/templates/gotest/testify",
             luasnip = true,
@@ -121,32 +108,32 @@ return {
             },
             lsp_gofumpt = true,
             dap_debug_keymap = false,
-            golangci_lint = {
-                cmd = { 'golangci-lint-langserver' },
-                filetypes = { 'go', 'gomod' },
-                root_markers = {
-                    '.golangci.yml',
-                    '.golangci.yaml',
-                    '.golangci.toml',
-                    '.golangci.json',
-                },
-
-                capabilites = capabilites,
-                on_attach = on_attach,
-                init_options = {
-                    command = {
-                        "golangci-lint",
-                        "run",
-                        "--output.text.path", "/dev/null",
-                        "--output.json.path", "stdout",
-                        "--show-stats=false",
-                        "--issues-exit-code", "1",
-                        "--build-tags",
-                        "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
-                        "--timeout", "5s"
-                    },
-                },
-            },
+            -- golangci_lint = {
+            --     cmd = { 'golangci-lint-langserver' },
+            --     filetypes = { 'go', 'gomod' },
+            --     root_markers = {
+            --         '.golangci.yml',
+            --         '.golangci.yaml',
+            --         '.golangci.toml',
+            --         '.golangci.json',
+            --     },
+            --
+            --     capabilites = capabilites,
+            --     on_attach = on_attach,
+            --     init_options = {
+            --         command = {
+            --             "golangci-lint",
+            --             "run",
+            --             "--output.text.path", "/dev/null",
+            --             "--output.json.path", "stdout",
+            --             "--show-stats=false",
+            --             "--issues-exit-code", "1",
+            --             "--build-tags",
+            --             "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
+            --             "--timeout", "5s"
+            --         },
+            --     },
+            -- },
         })
 
         -- local null_ls = require("null-ls")

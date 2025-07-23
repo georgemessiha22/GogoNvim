@@ -8,7 +8,7 @@ return {
   font = "JetBrainsMonoNL Nerd Font",
 
   ------------------------------- base46 -------------------------------------
-  theme = "default", -- "rose-pine-moon", -- "flow" -- "rose-pine-moon", -- default theme
+  theme = "rose-pine-main", -- "rose-pine-moon", -- "flow" -- "rose-pine-moon", -- default theme
   transparency = false,
   lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
   termguicolors = true,

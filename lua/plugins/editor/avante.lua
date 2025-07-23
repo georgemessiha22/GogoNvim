@@ -7,18 +7,59 @@ return {
         ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
         provider = "copilot",
         providers = {
+            gemini = {
+                model = "gemini-2.5-pro",
+            },
+            copilot = {
+                model = "gpt-4.1",
+            },
             ollama = {
                 endpoint = "http://127.0.0.1:11434",
-                model = "hf.co/lmstudio-community/Qwen2.5-7B-Instruct-1M-GGUF:Q8_0",
+                -- codellama:latest
+                -- codellama:7b-instruct
+                -- codellama:34b
+                -- qwen3:latest
+                -- deepseek-coder:33b
+                -- starcoder2:15b
+                -- hf.co/lmstudio-community/Qwen2.5-7B-Instruct-1M-GGUF:Q8_0
+                -- qwen2.5-coder:1.5b
+                -- codegemma:latest
+                model = "deepseek-coder:6.7b",
+                maxtokens = 4096,
+                -- timeout = 3000,
+                extra_request_body = {
+                    options = {
+                        temperature = 0.75,
+                        num_ctx = 20480,
+                        keep_alive = "4m",
+                    },
+                },
+                disable_tools = true,
             },
         }, -- Recommend using Claude
         -- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
         -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
         -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
-        auto_suggestions_provider = "copilot",
+        auto_suggestions_provider = "ollama",
         use_absolute_path = true,
-        vendors = {
-        },
+        system_promt = function()
+            local default = [[
+You are an expert Golang programmer that writes simple, concise code and explanations. Write a python function to generate the nth fibonacci number.
+
+- write testcases using table driven pattern in form of `map[string]sturct`.
+- using `require` and `mocks` as your go to tools.
+- testcases is well structured and every external call will be mocked is presented by pointer to struct of inputs and mocked outputs, to be only mock the function if the value is provided in the testcase loop.
+
+tools: use LSP feedback to know about errors, and don't stop until you fix all of them one by one.
+        ]]
+            local hub = require('mcphub').get_hub_instance()
+            return hub and hub:get_active_servers_prompt() or default
+        end,
+        custom_tools = function()
+            return {
+                require('mcphub.extensions.avante').mcp_tool(),
+            }
+        end,
         ---Specify the special dual_boost mode
         ---1. enabled: Whether to enable dual_boost mode. Default to false.
         ---2. first_provider: The first provider to generate response. Default to "openai".
@@ -42,6 +83,7 @@ return {
             auto_set_keymaps = true,
             auto_apply_diff_after_generation = false,
             support_paste_from_clipboard = true,
+            enable_cursor_planning_mode = true,
             minimize_diff = true,         -- Whether to remove unchanged lines when applying a code block
             enable_token_counting = true, -- Whether to enable token counting. Default to true.
         },
@@ -56,12 +98,12 @@ return {
                 next = "]x",
                 prev = "[x",
             },
-            suggestion = {
-                accept = "<M-l>",
-                next = "<M-]>",
-                prev = "<M-[>",
-                dismiss = "<C-]>",
-            },
+            -- suggestion = {
+            --     accept = "<M-l>",
+            --     next = "<M-]>",
+            --     prev = "<M-[>",
+            --     dismiss = "<C-]>",
+            -- },
             jump = {
                 next = "]]",
                 prev = "[[",
@@ -120,36 +162,15 @@ return {
             --- Disable by setting to -1.
             override_timeoutlen = 500,
         },
-        suggestion = {
-            debounce = 600,
-            throttle = 600,
-        },
+        -- suggestion = {
+        --     debounce = 300,
+        --     throttle = 300,
+        -- },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
     -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
     dependencies = {
-        "stevearc/dressing.nvim",
-        "nvim-lua/plenary.nvim",
-        "MunifTanjim/nui.nvim",
-        --- The below dependencies are optional,
-        {
-            -- support for image pasting
-            "HakonHarnes/img-clip.nvim",
-            event = "VeryLazy",
-            opts = {
-                -- recommended settings
-                default = {
-                    embed_image_as_base64 = false,
-                    prompt_for_file_name = false,
-                    drag_and_drop = {
-                        insert_mode = true,
-                    },
-                    -- required for Windows users
-                    use_absolute_path = true,
-                },
-            },
-        },
         {
             -- Make sure to set this up properly if you have lazy=true
             'MeanderingProgrammer/render-markdown.nvim',
@@ -159,5 +180,13 @@ return {
             },
             ft = { "markdown", "Avante" },
         },
+        {
+            "zbirenbaum/copilot.lua",
+            cmd = "Copilot",
+            event = "InsertEnter",
+            config = function()
+                require("copilot").setup({})
+            end,
+        }
     },
 }

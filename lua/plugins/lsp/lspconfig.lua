@@ -34,7 +34,7 @@ return {
                 ,
             }
         },
-        "SmiteshP/nvim-navic", -- A simple statusline/winbar component that uses LSP to show your current code context.
+        -- "SmiteshP/nvim-navic", -- A simple statusline/winbar component that uses LSP to show your current code context.
         -- Named after the Indian satellite navigation system.
         "j-hui/fidget.nvim",   -- Extensible UI for Neovim notifications and LSP progress messages.
     },

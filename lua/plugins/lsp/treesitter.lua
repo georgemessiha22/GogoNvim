@@ -23,7 +23,6 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-tree-docs",
             "nvim-treesitter/nvim-treesitter-refactor",
-            "windwp/nvim-ts-autotag",
             {
                 "nvim-treesitter/nvim-treesitter-textobjects",
                 config = function()
@@ -99,6 +98,9 @@ return {
                 -- "ruby",
                 -- "nu",
                 -- "fish",
+                "comment",
+                "gowork",
+                "gotmpl",
             },
             incremental_selection = {
                 enable = true,
@@ -202,7 +204,6 @@ return {
             },
             modules = {
                 "nvim-treesitter/nvim-treesitter-refactor",
-                "windwp/nvim-ts-autotag",
                 "nvim-treesitter/nvim-tree-docs",
                 "nvim-treesitter/nvim-treesitter-textobjects",
             },
@@ -244,12 +245,6 @@ return {
                 desc = "Toggle Treesitter Context",
             },
         },
-    },
-    -- Automatically add closing tags for HTML and JSX
-    {
-        "windwp/nvim-ts-autotag",
-        event = "LazyFile",
-        opts = {},
     },
 }
 -- }}}

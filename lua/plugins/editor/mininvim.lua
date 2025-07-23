@@ -40,14 +40,14 @@ return {
     -- })
     -- require("mini.comment").setup()
     -- require("mini.completion").setup({ set_vim_settings = true })
-    require("mini.cursorword").setup() -- highlight words under cursor
+    -- require("mini.cursorword").setup() -- highlight words under cursor
     -- require("mini.doc").setup()
     require("mini.diff").setup()
     -- require("mini.extra").setup()
     require("mini.files").setup({ windows = { preview = true, width_preview = 80, }, })
-    -- GogoVIM.load_mapping("minifiles")
+    GogoVIM.load_mapping("minifiles")
     -- require("mini.fuzzy").setup()
-    require("mini.git").setup()
+    -- require("mini.git").setup()
     --
     -- replaced with todo-comment
     -- local hipatterns = require("mini.hipatterns")
@@ -67,7 +67,7 @@ return {
     -- })
 
     require("mini.icons").setup()
-    -- require("mini.indentscope").setup()
+    require("mini.indentscope").setup()
     -- require("mini.jump").setup()
     -- require("mini.jump2d").setup()
     -- require("mini.map").setup()
@@ -78,36 +78,36 @@ return {
     require("mini.pick").setup()
 
     -- Session read and write
-    -- require("mini.sessions").setup({
-    --   -- Whether to read latest session if Neovim opened without file arguments
-    --   autoread = false,
-    --
-    --   -- Whether to write current session before quitting Neovim
-    --   autowrite = true,
-    --
-    --   -- Directory where global sessions are stored (use `''` to disable)
-    --   --minidoc_replace_start directory = --<"session" subdir of user data directory from |stdpath()|>,
-    --   directory = ("%s%ssessions"):format(vim.fn.stdpath('data'), '/'),
-    --   --minidoc_replace_end
-    --
-    --   -- File for local session (use `''` to disable)
-    --   file = 'Session.vim',
-    --
-    --   -- Whether to force possibly harmful actions (meaning depends on function)
-    --   force = { read = false, write = true, delete = false },
-    --   --
-    --   -- -- Hook functions for actions. Default `nil` means 'do nothing'.
-    --   -- -- Takes table with active session data as argument.
-    --   -- hooks = {
-    --   --   -- Before successful action
-    --   --   pre = { read = nil, write = nil, delete = nil },
-    --   --   -- After successful action
-    --   --   post = { read = nil, write = nil, delete = nil },
-    --   -- },
-    --
-    --   -- Whether to print session path after action
-    --   verbose = { read = true, write = true, delete = true },
-    -- })
+    require("mini.sessions").setup({
+      -- Whether to read latest session if Neovim opened without file arguments
+      autoread = true,
+
+      -- Whether to write current session before quitting Neovim
+      autowrite = true,
+
+      -- Directory where global sessions are stored (use `''` to disable)
+      --minidoc_replace_start directory = --<"session" subdir of user data directory from |stdpath()|>,
+      directory = ("%s%ssessions"):format(vim.fn.stdpath('data'), '/'),
+      --minidoc_replace_end
+
+      -- File for local session (use `''` to disable)
+      file = 'Session.vim',
+
+      -- Whether to force possibly harmful actions (meaning depends on function)
+      force = { read = false, write = true, delete = false },
+      --
+      -- -- Hook functions for actions. Default `nil` means 'do nothing'.
+      -- -- Takes table with active session data as argument.
+      -- hooks = {
+      --   -- Before successful action
+      --   pre = { read = nil, write = nil, delete = nil },
+      --   -- After successful action
+      --   post = { read = nil, write = nil, delete = nil },
+      -- },
+
+      -- Whether to print session path after action
+      verbose = { read = true, write = true, delete = true },
+    })
     -- require("mini.splitjoin").setup()
     -- require("mini.starter").setup()
     require("mini.statusline").setup({
