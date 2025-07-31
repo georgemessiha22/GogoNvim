@@ -81,17 +81,17 @@ M.lspkeys = {
     -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
 
     n = {
-        ["grd"] = {
-            function ()
-                vim.lsp.buf.definition()
-            end,
-            "LSP go to definition",
-        },
         ["gD"] = {
             function()
                 vim.lsp.buf.declaration()
             end,
             "LSP declaration",
+        },
+        ["grd"] = {
+            function()
+                vim.lsp.buf.definition()
+            end,
+            "LSP definition",
         },
         ["K"] = {
             function()
@@ -203,7 +203,7 @@ M.fzflua = {
     n = {
         -- LSP
         ["<leader>ldw"] = { "<cmd> FzfLua lsp_live_workspace_symbols <CR>", "Search for dynamic symbols" },
-        ["<leader>tld"] = { "<cmd> FzfLua lsp_definitions <CR>", "TeleScope defentions" },
+        ["<leader>tld"] = { "<cmd> FzfLua lsp_definitions <CR>", "List defentions" },
         ["<leader>li"] = { "<cmd> FzfLua lsp_implementations <CR>", "Lsp implementations" },
         ["<leader>lwd"] = { "<cmd> FzfLua lsp_workspace_diagnostics <CR>", "Show Workspace Diagnostics" },
         -- ["<leader>lts"] = { "<cmd> FzfLua treesitter <CR>", "Show treesitter" },
@@ -373,7 +373,7 @@ M.todo = {
         ["[t"] = { function() require("todo-comments").jump_prev() end, "Previous todo comment" },
         ["<leader>tt"] = { "<cmd>TodoTrouble<cr>", "Todo (Trouble)" },
         -- ["<leader>ttd"] = { "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme (Trouble)" },
-        ["<leader>td"] = { "<cmd>TodoTelescope<cr>", "Todo (Telescope)" },
+        -- ["<leader>td"] = { "<cmd>TodoTelescope<cr>", "Todo (Telescope)" },
         ["<leader>tf"] = { "<cmd>TodoFzfLua<cr>", "Todo (FzfLua)" }
         -- ["<leader>tdf"] = { "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme" },
     },

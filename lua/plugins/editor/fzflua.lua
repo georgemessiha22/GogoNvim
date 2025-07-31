@@ -17,6 +17,7 @@ return {
         -- require("fzf-lua").setup({"telescope"})
         GogoVIM.load_mapping("fzflua")
         require("fzf-lua.providers.ui_select").register()
+        -- require("fzf-lua.config").defaults.actions.files["ctrl-t"] = require("trouble.sources.fzf").actions.open
     end
 }
 -- }}}
