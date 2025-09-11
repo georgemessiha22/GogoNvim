@@ -56,34 +56,16 @@ function M.init()
         },
     })
     -- }}}
-
-    local group = vim.api.nvim_create_augroup("GogoVIM", { clear = true })
-
-    vim.api.nvim_create_autocmd("User", {
-        group = group,
-        pattern = "VeryLazy",
-        callback = M.Reload,
-    })
-
+    --
     -- Load colorscheme
     vim.cmd.colorscheme(GogoUI.theme)
     -- M.Reload()
 
     require("config.autocmds")
+
+    GogoVIM.load_mapping()
     M.lsp_defentions()
     M.did_init = true
-end
-
-function M.Reload()
-    vim.api.nvim_create_user_command("LazyHealth", function()
-        vim.cmd([[Lazy! load all]])
-        vim.cmd([[checkhealth]])
-    end, { desc = "Load all plugins and run :checkhealth" })
-
-    M.settings_loader.options()
-
-    -- load default mappings as no section provided
-    GogoVIM.load_mapping()
 end
 
 function M.lsp_defentions()

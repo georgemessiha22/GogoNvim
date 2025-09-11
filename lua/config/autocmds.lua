@@ -48,15 +48,18 @@ autocmd("FileType", {
 })
 
 -- Fix tabexpand for yaml files
-autocmd("FileType", {
-    group = augroup("yaml"),
-    pattern = { "yaml", "yml" },
-    callback = function(_)
-        GogoVIM.on_very_lazy(function()
-            vim.opt_local.expandtab = true
-        end)
-    end,
-})
+-- autocmd("FileType", {
+--     group = augroup("yaml"),
+--     pattern = { "yaml", "yml" },
+--     callback = function(_)
+--         GogoVIM.on_very_lazy(function()
+--             vim.opt_local.tabstop = 2
+--             vim.opt_local.softtabstop = 2
+--             vim.opt_local.shiftwidth = 2
+--             vim.opt_local.expandtab = true
+--         end)
+--     end,
+-- })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 autocmd({ "BufWritePre" }, {
