@@ -245,7 +245,7 @@ function M.lsp_defentions()
         "rust_analyzer",                   -- LSP Rust
     }
     for _, server in pairs(auto_enable) do
-        require("lspconfig")[server].setup({
+        vim.lsp.config[server].setup({
             capabilites = capabilites,
             on_attach = on_attach,
         })
