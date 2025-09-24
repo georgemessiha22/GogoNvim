@@ -61,9 +61,10 @@ function M.init()
     vim.cmd.colorscheme(GogoUI.theme)
     -- M.Reload()
 
+    M.settings_loader.options()
+    GogoVIM.load_mapping()
     require("config.autocmds")
 
-    GogoVIM.load_mapping()
     M.lsp_defentions()
     M.did_init = true
 end
