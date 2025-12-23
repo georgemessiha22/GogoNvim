@@ -3,6 +3,7 @@ return {
     priority = 1000,
     lazy = false,
     config = function()
+        local notify = vim.notify
         require("snacks").setup(
             {
                 -- picker = {
@@ -11,7 +12,7 @@ return {
                 -- dashboard = {
                 --     enabled = true,
                 --     preset = {
-                --         header = GogoUI.dash.header,
+                --         header = GogoVIM.UI.dash.header,
                 --     },
                 -- },
                 -- dim = { enabled = true },
@@ -37,10 +38,14 @@ return {
                 --     },
                 --     refresh = 50, -- refresh at most every 50ms
                 -- },
-                -- words = { enabled = true },
+                statuscolumn = { enabled = false },
+                words = { enabled = true },
                 terminal = { enabled = false },
                 lazygit = { enabled = true },
             })
         GogoVIM.load_mapping("snacks")
+        if GogoVIM.has("noice.nvim") then
+            vim.notify = notify
+        end
     end
 }

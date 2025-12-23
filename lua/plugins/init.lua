@@ -24,6 +24,7 @@ return {
     require("plugins.editor.mininvim"),
     require("plugins.editor.flash"),
     require("plugins.editor.trouble"),
+    require("plugins.editor.lualine"),
     -- require("plugins.editor.harpoon2"),
     -- require("plugins.editor.telescope"),
     require("plugins.editor.fzflua"),

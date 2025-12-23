@@ -13,7 +13,7 @@ function M.options()
     -------------------------------------- options ------------------------------------------
     opt.laststatus = 3  -- global statusline
     opt.showmode = true -- Don't show mode since we have a statusline
-    opt.termguicolors = GogoUI.termguicolors
+    opt.termguicolors = GogoVIM.UI.termguicolors
     opt.colorcolumn = "120"
 
     -- General {{{
@@ -28,7 +28,7 @@ function M.options()
 
     opt.updatetime = 200 -- Save swap file and trigger CursorHold
     opt.winminwidth = 5  -- Minimum window width
-    opt.fillchars = GogoUI.icons.fillchars
+    opt.fillchars = GogoVIM.UI.icons.fillchars
     opt.smoothscroll = true
     -- }}}
 
@@ -121,6 +121,8 @@ function M.options()
     vim.filetype.filetype = true
     vim.filetype.ftplugin = true
     -- }}}
+    --
+    vim.g.trouble_lualine = true
 end
 
 return M

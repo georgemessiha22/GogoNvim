@@ -32,7 +32,7 @@ return {
 		end,
 	},
 	config = function(_, opts)
-		local gitIcons = GogoUI.icons.git
+		local gitIcons = GogoVIM.UI.icons.git
 		require("gitsigns").setup({
 			signs = {
 				add = { text = gitIcons.LineAdded },

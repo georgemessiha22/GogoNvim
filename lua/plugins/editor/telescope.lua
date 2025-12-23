@@ -55,7 +55,7 @@ return {
 				},
 			},
 
-			picker = GogoUI.telescope,
+			picker = GogoVIM.UI.telescope,
 		}
 		opts_extend = vim.tbl_deep_extend("error", opts, opts_extend)
 
@@ -94,7 +94,7 @@ return {
 
 		return {
 			defaults = {
-				prompt_prefix = GogoUI.icons.ui.Scopes .. " ",
+				prompt_prefix = GogoVIM.UI.icons.ui.Scopes .. " ",
 				selection_caret = " ",
 				-- open files in the first window that is an actual file.
 				-- use the current window if no other window is available.

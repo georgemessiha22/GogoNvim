@@ -9,7 +9,7 @@ return {
 	"williamboman/mason.nvim",
 	build = ":MasonUpdate",
 	config = function(_, opts)
-		local icons = GogoUI.icons
+		local icons = GogoVIM.UI.icons
 		opts = vim.tbl_deep_extend("force", opts, {
 			ui = {
 				icons = {

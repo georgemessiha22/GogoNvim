@@ -7,6 +7,6 @@ return {
   "nvimdev/dashboard-nvim",
   event = "VimEnter",
   config = function()
-    require("dashboard").setup({ theme = "doom", config = GogoUI.dash })
+    require("dashboard").setup({ theme = "doom", config = GogoVIM.UI.dash })
   end,
 }

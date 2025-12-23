@@ -1,6 +1,3 @@
-_G.GogoVIM = require("util")
-_G.GogoUI = require("ui")
-
 local M = {
     did_init = false,
     settings_loader = require("config.loader")
@@ -12,9 +9,9 @@ function M.init()
     end
 
     -- Load leader keys {{{
-    vim.g.mapleader = GogoUI.leader
-    vim.g.maplocalleader = GogoUI.localleader
-    vim.opt.termguicolors = GogoUI.termguicolors
+    vim.g.mapleader = GogoVIM.UI.leader
+    vim.g.maplocalleader = GogoVIM.UI.localleader
+    vim.opt.termguicolors = GogoVIM.UI.termguicolors
     -- }}}
 
     -- Setup Lazy {{{
@@ -35,7 +32,7 @@ function M.init()
     vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
     -- }}}
 
-    -- Install Plugins from plugins directory and disable some builtins from `GogoUI.disabled_builtins`
+    -- Install Plugins from plugins directory and disable some builtins from `GogoVIM.UI.disabled_builtins`
     GogoVIM.lazy_file()
 
     -- Load Plugins {{{
@@ -51,14 +48,14 @@ function M.init()
         performance = {
             rtp = {
                 -- disable some rtp plugins
-                disabled_plugins = GogoUI.disabled_builtins,
+                disabled_plugins = GogoVIM.UI.disabled_builtins,
             },
         },
     })
     -- }}}
     --
     -- Load colorscheme
-    vim.cmd.colorscheme(GogoUI.theme)
+    vim.cmd.colorscheme(GogoVIM.UI.theme)
     -- M.Reload()
 
     M.settings_loader.options()
