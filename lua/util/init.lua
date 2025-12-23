@@ -40,6 +40,8 @@ function M.lazy_file()
             return
         end
         done = true
+
+        done = true
         vim.api.nvim_del_augroup_by_name("lazy_file")
 
         ---@type table<string,string[]>
@@ -66,6 +68,12 @@ function M.lazy_file()
             end
         end
         vim.api.nvim_exec_autocmds("CursorMoved", { modeline = false })
+        -- folds
+            -- Snacks.util.lsp.on({ method = "textDocument/foldingRange" }, function()
+            --     if GogoVIM.set_default("foldmethod", "expr") then
+            --         GogoVIM.set_default("foldexpr", "v:lua.vim.lsp.foldexpr()")
+            --     end
+            -- end)
         events = {}
     end
 
@@ -369,15 +377,15 @@ end
 
 ---@return string
 function M.norm(path)
-  if path:sub(1, 1) == "~" then
-    local home = vim.uv.os_homedir()
-    if home:sub(-1) == "\\" or home:sub(-1) == "/" then
-      home = home:sub(1, -2)
+    if path:sub(1, 1) == "~" then
+        local home = vim.uv.os_homedir()
+        if home:sub(-1) == "\\" or home:sub(-1) == "/" then
+            home = home:sub(1, -2)
+        end
+        path = home .. path:sub(2)
     end
-    path = home .. path:sub(2)
-  end
-  path = path:gsub("\\", "/"):gsub("/+", "/")
-  return path:sub(-1) == "/" and path:sub(1, -2) or path
+    path = path:gsub("\\", "/"):gsub("/+", "/")
+    return path:sub(-1) == "/" and path:sub(1, -2) or path
 end
 
 return M

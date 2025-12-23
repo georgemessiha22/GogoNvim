@@ -57,11 +57,10 @@ function M.options()
     -- Folding {{{
     opt.foldlevelstart = 99
     opt.foldlevel = 99
-    --
 
-    opt.foldmethod = "expr"
-    opt.foldexpr = "v:lua.require('util.ui').foldexpr()"
-    opt.foldtext = ""
+    opt.foldmethod = "indent"
+    opt.foldexpr = "v:lua.GogoVIM.folding.foldexpr()"
+    --
 
     if vim.lsp.inlay_hint then
         vim.lsp.inlay_hint.enable(true, { 1 })
