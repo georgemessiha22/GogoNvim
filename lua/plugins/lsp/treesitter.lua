@@ -18,18 +18,17 @@ return {
             -- Luckily, the only things that those plugins need are the custom queries, which we make available
             -- during startup.
             require("lazy.core.loader").add_to_rtp(plugin)
-            require("nvim-treesitter.query_predicates")
         end,
         dependencies = {
-            "nvim-treesitter/nvim-tree-docs",
-            "nvim-treesitter/nvim-treesitter-refactor",
+            "nvim-treesitter/nvim-treesitter-locals",
             {
                 "nvim-treesitter/nvim-treesitter-textobjects",
+                branch = "main",
                 config = function()
                     -- When in diff mode, we want to use the default
                     -- vim text objects c & C instead of the treesitter ones.
-                    local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
-                    local configs = require("nvim-treesitter.configs")
+                    local move = require("nvim-treesitter-textobjects.move") ---@type table<string,fun(...)>
+                    local configs = require("nvim-treesitter.config")
                     for name, fn in pairs(move) do
                         if name:find("goto") == 1 then
                             move[name] = function(q, ...)
@@ -222,7 +221,7 @@ return {
                 end, opts.ensure_installed)
             end
 
-            require("nvim-treesitter.configs").setup(opts)
+            require("nvim-treesitter.config").setup(opts)
         end,
     },
     {

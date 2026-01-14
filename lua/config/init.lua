@@ -18,7 +18,7 @@ function M.init()
     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
     if not vim.loop.fs_stat(lazypath) then
-        M.echo("  Installing lazy.nvim")
+        vim.notify("  Installing lazy.nvim")
         vim.fn.system({
             "git",
             "clone",

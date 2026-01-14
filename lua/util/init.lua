@@ -3,91 +3,23 @@
 local M = {}
 
 setmetatable(M, {
-  __index = function(t, k)
-    t[k] = require("util." .. k)
-    return t[k]
-  end,
+    __index = function(t, k)
+        t[k] = require("util." .. k)
+        return t[k]
+    end,
 })
 
-M.use_lazy_file = true
 M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
 
 -- Properly load file based plugins without blocking the UI
 -- COPIED FROM LazyVIM
 function M.lazy_file()
-    M.use_lazy_file = M.use_lazy_file and vim.fn.argc(-1) > 0
-
     -- Add support for the LazyFile event
     local Event = require("lazy.core.handler.event")
 
-    if M.use_lazy_file then
-        -- We'll handle delayed execution of events ourselves
-        Event.mappings.LazyFile = { id = "LazyFile", event = "User", pattern = "LazyFile" }
-        Event.mappings["User LazyFile"] = Event.mappings.LazyFile
-    else
-        -- Don't delay execution of LazyFile events, but let lazy know about the mapping
-        Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
-        Event.mappings["User LazyFile"] = Event.mappings.LazyFile
-
-        return
-    end
-
-    local events = {} ---@type {event: string, buf: number, data?: any}[]
-
-    local done = false
-    local function load()
-        if #events == 0 or done then
-            return
-        end
-        done = true
-
-        done = true
-        vim.api.nvim_del_augroup_by_name("lazy_file")
-
-        ---@type table<string,string[]>
-        local skips = {}
-        for _, event in ipairs(events) do
-            skips[event.event] = skips[event.event] or Event.get_augroups(event.event)
-        end
-
-        vim.api.nvim_exec_autocmds("User", { pattern = "LazyFile", modeline = false })
-        for _, event in ipairs(events) do
-            if vim.api.nvim_buf_is_valid(event.buf) then
-                Event.trigger({
-                    event = event.event,
-                    exclude = skips[event.event],
-                    data = event.data,
-                    buf = event.buf,
-                })
-                if vim.bo[event.buf].filetype then
-                    Event.trigger({
-                        event = "FileType",
-                        buf = event.buf,
-                    })
-                end
-            end
-        end
-        vim.api.nvim_exec_autocmds("CursorMoved", { modeline = false })
-        -- folds
-            -- Snacks.util.lsp.on({ method = "textDocument/foldingRange" }, function()
-            --     if GogoVIM.set_default("foldmethod", "expr") then
-            --         GogoVIM.set_default("foldexpr", "v:lua.vim.lsp.foldexpr()")
-            --     end
-            -- end)
-        events = {}
-    end
-
-    -- schedule wrap so that nested autocmds are executed
-    -- and the UI can continue rendering without blocking
-    load = vim.schedule_wrap(load)
-
-    vim.api.nvim_create_autocmd(M.lazy_file_events, {
-        group = vim.api.nvim_create_augroup("lazy_file", { clear = true }),
-        callback = function(event)
-            table.insert(events, event)
-            load()
-        end,
-    })
+    -- Don't delay execution of LazyFile events, but let lazy know about the mapping
+    Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
+    Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 end
 
 ---Load Mapping for special plugin name or general mappings, better call it after plugin config to with plugin name to load it's mapper.
@@ -138,35 +70,6 @@ end
 ---@param plugin string
 function M.has(plugin)
     return M.get_plugin(plugin) ~= nil
-end
-
---- Checks if the extras is enabled:
---- * If the module was imported
---- * If the module was added by LazyExtras
---- * If the module is in the user's lazy imports
----@param extra string
-function M.has_extra(extra)
-    local Config = require("lazyvim.config")
-    local modname = "lazyvim.plugins.extras." .. extra
-    local LazyConfig = require("lazy.core.config")
-    -- check if it was imported already
-    if vim.tbl_contains(LazyConfig.spec.modules, modname) then
-        return true
-    end
-    -- check if it was added by LazyExtras
-    if vim.tbl_contains(Config.json.data.extras, modname) then
-        return true
-    end
-    -- check if it's in the imports
-    local spec = LazyConfig.options.spec
-    if type(spec) == "table" then
-        for _, s in ipairs(spec) do
-            if type(s) == "table" and s.import == modname then
-                return true
-            end
-        end
-    end
-    return false
 end
 
 ---@param fn fun()

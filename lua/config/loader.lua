@@ -58,7 +58,7 @@ function M.options()
     opt.foldlevelstart = 99
     opt.foldlevel = 99
 
-    opt.foldmethod = "indent"
+    opt.foldmethod = "expr"
     opt.foldexpr = "v:lua.GogoVIM.folding.foldexpr()"
     --
 
