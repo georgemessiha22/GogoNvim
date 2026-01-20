@@ -118,8 +118,6 @@ return {
             --         '.golangci.json',
             --     },
             --
-            --     capabilites = capabilites,
-            --     on_attach = on_attach,
             --     init_options = {
             --         command = {
             --             "golangci-lint",
@@ -130,7 +128,7 @@ return {
             --             "--issues-exit-code", "1",
             --             "--build-tags",
             --             "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
-            --             "--timeout", "5s"
+            --             "--timeout", "10s"
             --         },
             --     },
             -- },

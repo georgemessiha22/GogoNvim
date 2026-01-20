@@ -424,7 +424,7 @@ M.minisurround = {
 M.minifiles = {
     plugin = true,
     n = {
-        ["<leader>nf"] = { "<cmd> lua MiniFiles.open() <CR>", "Open/Close explorer float" },
+        ["<leader>nf"] = { "<cmd> lua MiniFiles.open(vim.api.nvim_buf_get_name(0), true) <CR>", "Open/Close explorer float" },
     },
 }
 

@@ -59,7 +59,7 @@ function M.options()
     opt.foldlevel = 99
 
     opt.foldmethod = "expr"
-    opt.foldexpr = "v:lua.GogoVIM.folding.foldexpr()"
+    opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     --
 
     if vim.lsp.inlay_hint then
@@ -117,8 +117,8 @@ function M.options()
     -- }}}
 
     -- ftplugin {{{
-    vim.filetype.filetype = true
-    vim.filetype.ftplugin = true
+    vim.cmd("filetype plugin indent on")
+    vim.cmd("syntax on")
     -- }}}
     --
     vim.g.trouble_lualine = true

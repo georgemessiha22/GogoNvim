@@ -32,6 +32,7 @@ autocmd("FileType", {
         GogoVIM.on_very_lazy(function()
             vim.bo[event.buf].buflisted = false
             vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+            vim.keymap.set("n", "<Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
         end)
     end,
 })
@@ -47,20 +48,6 @@ autocmd("FileType", {
     end,
 })
 
--- Fix tabexpand for yaml files
--- autocmd("FileType", {
---     group = augroup("yaml"),
---     pattern = { "yaml", "yml" },
---     callback = function(_)
---         GogoVIM.on_very_lazy(function()
---             vim.opt_local.tabstop = 2
---             vim.opt_local.softtabstop = 2
---             vim.opt_local.shiftwidth = 2
---             vim.opt_local.expandtab = true
---         end)
---     end,
--- })
-
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
 autocmd({ "BufWritePre" }, {
     group = augroup("auto_create_dir"),
@@ -74,7 +61,6 @@ autocmd({ "BufWritePre" }, {
         end)
     end,
 })
-
 
 if GogoVIM.has("folke/snacks.nvim") then
     local progress = vim.defaulttable()
@@ -122,3 +108,11 @@ if GogoVIM.has("folke/snacks.nvim") then
         end,
     })
 end
+
+autocmd({"FileType"}, {
+    pattern = {"go", "lua", "yaml", "yml", "python" ,"py", "gomod", "gosum", "gowork"},
+    callback = function ()
+        vim.treesitter.start()
+    end
+
+})

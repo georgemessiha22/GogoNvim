@@ -60,9 +60,9 @@ function M.init()
 
     M.settings_loader.options()
     GogoVIM.load_mapping()
-    require("config.autocmds")
 
     M.lsp_defentions()
+    require("config.autocmds")
     M.did_init = true
 end
 
@@ -125,6 +125,7 @@ function M.lsp_defentions()
                     shadow = true,
                     unusedvariable = true,
                     useany = true,
+                    ST1000 = false,
                     ST1019 = true,
                     ST1020 = true,
                     ST1021 = true,
@@ -195,8 +196,8 @@ function M.lsp_defentions()
     --             "--show-stats=false",
     --             "--issues-exit-code", "1",
     --             "--build-tags",
-    --             "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
-    --             "--timeout", "5s"
+    --             "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6,functional_http,functional_grpc",
+    --             "--timeout", "10s"
     --         },
     --     },
     -- }

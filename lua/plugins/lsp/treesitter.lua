@@ -64,6 +64,7 @@ return {
                         return true
                     end
                 end,
+                additional_vim_regex_highlighting = true,
             },
             indent = { enable = true },
             ensure_installed = {
@@ -74,9 +75,9 @@ return {
                 "javascript",
                 "jsdoc",
                 "json",
-                "jsonc",
+                "json5",
                 "lua",
-                -- "luadoc",
+                "luadoc",
                 -- "luap",
                 "markdown",
                 "markdown_inline",
@@ -91,15 +92,21 @@ return {
                 "xml",
                 "yaml",
                 "go",
+                "gomod",
+                "gowork",
+                "gosum",
+                "gotmpl",
+                "git_config",
+                "gitcommit",
+                "git_rebase",
+                "gitignore",
                 "sql",
                 -- "astro",
                 "svelte",
-                -- "ruby",
+                "ruby",
                 -- "nu",
-                -- "fish",
+                "fish",
                 "comment",
-                "gowork",
-                "gotmpl",
             },
             incremental_selection = {
                 enable = true,
@@ -221,6 +228,7 @@ return {
                 end, opts.ensure_installed)
             end
 
+            require("nvim-treesitter").install(opts.ensure_installed)
             require("nvim-treesitter.config").setup(opts)
         end,
     },

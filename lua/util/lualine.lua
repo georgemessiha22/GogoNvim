@@ -87,7 +87,7 @@ function M.pretty_path(opts)
     filename_hl = "Bold",
     modified_sign = "",
     readonly_icon = " 󰌾 ",
-    length = 3,
+    length = 10,
   }, opts or {})
 
   return function(self)
