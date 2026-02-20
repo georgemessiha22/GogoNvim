@@ -34,7 +34,9 @@ return {
     require("plugins.editor.whichkey"),
     -- require("plugins.editor.persistence"),
     -- require("plugins.editor.dashboard"),
+    require("plugins.editor.rendermarkdown"),
     require("plugins.editor.mcphub"),
-    require("plugins.editor.avante"),
+    require("plugins.editor.codecompanion"),
+    -- require("plugins.editor.avante"),
     -- }}}
 }

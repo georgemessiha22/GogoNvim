@@ -13,7 +13,7 @@ return {
                 }
             end,
         },
-        {'Kaiser-Yang/blink-cmp-avante'},
+        { 'Kaiser-Yang/blink-cmp-avante' },
     },
     lazy = false, -- lazy loading handled internally
 
@@ -262,6 +262,7 @@ return {
                     },
                 },
             },
+
             -- Displays a preview of the selected item on the current line
             ghost_text = {
                 enabled = true,
@@ -301,7 +302,7 @@ return {
             -- proximity bonus boosts the score of items matching nearby words
             use_proximity = true,
             -- controls which sorts to use and in which order, these three are currently the only allowed options
-            sorts = {"score", "exact", "sort_text", "kind", "label",},
+            sorts = { "score", "exact", "sort_text", "kind", "label", },
 
             prebuilt_binaries = {
                 -- Whether or not to automatically download a prebuilt binary from github. If this is set to `false`
@@ -323,7 +324,7 @@ return {
 
         sources = {
             default = function()
-                local _defaults = { 'lsp', 'avante', 'path', 'omni', 'snippets', "cmdline"}
+                local _defaults = { 'lsp', 'avante', 'path', 'omni', 'snippets', "cmdline" }
 
                 --- @type boolean, TSNode|nil
                 local isTreeSitter, node = pcall(vim.treesitter.get_node)
@@ -332,7 +333,9 @@ return {
                 end
 
                 if vim.bo.filetype == 'lua' then
-                    return { 'lazydev', 'lsp', 'omni', 'path',"snippets", }
+                    return { 'lazydev', 'lsp', 'omni', 'path', "snippets", }
+                elseif vim.bo.filetype == "codecompanion" then
+                    return { "codecompanion" }
                 elseif node and vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
                     return { "avante", 'buffer', "path" }
                 else
@@ -413,6 +416,10 @@ return {
                     }
                 },
             },
+            -- codecompanion = {
+            --     name="codecompanion",
+            --     module="codecompanion",
+            -- },
         },
 
         appearance = {

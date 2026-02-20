@@ -5,11 +5,8 @@ return {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
         ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-        provider = "copilot",
+        provider = "gemini-cli",
         providers = {
-            gemini = {
-                model = "gemini-2.5-pro",
-            },
             copilot = {
                 model = "gpt-4.1",
             },
@@ -36,7 +33,15 @@ return {
                 },
                 disable_tools = true,
             },
-        }, -- Recommend using Claude
+        },
+        acp_providers = {
+            ["gemini-cli"] = {
+                command = "gemini",
+                args = {
+                    "--experimental-acp"
+                }
+            },
+        },
         -- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
         -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
         -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
@@ -78,7 +83,7 @@ tools: use LSP feedback to know about errors, and don't stop until you fix all o
             -- timeout = 60000, -- Timeout in milliseconds
         },
         behaviour = {
-            auto_suggestions = false, -- Experimental stage
+            auto_suggestions = true, -- Experimental stage
             auto_set_highlight_group = true,
             auto_set_keymaps = true,
             auto_apply_diff_after_generation = false,
@@ -86,6 +91,8 @@ tools: use LSP feedback to know about errors, and don't stop until you fix all o
             enable_cursor_planning_mode = true,
             minimize_diff = true,         -- Whether to remove unchanged lines when applying a code block
             enable_token_counting = true, -- Whether to enable token counting. Default to true.
+            confirmation_ui_style = true,
+            acp_follow_agent_locations = true,
         },
         mappings = {
             --- @class AvanteConflictMappings
@@ -162,10 +169,10 @@ tools: use LSP feedback to know about errors, and don't stop until you fix all o
             --- Disable by setting to -1.
             override_timeoutlen = 500,
         },
-        -- suggestion = {
-        --     debounce = 300,
-        --     throttle = 300,
-        -- },
+        suggestion = {
+            debounce = 300,
+            throttle = 300,
+        },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",

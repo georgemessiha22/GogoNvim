@@ -22,7 +22,7 @@ return {
             fillstruct = "gopls",
             max_line_len = 80,
             -- lsp_on_attach = on_attach,
-            build_tags = "functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6",
+            build_tags = "functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6,functional_http,functional_grpc",
             lsp_cfg = false,
             -- lsp_cfg = {
             --     -- capabilites = capabilites,
