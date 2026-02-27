@@ -5,7 +5,7 @@ return {
     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
         ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
-        provider = "gemini-cli",
+        provider = "ollama",
         providers = {
             copilot = {
                 model = "gpt-4.1",
@@ -21,7 +21,7 @@ return {
                 -- hf.co/lmstudio-community/Qwen2.5-7B-Instruct-1M-GGUF:Q8_0
                 -- qwen2.5-coder:1.5b
                 -- codegemma:latest
-                model = "deepseek-coder:6.7b",
+                model = "deepseek-coder:33b",
                 maxtokens = 4096,
                 -- timeout = 3000,
                 extra_request_body = {
@@ -31,7 +31,7 @@ return {
                         keep_alive = "4m",
                     },
                 },
-                disable_tools = true,
+                disable_tools = false,
             },
         },
         acp_providers = {
