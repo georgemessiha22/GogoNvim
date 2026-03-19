@@ -37,6 +37,6 @@ return {
     require("plugins.editor.rendermarkdown"),
     require("plugins.editor.mcphub"),
     require("plugins.editor.codecompanion"),
-    -- require("plugins.editor.avante"),
+    require("plugins.editor.avante"),
     -- }}}
 }
