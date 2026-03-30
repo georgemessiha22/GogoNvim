@@ -83,7 +83,6 @@ function M.lsp_defentions()
         capabilites = require("blink.cmp").get_lsp_capabilities(nil, true)
     end
 
-
     -- Check if solargraph is installed and run the configurations.
     local solargraphLocation = os.getenv("HOME") .. "/.rbenv/shims/solargraph"
     local file = io.open(solargraphLocation, "r")
@@ -115,8 +114,13 @@ function M.lsp_defentions()
     vim.lsp.config.gopls = {
         capabilites = capabilites,
         on_attach = on_attach,
+        cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         fillstruct = "gopls",
+        root_markers = {
+            "gomod",
+            "gowork"
+        },
         settings = {
             gopls = {
                 analyses = {
@@ -162,6 +166,7 @@ function M.lsp_defentions()
     vim.lsp.config.lua_ls = {
         capabilites = capabilites,
         on_attach = on_attach,
+        cmd = { "lua-language-server" },
         init_options = {
             formatting = true,
         },
@@ -195,7 +200,7 @@ function M.lsp_defentions()
                 "--output.json.path", "stdout",
                 "--show-stats=false",
                 "--issues-exit-code", "1",
-                "--new-from-rev","refs/remotes/origin",
+                "--new-from-rev", "refs/remotes/origin",
                 "--build-tags",
                 "unit,integration,functional,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6,functional_http,functional_grpc",
                 "--timeout", "10s"
@@ -233,7 +238,6 @@ function M.lsp_defentions()
         "docker_compose_language_service", -- LSP for Docker-compose
         "sqlls",                           -- LSP SQL
         "yamlls",                          -- LSP yaml
-        "rust_analyzer",                   -- LSP Rust rust_analyzer
         "jsonls",                          -- LSP json
         "html",                            -- LSP html
         "eslint",                          -- LSP eslint
@@ -250,6 +254,10 @@ function M.lsp_defentions()
         }
         vim.lsp.enable(server)
     end
+
+    vim.lsp.codelens.enable(true)
+    vim.lsp.inlay_hint.enable(true)
+    vim.lsp.inline_completion.enable(true)
 end
 
 return M
