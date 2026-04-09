@@ -8,7 +8,6 @@
 -- n, v, i, t = mode names
 -- for plugin add M.pluginname = {}
 
--- TODO: rewrite this file to use wk.register instead
 local M = {}
 
 M.general = {
@@ -130,7 +129,6 @@ M.lspkeys = {
 M.conform = {
     plugin = true,
     n = {
-
         -- formatting
         ["<leader>lwf"] = {
             function()
@@ -144,56 +142,6 @@ M.conform = {
             "LSP formatting",
             opts = { buffer = true },
         },
-    },
-}
-
-M.telescope = {
-    plugin = true,
-
-    n = {
-        -- LSP
-        ["<leader>ldw"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols<CR>", "Search for dynamic symbols" },
-        ["<leader>tld"] = { "<cmd> Telescope lsp_definitions <CR>", "TeleScope defentions" },
-        ["<leader>li"] = { "<cmd> Telescope lsp_implementations <CR>", "Lsp implementations" },
-        ["<leader>lwd"] = { "<cmd> Telescope diagnostics <CR>", "Show Workspace Diagnostics" },
-        ["<leader>lts"] = { "<cmd> Telescope treesitter <CR>", "Show treesitter" },
-        ["<leader>qf"] = { "<cmd> Telescope quickfix <CR>", "Show quickfixes" },
-        ["<leader>lci"] = { "<cmd> Telescope lsp_outgoing_calls <CR>", "Show LSP outgoing calls" },
-        ["<leader>lco"] = { "<cmd> Telescope lsp_incoming_calls <CR>", "Show LSP incoming calls" },
-        ["<leader>ltd"] = { "<cmd> Telescope lsp_type_defentions <CR>", "Show LSP type definition" },
-        ["<leader>lr"] = { "<cmd> Telescope lsp_references <CR>", "Show LSP references" },
-
-        -- find
-        ["<leader>F"] = { "<cmd> Telescope find_files <CR>", "Find files", opts = { noremap = true } },
-        ["<leader>fa"] = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "Find all" },
-        ["<leader>fw"] = { "<cmd> Telescope live_grep <CR>", "Live grep" },
-        ["<leader>fs"] = { "<cmd> Telescope grep_string <CR>", "Search keyword" },
-        ["<leader>fb"] = { "<cmd> Telescope buffers sort_mru=true sort_lastused=true<CR>", "Find buffers" },
-        ["<leader>fh"] = { "<cmd> Telescope help_tags <CR>", "Help page" },
-        ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "Find oldfiles" },
-        ["<leader>fz"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" },
-
-        -- git
-        ["<leader>gcm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
-        ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
-        ["<leader>gba"] = { "<cmd> Telescope git_branches <CR>", "Show git branches" },
-        ["<leader>gbc"] = { "<cmd> Telescope git_bcommits <CR>", "Show Blame commits" },
-        ["<leader>gf"] = { "<cmd> Telescope git_files <CR>", "Search for a file in project" },
-
-        -- pick a hidden term
-        -- ["<leader>pt"]  = { "<cmd> Telescope terms <CR>", "Pick hidden term" },
-
-        -- theme switcher
-        ["<leader>th"] = { "<cmd> Telescope colorscheme <CR>", "Themes" },
-
-        ["<leader>i"] = { "<cmd> Telescope jumplist <CR>", "Show jumplist (previous locations)" },
-        ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
-
-        ["<leader>ta"] = { "<cmd> Telescope <CR>", "Show all commands" },
-        ["<leader>tc"] = { "<cmd>Telescope command_history<cr>", "Command History" },
-        ["<leader>sa"] = { "<cmd>Telescope autocommands<cr>", "Auto Commands" },
-        ["<leader>sk"] = { "<cmd>Telescope keymaps<cr>", "Key Maps" },
-        ["<leader>sr"] = { "<cmd>Telescope resume<cr>", "Resume" },
     },
 }
 
@@ -227,7 +175,7 @@ M.fzflua = {
 
         -- git
         ["<leader>gcm"] = { "<cmd> FzfLua git_commits <CR>", "Git commits" },
-        ["<leader>gt"] = { "<cmd> FzfLua git_status <CR>", "Git status" },
+        ["<leader>gs"] = { "<cmd> FzfLua git_status <CR>", "Git status" },
         ["<leader>gba"] = { "<cmd> FzfLua git_branches <CR>", "Show git branches" },
         ["<leader>gbc"] = { "<cmd> FzfLua git_bcommits <CR>", "Show Blame commits" },
         ["<leader>gf"] = { "<cmd> FzfLua git_files <CR>", "Search for a file in project" },
@@ -239,7 +187,6 @@ M.fzflua = {
         ["<leader>th"] = { "<cmd> FzfLua colorschemes <CR>", "Themes" },
 
         ["<leader>i"] = { "<cmd> FzfLua jumps <CR>", "Show jumplist (previous locations)" },
-        ["<leader>ma"] = { "<cmd> FzfLua tags <CR>", "telescope bookmarks" },
 
         ["<leader>ta"] = { "<cmd> FzfLua <CR>", "Show all commands" },
         ["<leader>tc"] = { "<cmd>FzfLua command_history<cr>", "Command History" },
@@ -291,17 +238,6 @@ M.trouble = {
     },
 }
 
-M.neotree = {
-    plugin = true,
-    n = {
-        ["<leader>nf"] = { "<cmd> Neotree toggle float <CR>", "Open/Close explroer float" },
-        ["<leader>nl"] = { "<cmd> Neotree toggle left <CR>", "Open/Cloase explroer on left" },
-        ["<leader>nr"] = { "<cmd> Neotree toggle right <CR>", "Open/Close explorer on right" },
-        ["<leader>ng"] = { "<cmd> Neotree git_status <CR>", "Open Git Files menu" },
-        ["<leader>nb"] = { "<cmd> Neotree git_status <CR>", "Open Buffers menu" },
-    },
-}
-
 M.comment = {
     plugin = true,
 
@@ -347,23 +283,6 @@ M.whichkey = {
     },
 }
 
-M.cmp = {
-    plugin = true,
-    --	cmp keymaps are configured in `plugins/installer/cmp.lua`
-}
-
-M.iconpicker = {
-    plugin = true,
-    n = {
-        ["<Leader><Leader>i"] = { "<CMD> IconPickerInsert<CR>", "Icon Picker" },
-        ["<Leader><Leader>y"] = { "<CMD> IconPickerYank <CR>", "Icon Picker yank" },
-    },
-
-    -- i = {
-    -- 	["<C-i>"] = { "<CMD> IconPickerInsert<CR>", "Icon Picker"},
-    -- },
-}
-
 M.todo = {
     plugin = true,
 
@@ -376,21 +295,6 @@ M.todo = {
         -- ["<leader>td"] = { "<cmd>TodoTelescope<cr>", "Todo (Telescope)" },
         ["<leader>tf"] = { "<cmd>TodoFzfLua<cr>", "Todo (FzfLua)" }
         -- ["<leader>tdf"] = { "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", "Todo/Fix/Fixme" },
-    },
-}
-
-M.bufferline = {
-    plugin = true,
-    n = {
-        ["<leader>bp"] = { "<Cmd>BufferLineTogglePin<CR>", "Toggle pin" },
-        ["<leader>bP"] = { "<Cmd>BufferLineGroupClose ungrouped<CR>", "Delete non-pinned buffers" },
-        ["<leader>bo"] = { "<Cmd>BufferLineCloseOthers<CR>", "Delete other buffers" },
-        ["<leader>br"] = { "<Cmd>BufferLineCloseRight<CR>", "Delete buffers to the right" },
-        ["<leader>bl"] = { "<Cmd>BufferLineCloseLeft<CR>", "Delete buffers to the left" },
-        ["<S-h>"] = { "<cmd>BufferLineCyclePrev<cr>", "Prev buffer" },
-        ["<S-l>"] = { "<cmd>BufferLineCycleNext<cr>", "Next buffer" },
-        ["[b"] = { "<cmd>BufferLineCyclePrev<cr>", "Prev buffer" },
-        ["]b"] = { "<cmd>BufferLineCycleNext<cr>", "Next buffer" },
     },
 }
 
@@ -416,11 +320,6 @@ M.flash = {
     },
 }
 
-M.minisurround = {
-    plugin = true,
-    -- configured only in plugins.installer.minisurround
-}
-
 M.minifiles = {
     plugin = true,
     n = {
@@ -431,8 +330,13 @@ M.minifiles = {
 M.snacks = {
     plugin = true,
     n = {
-        ["<leader>gl"] = { "<cmd> lua Snacks.lazygit.open() <CR>", "Open lazygit" },
-        -- ["<leader>nf"] = { "<cmd> lua Snacks.explorer() <CR>", "Open/Close explorer float" },
+        ["<leader>sn"] = { function() require("snacks").notifier.show_history() end, "Snack notification" },
+        -- ["<leader>gl"] = { "<cmd> lua require("snacks").lazygit.open() <CR>", "Open lazygit" },
+        -- ["<leader>nf"] = { "<cmd> lua require("snacks").explorer() <CR>", "Open/Close explorer float" },
+        -- git
+        ["<leader>gL"] = { function() require("snacks").picker.git_log_line() end, "Git Log Line" },
+        ["<leader>gS"] = { function() require("snacks").picker.git_stash() end, "Git Stash status" },
+        ["<leader>gd"] = { function() require("snacks").picker.git_diff() end, "Git Diff (Hunks)" },
     }
 }
 

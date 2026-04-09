@@ -1,0 +1,41 @@
+return {
+    fillstruct = "gopls",
+    settings = {
+        gopls = {
+            analyses = {
+                unusedparams = true,
+                unusedwrite = true,
+                shadow = true,
+                unusedvariable = true,
+                useany = true,
+                ST1000 = false,
+                ST1019 = true,
+                ST1020 = true,
+                ST1021 = true,
+                ST1022 = true,
+                ST1023 = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+            buildFlags = { "-tags=functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6,functional_http,functional_grpc" },
+            vulncheck = "Imports",
+            hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+            },
+        },
+        codelenses = {
+            gc_details = true,
+            generate = true,
+            regenerate_cgo = true,
+            tidy = true,
+            upgrade_dependency = true,
+            vendor = true,
+        },
+    },
+}

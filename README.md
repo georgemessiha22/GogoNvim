@@ -7,7 +7,7 @@
 
 ## Install Instructions
 
- > Install requires Neovim 0.9+. Always review the code before installing a configuration.
+ > Install requires Neovim 0.12+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -23,20 +23,17 @@ NVIM_APPNAME=georgemessiha22/GogoNvim/ nvim
 
 ## Plugins
 
-### bars-and-lines
-
-+ [SmiteshP/nvim-navic](https://dotfyle.com/plugins/SmiteshP/nvim-navic)
 ### colorscheme
 
-+ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
-+ [folke/tokyonight.nvim](https://dotfyle.com/plugins/folke/tokyonight.nvim)
 + [rose-pine/neovim](https://dotfyle.com/plugins/rose-pine/neovim)
+
 ### comment
 
 + [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
-### completion
 
+### completion
 + [Saghen/blink.cmp](https://dotfyle.com/plugins/Saghen/blink.cmp)
+
 ### diagnostics
 
 + [folke/trouble.nvim](https://dotfyle.com/plugins/folke/trouble.nvim)
@@ -73,9 +70,8 @@ NVIM_APPNAME=georgemessiha22/GogoNvim/ nvim
 ### motion
 
 + [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
-### nvim-dev
 
-+ [folke/lazydev.nvim](https://dotfyle.com/plugins/folke/lazydev.nvim)
+### Coding
 + [ray-x/guihua.lua](https://dotfyle.com/plugins/ray-x/guihua.lua)
 + [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
 + [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
