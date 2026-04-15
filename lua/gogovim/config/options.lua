@@ -1,14 +1,14 @@
 local opt = vim.opt
 
 -------------------------------------- options ------------------------------------------
-opt.laststatus = 3  -- global statusline
+opt.laststatus = 3 -- global statusline
 opt.showmode = true -- Don't show mode since we have a statusline
 opt.termguicolors = GogoVIM.UI.termguicolors
 opt.colorcolumn = "120"
 
 -- General {{{
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
-opt.confirm = true   -- Confirm to save changes before exiting modified buffer
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.spell = true
 opt.spelllang = { "en" }
 opt.spelloptions = "camel,noplainbuffer"
@@ -16,9 +16,9 @@ opt.timeoutlen = 500
 opt.undofile = true
 opt.undolevels = 10000
 
-opt.iskeyword:remove { "_" }
+opt.iskeyword:remove({ "_" })
 opt.updatetime = 200 -- Save swap file and trigger CursorHold
-opt.winminwidth = 5  -- Minimum window width
+opt.winminwidth = 5 -- Minimum window width
 opt.winborder = "rounded"
 opt.fillchars = GogoVIM.UI.icons.fillchars
 opt.smoothscroll = true
@@ -121,7 +121,7 @@ vim.g.trouble_lualine = true
 vim.o.cmdheight = 0
 
 -- UI2 messages position to top right
-require("vim._core.ui2").enable {
+require("vim._core.ui2").enable({
   enable = true,
   msg = {
     targets = {
@@ -168,7 +168,7 @@ require("vim._core.ui2").enable {
       height = 0.5,
     },
   },
-}
+})
 
 -- Change Notification highlights colors
 vim.api.nvim_create_autocmd("FileType", {

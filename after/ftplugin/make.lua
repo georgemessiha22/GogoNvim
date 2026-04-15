@@ -6,4 +6,3 @@ vim.opt_local.smartindent = false
 vim.opt_local.softtabstop = 4
 vim.opt_local.modeline = false
 vim.treesitter.start()
-

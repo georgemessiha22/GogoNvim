@@ -1,10 +1,11 @@
 indent_type = "Spaces"
 indent_width = 2
 column_width = 120
-syntax = "Lua51"
+syntax = "All"
 line_endings = "Unix"
 quote_style = "AutoPreferDouble"
-call_parentheses = "NoSingleTable"
+call_parentheses = "Always"
+block_newline_gaps = "Never"
 
 [sort_requires]
 enabled = true

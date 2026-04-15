@@ -1,10 +1,10 @@
 -- TODO comments
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("folke/todo-comments.nvim"),
   name = "todo-comments",
   data = {
     config = function()
-      require("todo-comments").setup {
+      require("todo-comments").setup({
         signs = true,
         keywords = {
           TODO = { icon = " ", color = "info" },
@@ -26,23 +26,23 @@ GogoVIM.AddPack {
           hint = { "DiagnosticHint", "#10B981" },
           default = { "Identifier", "#7C3AED" },
         },
-      }
+      })
       GogoVIM.load_mapping("todo")
     end,
   },
-}
+})
 
 -- treesitter TODO: check for updated version
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-treesitter/nvim-treesitter-locals"),
   name = "nvim-treesitter-locals",
   version = "main",
   data = {
     config = function() end,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-treesitter/nvim-treesitter"),
   name = "nvim-treesitter",
   version = "main",
@@ -224,9 +224,9 @@ GogoVIM.AddPack {
       require("nvim-treesitter.config").setup(opts)
     end,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-treesitter/nvim-treesitter-textobjects"),
   name = "nvim-treesitter-textobjects",
   version = "main",
@@ -254,9 +254,9 @@ GogoVIM.AddPack {
       end
     end,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-treesitter/nvim-treesitter-context"),
   name = "nvim-treesitter-context",
   data = {
@@ -271,7 +271,7 @@ GogoVIM.AddPack {
         end
       end, { desc = "Toggle Treesitter context" })
 
-      require("treesitter-context").setup {
+      require("treesitter-context").setup({
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
         multiwindow = false, -- Enable multiwindow support.
         max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
@@ -284,19 +284,19 @@ GogoVIM.AddPack {
         -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
         separator = nil,
         zindex = 20, -- The Z-index of the context window
-      }
+      })
     end,
   },
-}
+})
 
 -- Conform
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("stevearc/conform.nvim"),
   name = "conform.nvim",
   data = {
     name = "conform",
     config = function()
-      require("conform").setup {
+      require("conform").setup({
         formatters_by_ft = {
           python = { "ruff_fix", "ruff_organize_imports" },
           -- yaml = { "yamlfix" },
@@ -307,6 +307,7 @@ GogoVIM.AddPack {
           tf = { "tfmt" },
           terraform = { "tfmt" },
           hcl = { "tfmt" },
+          kdl = { "kdlfmt" },
         },
         formatters = {
           tfmt = {
@@ -319,15 +320,15 @@ GogoVIM.AddPack {
           lsp_format = "fallback",
         },
         notify_on_error = true,
-      }
+      })
 
       GogoVIM.load_mapping("conform")
     end,
   },
-}
+})
 
 -- Blink.cmp
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("saghen/blink.compat"),
   name = "blink.compat",
   data = {
@@ -338,17 +339,17 @@ GogoVIM.AddPack {
       }
     end,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("Kaiser-Yang/blink-cmp-avante"),
   name = "blink-cmp-avante",
   data = {
     skip_load = true,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("saghen/blink.cmp"),
   version = vim.version.range("v1.x"),
   name = "blink.cmp",
@@ -776,17 +777,17 @@ GogoVIM.AddPack {
       },
     },
   },
-}
+})
 
 -- GitSigns
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("lewis6991/gitsigns.nvim"),
   name = "gitsigns.nvim",
   data = {
     name = "gitsigns",
     config = function()
       local gitIcons = GogoVIM.UI.icons.git
-      require("gitsigns").setup {
+      require("gitsigns").setup({
         on_attach = function(buffer)
           local gs = package.loaded.gitsigns
 
@@ -823,7 +824,7 @@ GogoVIM.AddPack {
           delay = 1000,
           ignore_whitespace = false,
         },
-      }
+      })
     end,
   },
-}
+})

@@ -25,24 +25,24 @@
 -- - Attached buffers: 1, 18, 6
 --
 return {
-    -- LuaLS Structure of these settings comes from LuaLS, not Neovim
-    settings = {
-        root_markers = { "stylua.lua" },
-        Lua = {
-            codeLens = {
-                enable = true,
-            },
-            hint = {
-                enable = true,
-            },
-            -- Define runtime properties. Use 'LuaJIT', as it is built into Neovim.
-            runtime = { version = 'LuaJIT', path = vim.split(package.path, ';') },
-            workspace = {
-                -- Don't analyze code from submodules
-                ignoreSubmodules = false,
-                -- Add Neovim's methods for easier code writing
-                library = { vim.env.VIMRUNTIME },
-            },
-        },
+  -- LuaLS Structure of these settings comes from LuaLS, not Neovim
+  settings = {
+    root_markers = { "stylua.lua" },
+    Lua = {
+      codeLens = {
+        enable = true,
+      },
+      hint = {
+        enable = true,
+      },
+      -- Define runtime properties. Use 'LuaJIT', as it is built into Neovim.
+      runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
+      workspace = {
+        -- Don't analyze code from submodules
+        ignoreSubmodules = false,
+        -- Add Neovim's methods for easier code writing
+        library = { vim.env.VIMRUNTIME },
+      },
     },
+  },
 }

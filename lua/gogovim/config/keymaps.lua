@@ -122,7 +122,7 @@ M.lspkeys = {
     },
     ["<leader>e"] = {
       function()
-        vim.diagnostic.open_float { border = "rounded" }
+        vim.diagnostic.open_float({ border = "rounded" })
       end,
       "Open Diagnostics",
       opts = { remap = false, silent = true },
@@ -136,11 +136,11 @@ M.conform = {
     -- formatting
     ["<leader>lwf"] = {
       function()
-        require("conform").format {
+        require("conform").format({
           timeout_ms = 500,
           async = true,
           lsp_format = "prefer",
-        }
+        })
         -- vim.lsp.buf.format({ async = true })
       end,
       "LSP formatting",
@@ -216,7 +216,7 @@ M.trouble = {
     ["[q"] = {
       function()
         if require("trouble").is_open() then
-          require("trouble").previous { skip_groups = true, jump = true }
+          require("trouble").previous({ skip_groups = true, jump = true })
         else
           local ok, err = pcall(vim.cmd.cprev)
           if not ok then
@@ -229,7 +229,7 @@ M.trouble = {
     ["]q"] = {
       function()
         if require("trouble").is_open() then
-          require("trouble").next { skip_groups = true, jump = true }
+          require("trouble").next({ skip_groups = true, jump = true })
         else
           local ok, err = pcall(vim.cmd.cnext)
           if not ok then

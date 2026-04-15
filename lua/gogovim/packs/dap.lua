@@ -1,12 +1,12 @@
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-neotest/nvim-nio"),
   name = "nvim-nio",
   data = {
     skip_load = true,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("mfussenegger/nvim-dap"),
   name = "nvim-dap",
   data = {
@@ -42,9 +42,9 @@ GogoVIM.AddPack {
       GogoVIM.load_mapping("dap")
     end,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("jay-babu/mason-nvim-dap.nvim"),
   name = "mason-nvim-dap",
   data = {
@@ -65,9 +65,9 @@ GogoVIM.AddPack {
       },
     },
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("rcarriga/nvim-dap-ui"),
   name = "nvim-dap-ui",
   data = {
@@ -93,21 +93,21 @@ GogoVIM.AddPack {
       },
     },
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("theHamsta/nvim-dap-virtual-text"),
   name = "nvim-dap-virtual-text",
   data = {
     opts = {},
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("leoluz/nvim-dap-go"),
   name = "nvim-dap-go",
   data = {
     name = "dap-go",
     opts = {},
   },
-}
+})

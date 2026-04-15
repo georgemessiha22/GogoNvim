@@ -188,7 +188,7 @@ function M.InstallPacks()
     confirm = false,
     --- @param pack_data GogoVIM.packs.pack_data
     load = function(pack_data)
-      vim.cmd.packadd { vim.fn.escape(pack_data.spec.name, " ") }
+      vim.cmd.packadd({ vim.fn.escape(pack_data.spec.name, " ") })
 
       local data = pack_data.spec.data
 

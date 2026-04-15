@@ -1,9 +1,9 @@
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("rafamadriz/friendly-snippets"),
   name = "friendly-snippets",
   data = { skip_load = true },
-}
-GogoVIM.AddPack {
+})
+GogoVIM.AddPack({
   src = GogoVIM.GH("L3MON4D3/LuaSnip"),
   name = "LuaSnip",
   version = vim.version.range("v2.x"),
@@ -11,15 +11,15 @@ GogoVIM.AddPack {
     name = "luasnip",
     build = { "make", "install_jsregexp" },
   },
-}
+})
 
 -- Mason
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("williamboman/mason.nvim"),
   name = "mason.nvim",
   data = {
     config = function()
-      require("mason").setup {
+      require("mason").setup({
         ui = {
           icons = {
             package_installed = GogoVIM.UI.icons.misc.Package,
@@ -27,13 +27,13 @@ GogoVIM.AddPack {
             package_uninstalled = GogoVIM.UI.icons.ui.BoldClose,
           },
         },
-      }
+      })
     end,
   },
-}
+})
 
 -- LSPConfig
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("williamboman/mason-lspconfig.nvim"),
   name = "mason-lspconfig",
   data = {
@@ -65,18 +65,19 @@ GogoVIM.AddPack {
         "gopls", -- LSP Go
         "stylua", -- LSP lua formatter
         "lua_ls",
+        "kdlfmt",
       },
     },
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("neovim/nvim-lspconfig"),
   name = "nvim-lspconfig",
   data = {
     config = function() end,
   },
-}
+})
 --
 -- GogoVIM.AddPack({
 --     src = GogoVIM.GH("folke/lazydev.nvim"),
@@ -89,16 +90,16 @@ GogoVIM.AddPack {
 -- })
 
 -- Go by RayX
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("ray-x/guihua.lua"),
   name = "guihua",
   version = "master",
   data = {
     skip_load = true,
   },
-}
+})
 
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("ray-x/go.nvim"),
   name = "go.nvim",
   version = "master",
@@ -159,4 +160,4 @@ GogoVIM.AddPack {
       dap_debug_keymap = false,
     },
   },
-}
+})

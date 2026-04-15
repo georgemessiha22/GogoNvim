@@ -2,7 +2,7 @@ vim.cmd.packadd("nvim.difftool")
 vim.cmd.packadd("nvim.undotree")
 
 -- Mini.nvim (file explorer, surround select, indentation)
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("echasnovski/mini.nvim"),
   name = "mini.nvim",
   version = "main",
@@ -11,18 +11,18 @@ GogoVIM.AddPack {
       require("mini.surround").setup()
       require("mini.ai").setup()
       require("mini.basics").setup()
-      require("mini.files").setup {
+      require("mini.files").setup({
         options = { use_as_default_explorer = true },
         windows = { preview = true, width_preview = 80 },
-      }
+      })
       GogoVIM.load_mapping("minifiles")
       require("mini.icons").setup()
     end,
   },
-}
+})
 
 -- Flash (jump fast)
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("folke/flash.nvim"),
   name = "falsh.nvim",
   data = {
@@ -32,32 +32,32 @@ GogoVIM.AddPack {
       GogoVIM.load_mapping("flash")
     end,
   },
-}
+})
 
 -- NUI UX library (Needed for Avante)
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("MunifTanjim/nui.nvim"),
   name = "nui.nvim",
   data = {
     name = "nui",
     skip_load = true,
   },
-}
+})
 
 -- Trouble (showing lists as quickfixes)
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("folke/trouble.nvim"),
   name = "trouble.nvim",
   data = {
     config = function()
-      require("trouble").setup { use_diagnostic_signs = true }
+      require("trouble").setup({ use_diagnostic_signs = true })
       GogoVIM.load_mapping("trouble")
     end,
   },
-}
+})
 
 -- LuaLine (StatusLine)
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-lualine/lualine.nvim"),
   name = "lualine.nvim",
   data = {
@@ -139,14 +139,14 @@ GogoVIM.AddPack {
       -- And allow it to be overriden for some buffer types (see autocmds)
       if vim.g.trouble_lualine and GogoVIM.has("trouble.nvim") then
         local trouble = require("trouble")
-        local symbols = trouble.statusline {
+        local symbols = trouble.statusline({
           mode = "symbols",
           groups = {},
           title = false,
           filter = { range = true },
           format = "{kind_icon}{symbol.name:Normal}",
           hl_group = "lualine_c_normal",
-        }
+        })
         table.insert(opts.sections.lualine_c, {
           symbols and symbols.get,
           cond = function()
@@ -158,10 +158,10 @@ GogoVIM.AddPack {
       require("lualine").setup(opts)
     end,
   },
-}
+})
 
 -- FZF-lua
-GogoVIM.AddPack {
+GogoVIM.AddPack({
   src = GogoVIM.GH("ibhagwan/fzf-lua"),
   name = "fzf-lua",
   data = {
@@ -206,4 +206,4 @@ GogoVIM.AddPack {
       require("fzf-lua.providers.ui_select").register()
     end,
   },
-}
+})
