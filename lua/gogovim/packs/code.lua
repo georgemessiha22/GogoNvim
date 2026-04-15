@@ -299,7 +299,7 @@ GogoVIM.AddPack({
       require("conform").setup({
         formatters_by_ft = {
           python = { "ruff_fix", "ruff_organize_imports" },
-          -- yaml = { "yamlfix" },
+          yaml = { "yamlfix" },
           fish = { "fish_indent" },
           -- bash = { "bash" },
           sql = { "sqruff" },
@@ -317,7 +317,7 @@ GogoVIM.AddPack({
           },
         },
         default_format_opts = {
-          lsp_format = "fallback",
+          lsp_format = "first",
         },
         notify_on_error = true,
       })

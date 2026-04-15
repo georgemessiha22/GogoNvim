@@ -139,7 +139,7 @@ M.conform = {
         require("conform").format({
           timeout_ms = 500,
           async = true,
-          lsp_format = "prefer",
+          lsp_format = "first",
         })
         -- vim.lsp.buf.format({ async = true })
       end,

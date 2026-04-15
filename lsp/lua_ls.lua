@@ -27,7 +27,7 @@
 return {
   -- LuaLS Structure of these settings comes from LuaLS, not Neovim
   settings = {
-    root_markers = { "stylua.lua" },
+    root_markers = { "stylua.lua", ".stylua.lua" },
     Lua = {
       codeLens = {
         enable = true,
