@@ -74,6 +74,7 @@ opt.ignorecase = true -- Ignore case if all characters in lower case
 opt.joinspaces = false -- Join multiple spaces in search
 opt.smartcase = true -- When there is a one capital letter search for exact match
 opt.showmatch = true -- Highlight search instances
+-- opt.imsearch = 2
 opt.inccommand = "nosplit" -- preview incremental substitute
 -- }}}
 
@@ -107,7 +108,7 @@ opt.list = true -- Show some invisible characters (tabs...
 opt.listchars = GogoVIM.UI.icons.listchars
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
-opt.shortmess:append("w")
+opt.shortmess:append("atS")
 -- }}}
 
 -- ftplugin {{{

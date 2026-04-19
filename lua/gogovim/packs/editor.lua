@@ -124,6 +124,7 @@ GogoVIM.AddPack({
               end,
             },
             { "lsp_progress" },
+            { "searchcount" },
             { "location", padding = { left = 0, right = 1 } },
           },
           lualine_z = {

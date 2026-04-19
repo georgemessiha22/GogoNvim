@@ -116,6 +116,7 @@ M.lspkeys = {
     },
     ["<leader>wl"] = {
       function()
+          require("fzf-lua")
         vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end,
       "List workspace folders",
@@ -127,24 +128,11 @@ M.lspkeys = {
       "Open Diagnostics",
       opts = { remap = false, silent = true },
     },
-  },
-}
 
-M.conform = {
-  plugin = true,
-  n = {
-    -- formatting
-    ["<leader>lwf"] = {
-      function()
-        require("conform").format({
-          timeout_ms = 500,
-          async = true,
-          lsp_format = "first",
-        })
-        -- vim.lsp.buf.format({ async = true })
-      end,
+    ["<leader>bf"] = {
+      "<cmd> LspFormat <CR>",
       "LSP formatting",
-      opts = { buffer = true },
+      opts = { buffer = true, remap = false },
     },
   },
 }

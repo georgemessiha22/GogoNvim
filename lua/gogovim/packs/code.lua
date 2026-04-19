@@ -322,7 +322,6 @@ GogoVIM.AddPack({
         notify_on_error = true,
       })
 
-      GogoVIM.load_mapping("conform")
     end,
   },
 })
