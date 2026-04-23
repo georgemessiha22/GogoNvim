@@ -199,6 +199,15 @@ GogoVIM.AddPack({
             ["ctrl-v"] = { require("fzf-lua").actions.grep_lgrep }, -- changing conflict with alacritty
           },
         },
+        diagnostics = {
+          signs = {
+            -- enable fuzzy find with appended keywords
+            ["Error"] = { text = GogoVIM.UI.icons.diagnostics.BoldError .. " [Error]", texthl = "DiagnosticError" },
+            -- ["Warn"] = { text = GogoVIM.UI.icons.diagnostics.BoldWarning, texthl = "DiagnosticWarn" },
+            -- ["Info"] = { text = GogoVIM.UI.icons.diagnostics.BoldHint, texthl = "DiagnosticInfo" },
+            -- ["Hint"] = { text = GogoVIM.UI.icons.diagnostics.BoldHint, texthl = "DiagnosticHint" },
+          },
+        },
       }, true)
 
       -- require("fzf-lua").setup({"fzf-vim"})
