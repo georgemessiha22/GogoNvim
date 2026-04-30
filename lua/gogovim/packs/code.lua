@@ -321,7 +321,6 @@ GogoVIM.AddPack({
         },
         notify_on_error = true,
       })
-
     end,
   },
 })
@@ -690,14 +689,8 @@ GogoVIM.AddPack({
             module = "blink.cmp.sources.snippets",
             score_offset = -3,
             opts = {
-              friendly_snippets = true,
-              search_paths = { vim.fn.stdpath("config") .. "/snippets" },
-              global_snippets = { "all" },
+              preset = "LuaSnip",
               extended_filetypes = {},
-              ignored_filetypes = {},
-              get_filetype = function(context)
-                return vim.bo.filetype
-              end,
             },
           },
           buffer = {
