@@ -23,7 +23,7 @@ function M.setup()
   M.InstallPacks()
 
   -- Load colorscheme
-  vim.cmd.colorscheme(GogoVIM.UI.theme)
+  -- vim.cmd.colorscheme(GogoVIM.UI.theme)
 
   GogoVIM.load_mapping()
 

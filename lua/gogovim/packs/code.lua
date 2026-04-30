@@ -1,3 +1,22 @@
+GogoVIM.AddPack({
+  src = GogoVIM.GH("L3MON4D3/LuaSnip"),
+  name = "LuaSnip",
+  version = vim.version.range("v2.x"),
+  data = {
+    name = "luasnip",
+    build = { "make", "install_jsregexp" },
+  },
+})
+GogoVIM.AddPack({
+  src = GogoVIM.GH("rafamadriz/friendly-snippets"),
+  name = "friendly-snippets",
+  data = {
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end,
+  },
+})
+
 -- TODO comments
 GogoVIM.AddPack({
   src = GogoVIM.GH("folke/todo-comments.nvim"),
@@ -321,6 +340,7 @@ GogoVIM.AddPack({
         },
         notify_on_error = true,
       })
+
     end,
   },
 })
@@ -689,8 +709,7 @@ GogoVIM.AddPack({
             module = "blink.cmp.sources.snippets",
             score_offset = -3,
             opts = {
-              preset = "LuaSnip",
-              extended_filetypes = {},
+              friendly_snippets = true,
             },
           },
           buffer = {
