@@ -1,3 +1,4 @@
+-- Diagnostic UI (cheap, runs at startup).
 vim.diagnostic.config({
     severity_sort = true,
     float = {
@@ -24,21 +25,31 @@ vim.diagnostic.config({
     },
 })
 
-vim.lsp.document_color.enable(true, nil, { style = "virtual" })
-vim.lsp.codelens.enable(true)
-vim.lsp.inlay_hint.enable(true)
-vim.lsp.inline_completion.enable(true)
-
 GogoVIM.lsp_on_attach = function(client, bufnr) end
 
-local capabilites = vim.lsp.protocol.make_client_capabilities()
-if GogoVIM.has("blink.cmp") then
-    capabilites = require("blink.cmp").get_lsp_capabilities(nil, true)
+-- Lazy capabilities: avoids forcing blink.cmp to load at startup.
+local _caps
+local function _get_caps()
+    if _caps ~= nil then
+        return _caps
+    end
+    if GogoVIM.has("blink.cmp") then
+        local ok, blink = pcall(require, "blink.cmp")
+        if ok then
+            _caps = blink.get_lsp_capabilities(nil, true)
+            return _caps
+        end
+    end
+    _caps = vim.lsp.protocol.make_client_capabilities()
+    return _caps
 end
 
-GogoVIM.lsp_capabilites = capabilites
+GogoVIM.lsp_capabilites = setmetatable({}, {
+    __index = function(_, k)
+        return _get_caps()[k]
+    end,
+})
 
--- auto enable few servers.
 local auto_enable = {
     "lua_ls",
     "solargraph",                      -- LSP for Ruby on Rails
@@ -68,13 +79,43 @@ local auto_enable = {
     "stylua",                          -- LSP stylua formatter
     "tofu_ls",                         -- LSP for terraform
     "terraform_lsp",
-    "fish_lsp"
+    "fish_lsp",
 }
-for _, server in pairs(auto_enable) do
-    vim.lsp.config[server] = {
-        capabilites = capabilites,
-        on_attach = GogoVIM.lsp_on_attach,
-    }
+
+-- Defer heavy LSP init (enable + per-server config) until the first buffer is
+-- read or the UI is up. This avoids ~260ms at startup.
+local lsp_inited = false
+local function init_lsp()
+    if lsp_inited then
+        return
+    end
+    lsp_inited = true
+
+    pcall(vim.lsp.document_color.enable, true, nil, { style = "virtual" })
+    pcall(vim.lsp.codelens.enable, true)
+    pcall(vim.lsp.inlay_hint.enable, true)
+    if vim.lsp.inline_completion and vim.lsp.inline_completion.enable then
+        pcall(vim.lsp.inline_completion.enable, true)
+    end
+
+    local capabilites = _get_caps()
+
+    for _, server in pairs(auto_enable) do
+        vim.lsp.config[server] = {
+            capabilites = capabilites,
+            on_attach = GogoVIM.lsp_on_attach,
+        }
+    end
+
+    vim.lsp.enable(auto_enable)
 end
 
-vim.lsp.enable(auto_enable)
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile", "UIEnter" }, {
+    group = vim.api.nvim_create_augroup("GogoVIM.lsp_deferred_init", { clear = true }),
+    once = true,
+    callback = function()
+        vim.schedule(init_lsp)
+    end,
+})
+
+GogoVIM.lsp_init = init_lsp

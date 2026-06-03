@@ -5,12 +5,14 @@ GogoVIM.AddPack({
   data = {
     name = "luasnip",
     build = { "make", "install_jsregexp" },
+    event = "InsertEnter",
   },
 })
 GogoVIM.AddPack({
   src = GogoVIM.GH("rafamadriz/friendly-snippets"),
   name = "friendly-snippets",
   data = {
+    event = "InsertEnter",
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
     end,
@@ -22,6 +24,8 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("mason-org/mason.nvim"),
   name = "mason.nvim",
   data = {
+    cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog", "MasonUpdate" },
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("mason").setup({
         PATH = "skip",
@@ -42,6 +46,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("mason-org/mason-lspconfig.nvim"),
   name = "mason-lspconfig",
   data = {
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       automatic_enable = true,
       ensure_installed = {
@@ -84,6 +89,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("neovim/nvim-lspconfig"),
   name = "nvim-lspconfig",
   data = {
+    event = { "BufReadPost", "BufNewFile" },
     config = function() end,
   },
 })
@@ -115,6 +121,7 @@ GogoVIM.AddPack({
   -- version = vim.version.range("v0.x"),
   data = {
     name = "go",
+    ft = { "go", "gomod", "gowork", "gotmpl", "gosum" },
     opts = {
       gotests_template_dir = vim.fn.stdpath("config") .. "/templates/gotest/testify",
       luasnip = true,

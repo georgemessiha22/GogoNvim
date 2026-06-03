@@ -94,6 +94,10 @@ end
 --- @field build? table{string}
 --- @field config? function()
 --- @field opts? any
+--- @field cmd? string|string[]   -- lazy: load on first invocation of any of these user commands
+--- @field event? string|string[] -- lazy: load on first occurrence of any of these autocmd events
+--- @field ft? string|string[]    -- lazy: load on FileType matching any of these
+--- @field keys? table            -- lazy: load on first press; entries: { lhs, mode = "n"|table }
 ---
 --- @class GogoVIM.packs.pack
 --- @field src string
@@ -104,6 +108,147 @@ end
 --- @alias GogoVIM.packs.pack_data {spec: GogoVIM.packs.pack}
 ---
 M.packs = {}
+
+-- Lazy-load infrastructure ----------------------------------------------------
+-- Shared cmd/event/ft/key triggers can fire loaders for multiple packs.
+local _cmd_loaders = {}   -- cmd  -> { loader, ... }
+local _ft_loaders = {}    -- ft   -> { loader, ... }
+local _key_loaders = {}   -- key  -> { mode -> { loader, ... } }
+
+local function _as_list(v)
+  if v == nil then return {} end
+  if type(v) == "table" then return v end
+  return { v }
+end
+
+local function _do_load(pack_name, data)
+  -- Idempotent loader: packadd + run config/setup once.
+  if data._loaded then return end
+  data._loaded = true
+
+  vim.cmd.packadd({ vim.fn.escape(pack_name, " ") })
+
+  if data.skip_load then return end
+
+  if data.config ~= nil then
+    data.config()
+    return
+  end
+
+  local modname = data.name or pack_name
+  if modname ~= nil then
+    require(modname).setup(data.opts or {})
+  end
+end
+
+local function _register_cmd(cmd_name, loader)
+  if _cmd_loaders[cmd_name] == nil then
+    _cmd_loaders[cmd_name] = {}
+    vim.api.nvim_create_user_command(cmd_name, function(opts)
+      local loaders = _cmd_loaders[cmd_name] or {}
+      _cmd_loaders[cmd_name] = nil
+      pcall(vim.api.nvim_del_user_command, cmd_name)
+      for _, l in ipairs(loaders) do
+        local ok, err = pcall(l)
+        if not ok then
+          vim.notify("lazy load failed for " .. cmd_name .. ": " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end
+      local args = opts.args or ""
+      local bang = opts.bang and "!" or ""
+      local range = ""
+      if opts.range == 1 then
+        range = tostring(opts.line1)
+      elseif opts.range == 2 then
+        range = opts.line1 .. "," .. opts.line2
+      end
+      vim.cmd(string.format("%s%s%s %s", range, cmd_name, bang, args))
+    end, { nargs = "*", bang = true, range = true, complete = "file" })
+  end
+  table.insert(_cmd_loaders[cmd_name], loader)
+end
+
+local function _register_event(events, loader)
+  vim.api.nvim_create_autocmd(events, {
+    group = M.augroup("lazy_event"),
+    once = true,
+    callback = function()
+      local ok, err = pcall(loader)
+      if not ok then
+        vim.notify("lazy load (event) failed: " .. tostring(err), vim.log.levels.ERROR)
+      end
+    end,
+  })
+end
+
+local function _register_ft(fts, loader)
+  for _, ft in ipairs(fts) do
+    if _ft_loaders[ft] == nil then
+      _ft_loaders[ft] = {}
+      vim.api.nvim_create_autocmd("FileType", {
+        group = M.augroup("lazy_ft"),
+        pattern = ft,
+        once = true,
+        callback = function()
+          local loaders = _ft_loaders[ft] or {}
+          _ft_loaders[ft] = nil
+          for _, l in ipairs(loaders) do
+            local ok, err = pcall(l)
+            if not ok then
+              vim.notify("lazy load (ft) failed: " .. tostring(err), vim.log.levels.ERROR)
+            end
+          end
+        end,
+      })
+    end
+    table.insert(_ft_loaders[ft], loader)
+  end
+end
+
+local function _register_keys(keys, loader, pack_name)
+  for _, key in ipairs(keys) do
+    local lhs = key[1] or key.lhs
+    local modes = _as_list(key.mode or "n")
+    for _, mode in ipairs(modes) do
+      local registry_key = mode .. ":" .. lhs
+      if _key_loaders[registry_key] == nil then
+        _key_loaders[registry_key] = {}
+        vim.keymap.set(mode, lhs, function()
+          local loaders = _key_loaders[registry_key] or {}
+          _key_loaders[registry_key] = nil
+          pcall(vim.keymap.del, mode, lhs)
+          for _, l in ipairs(loaders) do
+            local ok, err = pcall(l)
+            if not ok then
+              vim.notify("lazy load (key) failed: " .. tostring(err), vim.log.levels.ERROR)
+            end
+          end
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(lhs, true, true, true), "m", false)
+        end, { desc = "lazy load " .. pack_name })
+      end
+      table.insert(_key_loaders[registry_key], loader)
+    end
+  end
+end
+
+--- Register lazy triggers for a pack. Returns true if any lazy trigger was set.
+local function _register_lazy(pack_name, data)
+  local has_lazy = data.cmd or data.event or data.ft or data.keys
+  if not has_lazy then return false end
+
+  local loader = function() _do_load(pack_name, data) end
+
+  for _, c in ipairs(_as_list(data.cmd)) do _register_cmd(c, loader) end
+  if data.event then _register_event(_as_list(data.event), loader) end
+  if data.ft then _register_ft(_as_list(data.ft), loader) end
+  if data.keys then _register_keys(data.keys, loader, pack_name) end
+
+  return true
+end
+
+M._do_load = _do_load
+M._register_lazy = _register_lazy
+-- End lazy-load infrastructure -----------------------------------------------
 
 --- AddPack add the configuration of pack to be installed later when calling InstallPacks
 --- @param pack GogoVIM.packs.pack
@@ -188,9 +333,14 @@ function M.InstallPacks()
     confirm = false,
     --- @param pack_data GogoVIM.packs.pack_data
     load = function(pack_data)
-      vim.cmd.packadd({ vim.fn.escape(pack_data.spec.name, " ") })
-
       local data = pack_data.spec.data
+      local name = pack_data.spec.name
+
+      if data ~= nil and _register_lazy(name, data) then
+        return
+      end
+
+      vim.cmd.packadd({ vim.fn.escape(name, " ") })
 
       if data == nil then
         return
@@ -205,7 +355,7 @@ function M.InstallPacks()
         return
       end
 
-      local modname = data.name or pack_data.spec.name
+      local modname = data.name or name
       if modname ~= nil then
         require(modname).setup(data.opts or {})
       end

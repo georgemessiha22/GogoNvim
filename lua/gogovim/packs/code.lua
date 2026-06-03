@@ -5,12 +5,14 @@ GogoVIM.AddPack({
   data = {
     name = "luasnip",
     build = { "make", "install_jsregexp" },
+    event = "InsertEnter",
   },
 })
 GogoVIM.AddPack({
   src = GogoVIM.GH("rafamadriz/friendly-snippets"),
   name = "friendly-snippets",
   data = {
+    event = "InsertEnter",
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
     end,
@@ -22,6 +24,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("folke/todo-comments.nvim"),
   name = "todo-comments",
   data = {
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("todo-comments").setup({
         signs = true,
@@ -250,6 +253,7 @@ GogoVIM.AddPack({
   name = "nvim-treesitter-textobjects",
   version = "main",
   data = {
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       -- When in diff mode, we want to use the default
       -- vim text objects c & C instead of the treesitter ones.
@@ -279,6 +283,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-treesitter/nvim-treesitter-context"),
   name = "nvim-treesitter-context",
   data = {
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       vim.keymap.set("v", "<leader>ut", function()
         local tsc = require("treesitter-context")
@@ -314,6 +319,8 @@ GogoVIM.AddPack({
   name = "conform.nvim",
   data = {
     name = "conform",
+    event = "BufWritePre",
+    cmd = { "ConformInfo", "Format" },
     config = function()
       require("conform").setup({
         formatters_by_ft = {
@@ -796,6 +803,7 @@ GogoVIM.AddPack({
   name = "gitsigns.nvim",
   data = {
     name = "gitsigns",
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
       local gitIcons = GogoVIM.UI.icons.git
       require("gitsigns").setup({

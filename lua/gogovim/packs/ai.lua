@@ -2,6 +2,7 @@
 GogoVIM.AddPack({
   src = GogoVIM.GH("MeanderingProgrammer/render-markdown.nvim"),
   data = {
+    ft = { "markdown", "Avante", "codecompanion" },
     config = function()
       require("render-markdown").setup({
         file_types = { "markdown", "Avante", "codecompanion" },
@@ -27,6 +28,14 @@ GogoVIM.AddPack({
   data = {
     name = "mcphub",
     build = { "npm", "install", "-g", "mcp-hub@latest" },
+    -- Loaded on its own command, OR pulled in when avante / codecompanion start
+    -- (they both `require("mcphub")` from inside their setup closures).
+    cmd = {
+      "MCPHub",
+      "AvanteAsk", "AvanteChat", "AvanteToggle", "AvanteEdit", "AvanteRefresh", "AvanteBuild",
+      "AvanteFocus", "AvanteClear", "AvanteShowRepoMap", "AvanteSwitchProvider",
+      "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd",
+    },
     config = function()
       require("mcphub").setup({
         --- `mcp-hub` binary related options-------------------
@@ -80,6 +89,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("zbirenbaum/copilot.lua"),
   name = "copilot.lua",
   data = {
+    event = "InsertEnter",
     config = function()
       require("copilot").setup({})
     end,
@@ -93,6 +103,7 @@ GogoVIM.AddPack({
   version = vim.version.range("v19.x"),
   data = {
     name = "codecompanion",
+    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionCmd" },
     config = function()
       require("codecompanion").setup({
         opts = {
@@ -154,6 +165,10 @@ GogoVIM.AddPack({
   data = {
     name = "avante",
     build = { "make", "BUILD_FROM_SOURCE=true" },
+    cmd = {
+      "AvanteAsk", "AvanteChat", "AvanteToggle", "AvanteEdit", "AvanteRefresh", "AvanteBuild",
+      "AvanteFocus", "AvanteClear", "AvanteShowRepoMap", "AvanteSwitchProvider",
+    },
     config = function()
       local opts = {
         ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string

@@ -6,11 +6,30 @@ GogoVIM.AddPack({
   },
 })
 
+local _dap_cmds = {
+  "DapNew", "DapContinue", "DapToggleBreakpoint", "DapToggleRepl",
+  "DapStepInto", "DapStepOver", "DapStepOut", "DapTerminate", "DapDisconnect",
+  "DapShowLog", "DapRestartFrame",
+  "GoBreakToggle", "GoDebug", "GoDbgStop",
+}
+
+local _dap_keys = {
+  -- function-form mappings from keymaps.lua that don't exist until dap loads
+  { "<leader>dc", mode = "n" },
+  { "<leader>di", mode = "n" },
+  { "<leader>do", mode = "n" },
+  { "<leader>dl", mode = "n" },
+  { "<leader>dq", mode = "n" },
+  { "<leader>de", mode = "n" },
+}
+
 GogoVIM.AddPack({
   src = GogoVIM.GH("mfussenegger/nvim-dap"),
   name = "nvim-dap",
   data = {
     name = "dap",
+    cmd = _dap_cmds,
+    keys = _dap_keys,
     config = function()
       vim.schedule_wrap(function()
         if GogoVIM.has("nvim-dap-ui") then
@@ -48,21 +67,12 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("jay-babu/mason-nvim-dap.nvim"),
   name = "mason-nvim-dap",
   data = {
+    cmd = _dap_cmds,
+    keys = _dap_keys,
     opts = {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
       automatic_installation = true,
-
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
       handlers = {},
-
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
-      ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        "delve",
-      },
+      ensure_installed = { "delve" },
     },
   },
 })
@@ -72,10 +82,9 @@ GogoVIM.AddPack({
   name = "nvim-dap-ui",
   data = {
     name = "dapui",
+    cmd = _dap_cmds,
+    keys = _dap_keys,
     opts = {
-      -- Set icons to characters that are more likely to work in every terminal.
-      --    Feel free to remove or use ones that you like more! :)
-      --    Don't feel like these are good choices.
       icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
       ---@diagnostic disable-next-line: missing-fields
       controls = {
@@ -99,6 +108,8 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("theHamsta/nvim-dap-virtual-text"),
   name = "nvim-dap-virtual-text",
   data = {
+    cmd = _dap_cmds,
+    keys = _dap_keys,
     opts = {},
   },
 })
@@ -108,6 +119,16 @@ GogoVIM.AddPack({
   name = "nvim-dap-go",
   data = {
     name = "dap-go",
-    opts = {},
+    ft = "go",
+    cmd = _dap_cmds,
+    config = function()
+      -- Force-load the rest of the DAP stack first; dap-go.setup() requires
+      -- nvim-dap, nvim-dap-ui, etc. to already be on the runtimepath.
+      vim.cmd.packadd("nvim-dap")
+      vim.cmd.packadd("nvim-dap-ui")
+      vim.cmd.packadd("nvim-dap-virtual-text")
+      vim.cmd.packadd("mason-nvim-dap")
+      require("dap-go").setup({})
+    end,
   },
 })

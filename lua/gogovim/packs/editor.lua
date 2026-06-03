@@ -27,6 +27,12 @@ GogoVIM.AddPack({
   name = "falsh.nvim",
   data = {
     name = "flash",
+    keys = {
+      { "S",  mode = { "n", "x", "o" } },
+      { "ts", mode = { "n", "x", "o" } },
+      { "R",  mode = { "x", "o" } },
+      { "r",  mode = "o" },
+    },
     config = function()
       require("flash").setup()
       GogoVIM.load_mapping("flash")
@@ -49,6 +55,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("folke/trouble.nvim"),
   name = "trouble.nvim",
   data = {
+    cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
     config = function()
       require("trouble").setup({ use_diagnostic_signs = true })
       GogoVIM.load_mapping("trouble")
@@ -166,6 +173,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("ibhagwan/fzf-lua"),
   name = "fzf-lua",
   data = {
+    cmd = { "FzfLua", "TodoFzfLua" },
     config = function()
       -- require("fzf-lua").setup({"fzf-native"})
       -- require("fzf-lua").setup({"telescope", winopts={preview={default="bat"}}})
