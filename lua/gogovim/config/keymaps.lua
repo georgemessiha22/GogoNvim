@@ -71,6 +71,24 @@ M.general = {
     -- tab movements
     ["<leader>tn"] = { "<cmd>bNext<CR>", "Move to next tab" },
     ["<leader>tp"] = { "<cmd>bprevious<CR>", "Move to previous tab" },
+
+    -- git permalink to the current line on the current branch
+    ["<Leader>gy"] = {
+      function()
+        require("gogovim.config.git_permalink").copy_permalink()
+      end,
+      "Copy git permalink",
+    },
+  },
+
+  x = {
+    -- git permalink to the selected lines on the current branch
+    ["<Leader>gy"] = {
+      function()
+        require("gogovim.config.git_permalink").copy_permalink()
+      end,
+      "Copy git permalink",
+    },
   },
 
   t = {
