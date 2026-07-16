@@ -33,71 +33,133 @@ function M.setup()
   M.did_init = true
 end
 
----Load Mapping for special plugin name or general mappings, better call it after plugin config to with plugin name to load it's mapper.
----@param section any
-function M.load_mapping(section)
-  vim.schedule(function()
-    local function set_section_map(values)
-      if values.plugin then -- bypass plugins section
-        return
-      end
-      values.plugin = nil -- this to garauntee all values are pair
+-- Forward declarations: these locals are defined in the lazy-load section below,
+-- but the mapping helpers (defined here) reference them.
+local _pack_index   -- pack name -> GogoVIM.packs.pack.data
+local _do_load      -- function(pack_name, data)
+local _ensure_loaded -- function(pack_name) -> boolean
 
-      for mode, mode_values in pairs(values) do -- first layer is modes i, v, t, x
-        for keybind, mapping_info in pairs(mode_values) do -- second layer is key = {command, description}
-          local opts = vim.tbl_deep_extend("force", { desc = mapping_info[2], remap = false }, mapping_info.opts or {})
-          vim.keymap.set(mode, keybind, mapping_info[1], opts)
+-- Keys in a mapping section that are metadata, not Vim modes.
+local _section_meta = { plugin = true, pack = true }
+
+--- Apply every mapping in one section directly (no lazy wrapper).
+--- Does not mutate the section table.
+--- @param values table The section, e.g. M.mappings.general.
+local function _apply_section_direct(values)
+  for mode, mode_values in pairs(values) do
+    if not _section_meta[mode] and type(mode_values) == "table" then
+      for keybind, mapping_info in pairs(mode_values) do
+        local opts = vim.tbl_deep_extend("force", { desc = mapping_info[2], remap = false }, mapping_info.opts or {})
+        local ok, err = pcall(vim.keymap.set, mode, keybind, mapping_info[1], opts)
+        if not ok then
+          vim.notify("keymap set failed for " .. mode .. " " .. keybind .. ": " .. tostring(err), vim.log.levels.ERROR)
         end
       end
     end
+  end
+end
 
-    local partially_mappings = M.mappings
+--- Apply a section whose plugin (`pack`) may not be loaded yet.
+--- Each key is bound to a stub that, on first press, loads the pack, swaps in the
+--- real mappings, then replays the keypress so the real action runs.
+--- @param values table The section table (must contain a `pack` field).
+local function _apply_section_lazy(values)
+  local pack = values.pack
 
-    if type(section) == "string" then -- if section declared only load this section
-      partially_mappings[section]["plugin"] = nil
-      partially_mappings = { partially_mappings[section] }
+  for mode, mode_values in pairs(values) do
+    if not _section_meta[mode] and type(mode_values) == "table" then
+      for keybind, mapping_info in pairs(mode_values) do
+        local lhs = keybind
+        local stub = function()
+          -- Load the pack (its config typically re-applies these mappings via
+          -- load_mapping). Then ensure the real mappings exist and replay.
+          _ensure_loaded(pack)
+          _apply_section_direct(values)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(lhs, true, true, true), "m", false)
+        end
+        local opts = vim.tbl_deep_extend(
+          "force",
+          { desc = mapping_info[2], remap = false },
+          mapping_info.opts or {},
+          { remap = false }
+        )
+        local ok, err = pcall(vim.keymap.set, mode, lhs, stub, opts)
+        if not ok then
+          vim.notify("keymap stub set failed for " .. mode .. " " .. lhs .. ": " .. tostring(err), vim.log.levels.ERROR)
+        end
+      end
+    end
+  end
+end
+
+--- Apply a single section, choosing eager or lazy strategy.
+--- @param values table
+local function _set_section_map(values)
+  if values.pack ~= nil and not (_pack_index[values.pack] and _pack_index[values.pack]._loaded) then
+    _apply_section_lazy(values)
+  else
+    _apply_section_direct(values)
+  end
+end
+
+--- Load mappings. With no argument, every section is applied (including plugin
+--- sections, so plugin keymaps work even before their pack is loaded). With a
+--- section name, only that section is (re)applied — typically called from a
+--- plugin's config after it loads, to swap stubs for the real mappings.
+--- @param section? string Section name in M.mappings (e.g. "flash"). nil = all.
+function M.load_mapping(section)
+  vim.schedule(function()
+    local mappings = M.mappings
+
+    if type(section) == "string" then
+      local sec = mappings[section]
+      if sec == nil then
+        vim.notify("load_mapping: unknown section '" .. section .. "'", vim.log.levels.WARN)
+        return
+      end
+      -- Explicit per-section load means the pack is (being) loaded: apply directly.
+      _apply_section_direct(sec)
+      return
     end
 
-    for _, sec in pairs(partially_mappings) do
-      set_section_map(sec)
+    for _, sec in pairs(mappings) do
+      _set_section_map(sec)
     end
   end)
 end
 
---- has Checks if pack is being installed.
+--- Checks whether a pack is installed and active.
+--- @param key string Pack name (top-level name passed to vim.pack.add).
+--- @return boolean
 function M.has(key)
-  local active_packs = vim
-    .iter(vim.pack.get())
-    :filter(function(x)
-      return x.active
-    end)
-    :filter(function(x)
-      return x.spec.name == key
-    end)
-    :map(function(x)
-      return x.spec.name
-    end)
-    :totable()
-
-  return #active_packs > 0
+  for _, x in ipairs(vim.pack.get()) do
+    if x.active and x.spec.name == key then
+      return true
+    end
+  end
+  return false
 end
 
---- GH generates github url
+--- GH generates a GitHub https URL for a "owner/repo" string.
+--- @param repo_name string e.g. "folke/trouble.nvim".
+--- @return string
 function M.GH(repo_name)
   return "https://github.com/" .. repo_name
 end
 
 --- @class GogoVIM.packs.pack.data
---- @field name? string
+--- @field name? string           -- module name to `require(...).setup()` (defaults to the pack name)
 --- @field confirm? boolean
 --- @field skip_load? boolean
---- @field build? table{string}
---- @field config? function()
+--- @field build? string[]        -- command + args run via vim.system on PackChanged
+--- @field config? function
 --- @field opts? any
 --- @field cmd? string|string[]   -- lazy: load on first invocation of any of these user commands
 --- @field event? string|string[] -- lazy: load on first occurrence of any of these autocmd events
 --- @field ft? string|string[]    -- lazy: load on FileType matching any of these
 --- @field keys? table            -- lazy: load on first press; entries: { lhs, mode = "n"|table }
+--- @field mapping? string         -- keymap section in M.mappings applied after this pack loads
+--- @field _loaded? boolean       -- internal: set by _do_load to make loading idempotent
 ---
 --- @class GogoVIM.packs.pack
 --- @field src string
@@ -114,6 +176,7 @@ M.packs = {}
 local _cmd_loaders = {}   -- cmd  -> { loader, ... }
 local _ft_loaders = {}    -- ft   -> { loader, ... }
 local _key_loaders = {}   -- key  -> { mode -> { loader, ... } }
+_pack_index = {}          -- pack name -> GogoVIM.packs.pack.data (built in InstallPacks)
 
 local function _as_list(v)
   if v == nil then return {} end
@@ -121,24 +184,54 @@ local function _as_list(v)
   return { v }
 end
 
-local function _do_load(pack_name, data)
+_do_load = function(pack_name, data)
   -- Idempotent loader: packadd + run config/setup once.
   if data._loaded then return end
   data._loaded = true
 
   vim.cmd.packadd({ vim.fn.escape(pack_name, " ") })
 
-  if data.skip_load then return end
-
-  if data.config ~= nil then
-    data.config()
-    return
+  if not data.skip_load then
+    if data.config ~= nil then
+      data.config()
+    else
+      local modname = data.name or pack_name
+      if modname ~= nil then
+        require(modname).setup(data.opts or {})
+      end
+    end
   end
 
-  local modname = data.name or pack_name
-  if modname ~= nil then
-    require(modname).setup(data.opts or {})
+  -- Apply this pack's keymap section (swaps any lazy stubs for real mappings).
+  if data.mapping ~= nil then
+    M.load_mapping(data.mapping)
   end
+end
+
+--- Ensure a registered pack is loaded on demand (idempotent).
+--- Used by keymap wrappers so a plugin's keys work before the pack is loaded.
+--- @param pack_name string Top-level pack name (as passed to vim.pack.add / packadd).
+--- @return boolean # true if the pack was found in the index (or already loaded).
+_ensure_loaded = function(pack_name)
+  if pack_name == nil then
+    return false
+  end
+
+  local data = _pack_index[pack_name]
+  if data ~= nil then
+    if data._loaded then
+      return true
+    end
+    local ok, err = pcall(_do_load, pack_name, data)
+    if not ok then
+      vim.notify("ensure_loaded failed for " .. pack_name .. ": " .. tostring(err), vim.log.levels.ERROR)
+    end
+    return true
+  end
+
+  -- Unknown pack (added without data, or not registered): best-effort packadd.
+  local ok = pcall(vim.cmd.packadd, { vim.fn.escape(pack_name, " ") })
+  return ok
 end
 
 local function _register_cmd(cmd_name, loader)
@@ -247,6 +340,7 @@ local function _register_lazy(pack_name, data)
 end
 
 M._do_load = _do_load
+M._ensure_loaded = _ensure_loaded
 M._register_lazy = _register_lazy
 -- End lazy-load infrastructure -----------------------------------------------
 
@@ -329,6 +423,14 @@ function M.InstallPacks()
   require("gogovim.packs.dap")
   require("gogovim.packs.ai")
 
+  -- Build the name -> data index so keymap stubs can load packs on demand,
+  -- regardless of whether the pack has been (lazily) loaded yet.
+  for _, pack in ipairs(M.packs) do
+    if pack.name ~= nil and pack.data ~= nil then
+      _pack_index[pack.name] = pack.data
+    end
+  end
+
   vim.pack.add(M.packs, {
     confirm = false,
     --- @param pack_data GogoVIM.packs.pack_data
@@ -340,30 +442,21 @@ function M.InstallPacks()
         return
       end
 
-      vim.cmd.packadd({ vim.fn.escape(name, " ") })
-
+      -- Non-lazy path: single source of truth in _do_load.
       if data == nil then
+        vim.cmd.packadd({ vim.fn.escape(name, " ") })
         return
       end
 
-      if data.skip_load then
-        return
-      end
-
-      if data.config ~= nil then
-        data.config()
-        return
-      end
-
-      local modname = data.name or name
-      if modname ~= nil then
-        require(modname).setup(data.opts or {})
-      end
+      _do_load(name, data)
     end,
   })
 end
 
----@return string
+--- Normalize a path: expand a leading "~", convert "\\" to "/", collapse
+--- repeated slashes, and drop any trailing slash.
+--- @param path string
+--- @return string
 function M.norm(path)
   if path:sub(1, 1) == "~" then
     local home = vim.uv.os_homedir()

@@ -174,6 +174,7 @@ GogoVIM.AddPack({
   name = "fzf-lua",
   data = {
     cmd = { "FzfLua", "TodoFzfLua" },
+    mapping = "fzflua",
     config = function()
       -- require("fzf-lua").setup({"fzf-native"})
       -- require("fzf-lua").setup({"telescope", winopts={preview={default="bat"}}})
@@ -220,7 +221,6 @@ GogoVIM.AddPack({
 
       -- require("fzf-lua").setup({"fzf-vim"})
       -- require("fzf-lua").setup({"telescope"})
-      GogoVIM.load_mapping("fzflua")
       require("fzf-lua.providers.ui_select").register()
     end,
   },

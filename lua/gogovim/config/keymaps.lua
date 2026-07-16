@@ -139,6 +139,7 @@ M.lspkeys = {
 
 M.fzflua = {
   plugin = true,
+  pack = "fzf-lua",
 
   n = {
     -- LSP
@@ -190,6 +191,7 @@ M.fzflua = {
 
 M.trouble = {
   plugin = true,
+  pack = "trouble.nvim",
   n = {
     ["<leader>xx"] = { "<CMD>Trouble toggle<CR>", "Show Trouble" },
     ["<leader>xw"] = { "<CMD>Trouble diagnostics toggle<CR>", "Show trouble diagnostics" },
@@ -232,6 +234,8 @@ M.trouble = {
 
 M.comment = {
   plugin = true,
+  -- NOTE: no `pack` link: these use require("Comment.api") but no Comment.nvim
+  -- pack is installed. Pressing <C-_> errors until such a pack is added.
 
   -- toggle comment in both modes
   n = {
@@ -277,6 +281,7 @@ M.whichkey = {
 
 M.todo = {
   plugin = true,
+  pack = "todo-comments",
 
     -- stylua: ignore
     n = {
@@ -292,6 +297,7 @@ M.todo = {
 
 M.flash = {
   plugin = true,
+  pack = "falsh.nvim",
   x = {
     ["S"] = { '<cmd>lua require("flash").jump()<CR>', "Flash" },
     ["ts"] = { '<cmd>lua require("flash").treesitter()<CR>', "Flash Treesitter" },
@@ -314,6 +320,7 @@ M.flash = {
 
 M.minifiles = {
   plugin = true,
+  pack = "mini.nvim",
   n = {
     ["<leader>nf"] = {
       "<cmd> lua MiniFiles.open(vim.api.nvim_buf_get_name(0), true) <CR>",
@@ -324,6 +331,7 @@ M.minifiles = {
 
 M.dap = {
   plugin = true,
+  pack = "nvim-dap",
   n = {
     ["<leader>dn"] = { "<cmd> DapNew <CR>", "Toggle Breakpoint" },
     ["<leader>dt"] = { "<cmd> DapToggleBreakpoint <CR>", "Toggle Breakpoint" },
