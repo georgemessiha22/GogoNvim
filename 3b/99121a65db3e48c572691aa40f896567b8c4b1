@@ -1,0 +1,20 @@
+lua/gogovim/config/lsp.lua
+  s_c963821e29b612::t_52b9bde35bdf91 113-117
+  s_c963821e29b612::t_e2275dc42a6a9a 86
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "3b99121a65db3e48c572691aa40f896567b8c4b1",
+  "prompts": {},
+  "sessions": {
+    "s_c963821e29b612": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_01aff8610ffemMjGd583oh4lbU",
+        "model": "claude-opus-4.8"
+      },
+      "human_author": "George Messiha <georgemessiha22@gmail.com>"
+    }
+  }
+}
