@@ -83,7 +83,7 @@ local auto_enable = {
 }
 
 -- Defer heavy LSP init (enable + per-server config) until the first buffer is
--- read or the UI is up. This avoids ~260ms at startup.
+-- read. This avoids ~260ms at startup.
 local lsp_inited = false
 local function init_lsp()
     if lsp_inited then
@@ -110,7 +110,11 @@ local function init_lsp()
     vim.lsp.enable(auto_enable)
 end
 
-vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile", "UIEnter" }, {
+-- NOTE: intentionally NOT triggered on "UIEnter". On an empty start UIEnter
+-- fires before nvim-lspconfig has been lazy-loaded, which poisons the LSP
+-- config cache (see init_lsp above). Triggering only on a real buffer read
+-- guarantees nvim-lspconfig is loaded first, so configs resolve correctly.
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
     group = vim.api.nvim_create_augroup("GogoVIM.lsp_deferred_init", { clear = true }),
     once = true,
     callback = function()
