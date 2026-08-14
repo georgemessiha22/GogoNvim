@@ -2,6 +2,7 @@ return {
   fillstruct = "gopls",
   settings = {
     gopls = {
+      semanticTokens = true,
       analyses = {
         unusedparams = true,
         unusedwrite = true,
@@ -18,7 +19,7 @@ return {
       staticcheck = true,
       gofumpt = true,
       buildFlags = {
-        "-tags=functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6,functional_http,functional_grpc",
+        "-tags=cron,api,functional,integration,unit,functional_1,functional_2,functional_3,functional_4,functional_5,functional_6,functional_http,functional_grpc",
       },
       vulncheck = "Imports",
       hints = {
