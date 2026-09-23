@@ -98,11 +98,11 @@ local function init_lsp()
         pcall(vim.lsp.inline_completion.enable, true)
     end
 
-    local capabilites = _get_caps()
+    local capabilities = _get_caps()
 
     for _, server in pairs(auto_enable) do
         vim.lsp.config[server] = {
-            capabilites = capabilites,
+            capabilities = capabilities,
             on_attach = GogoVIM.lsp_on_attach,
         }
     end

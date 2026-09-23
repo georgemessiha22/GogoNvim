@@ -395,7 +395,7 @@ function M.InstallPacks()
         end)
       end
 
-      local data = ev.data.spec.data
+      local data = _pack_index[name]
 
       if data == nil then
         return
@@ -431,12 +431,23 @@ function M.InstallPacks()
     end
   end
 
-  vim.pack.add(M.packs, {
+  -- Only pass the fields vim.pack itself understands. `data` (which may hold a
+  -- `config` function) must never ride along in the spec: vim.pack deep-copies
+  -- the whole spec and threads it through nvim_exec_autocmds on every
+  -- install/update/delete, and a function value can't be converted to an API
+  -- Object there ("Invalid 'data': Cannot convert given Lua table"). Custom
+  -- per-pack data is looked up from `_pack_index` instead (see above).
+  local pack_specs = {}
+  for i, pack in ipairs(M.packs) do
+    pack_specs[i] = { src = pack.src, name = pack.name, version = pack.version }
+  end
+
+  vim.pack.add(pack_specs, {
     confirm = false,
     --- @param pack_data GogoVIM.packs.pack_data
     load = function(pack_data)
-      local data = pack_data.spec.data
       local name = pack_data.spec.name
+      local data = _pack_index[name]
 
       if data ~= nil and _register_lazy(name, data) then
         return

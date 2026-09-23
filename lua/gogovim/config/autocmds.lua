@@ -104,6 +104,7 @@ autocmd("LspAttach", {
 
 vim.api.nvim_create_user_command("LspFormat", function()
   if GogoVIM.has("conform.nvim") then
+    GogoVIM._ensure_loaded("conform.nvim")
     require("conform").format({ lsp_format = "first" })
     return
   end

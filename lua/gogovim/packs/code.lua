@@ -348,6 +348,9 @@ GogoVIM.AddPack({
         notify_on_error = true,
       })
 
+      vim.api.nvim_create_user_command("Format", function()
+        require("conform").format({ lsp_format = "first" })
+      end, { desc = "Format buffer with conform.nvim" })
     end,
   },
 })
