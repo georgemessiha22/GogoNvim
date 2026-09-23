@@ -1,0 +1,32 @@
+lua/gogovim/init.lua
+  s_77a426173eaec7::t_c6891f064aa749 398
+  s_77a426173eaec7::t_4ee609d5556e50 434-445,450
+lua/gogovim/config/autocmds.lua
+  s_c1663b43252624::t_17d2ab968eadd7 107
+lua/gogovim/packs/code.lua
+  s_c1663b43252624::t_dfea3afc544c62 351-353
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "6e6c7b6ba30d17cfc08477460e220657488a4364",
+  "prompts": {},
+  "sessions": {
+    "s_77a426173eaec7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "613764e5-3035-41c2-9744-d91426b2853c",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "George Messiha <georgemessiha22@gmail.com>"
+    },
+    "s_c1663b43252624": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "18ce54f0-fff1-4afe-91e9-335183c4ea94",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "George Messiha <georgemessiha22@gmail.com>"
+    }
+  }
+}
