@@ -1,0 +1,20 @@
+lua/gogovim/config/autocmds.lua
+  h_7e869580ab12e8 114-142
+lua/gogovim/config/keymaps.lua
+  h_7e869580ab12e8 137,181-214
+lua/gogovim/init.lua
+  h_7e869580ab12e8 23
+lua/gogovim/packs/editor.lua
+  h_7e869580ab12e8 31,33-34,176,187-190,193-194
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e5b42c8f1a784377c17b153d81094317a7b915ed",
+  "prompts": {},
+  "humans": {
+    "h_7e869580ab12e8": {
+      "author": "George Messiha <georgemessiha22@gmail.com>"
+    }
+  }
+}
