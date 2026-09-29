@@ -20,6 +20,7 @@ function M.setup()
   vim.g.maplocalleader = GogoVIM.UI.localleader
   -- }}}
 
+  require("gogovim.config.autocmds")
   M.InstallPacks()
 
   -- Load colorscheme
@@ -29,7 +30,6 @@ function M.setup()
 
   require("gogovim.config.options")
   require("gogovim.config.lsp")
-  require("gogovim.config.autocmds")
   M.did_init = true
 end
 

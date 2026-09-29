@@ -111,3 +111,32 @@ vim.api.nvim_create_user_command("LspFormat", function()
 
   vim.lsp.buf.format()
 end, {})
+
+vim.api.nvim_create_user_command("Fsearch", function(opts)
+  GogoVIM._ensure_loaded("fzf-lua")
+  -- Pass the transformed string (e.g., hs.staging.v43) to fzf-lua
+  require("fzf-lua").live_grep({
+    search = opts.args,
+    prompt = "Regex ignore> ",
+    rg_glob = true,
+    glob_separator = "",
+    glob_flag = "--iglob",
+    hidden = true,
+    no_ignore = true,
+    no_esc = true,
+    -- Force ripgrep to use regex (-e) and ignore fixed-strings flags
+    rg_opts = [[--hidden --column --line-number --no-heading --sort-files --max-columns=4096 --color=always --smart-case -g '!{.git,node_modules,vendor,.jj,.worktrees,venv}/*']],
+
+    rg_glob_fn = function(query, opts)
+      if not query or query == "" then
+        return query, ""
+      end
+
+      -- Specifically replaces hyphen (-), underscore (_), percent (%), and spaces with a regex dot (.)
+      -- In Lua pattern matching: %- is hyphen, %% is percent, %s is space
+      local search = query:gsub("[%-_%%%s]", ".")
+
+      return search, ""
+    end,
+  })
+end, { nargs = 1, desc = "Search string ignoring exact separators" })

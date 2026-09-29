@@ -28,10 +28,10 @@ GogoVIM.AddPack({
   data = {
     name = "flash",
     keys = {
-      { "S",  mode = { "n", "x", "o" } },
+      { "S", mode = { "n", "x", "o" } },
       { "ts", mode = { "n", "x", "o" } },
-      { "R",  mode = { "x", "o" } },
-      { "r",  mode = "o" },
+      { "R", mode = { "x", "o" } },
+      { "r", mode = "o" },
     },
     config = function()
       require("flash").setup()
@@ -173,7 +173,7 @@ GogoVIM.AddPack({
   src = GogoVIM.GH("ibhagwan/fzf-lua"),
   name = "fzf-lua",
   data = {
-    cmd = { "FzfLua", "TodoFzfLua" },
+    cmd = { "FzfLua", "TodoFzfLua"},
     mapping = "fzflua",
     config = function()
       -- require("fzf-lua").setup({"fzf-native"})
@@ -184,13 +184,14 @@ GogoVIM.AddPack({
         winopts = { preview = { default = "bat" } },
         fzf_opts = { ["--cycle"] = true },
         files = {
-          input_prompt = "Search files > ",
-          fd_opts = [[--color=always --type f --type l --exclude .git --exclude .jj --exclude node_modules --exclude vendor]],
-          rg_opts = [[--hidden --files --column --line-number --no-heading --sort-files --color=always --smart-case -g '!{.git,node_modules,vendor,.jj}/*']],
+          prompt = "Search files > ",
+          fd_opts = [[--color=always --type f --type l --exclude .git --exclude .jj --exclude node_modules --exclude vendor --exclude .worktrees --exclude venv]],
+          rg_opts = [[--hidden --files --column --line-number --no-heading --sort-files --color=always --smart-case -g '!{.git,node_modules,vendor,.jj,.worktrees,venv}/*']],
+          git_icons = true,
         },
         grep = {
-          input_prompt = "RipGrep",
-          rg_opts = [[--hidden --column --line-number --no-heading --sort-files --max-columns=4096 --color=always --smart-case -g '!{.git,node_modules,vendor,.jj}/*']],
+          prompt = "RipGrep > ",
+          rg_opts = [[--hidden --column --line-number --no-heading --sort-files --max-columns=4096 --color=always --smart-case -g '!{.git,node_modules,vendor,.jj,.worktrees,venv}/*']],
           actions = {
             ["ctrl-g"] = false,
             ["ctrl-v"] = { require("fzf-lua").actions.grep_lgrep }, -- changing conflict with alacritty

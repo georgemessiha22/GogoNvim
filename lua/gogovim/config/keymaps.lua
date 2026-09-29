@@ -134,7 +134,7 @@ M.lspkeys = {
     },
     ["<leader>wl"] = {
       function()
-          require("fzf-lua")
+        require("fzf-lua")
         vim.notify(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end,
       "List workspace folders",
@@ -178,6 +178,40 @@ M.fzflua = {
     ["<leader>F"] = { "<cmd> FzfLua files <CR>", "Find files", opts = { noremap = true } },
     ["<leader>fa"] = { "<cmd> FzfLua files follow=true no_ignore=true hidden=true <CR>", "Find all" },
     ["<leader>fw"] = { "<cmd> FzfLua live_grep <CR>", "Live grep" },
+    ["<leader>fW"] = {
+      function()
+        require("fzf-lua").live_grep({
+          prompt = "Regex ignore> ",
+          rg_glob = true,
+          glob_separator = "-",
+          glob_flag = "--iglob",
+          hidden = true,
+          no_ignore = true,
+          no_esc = true,
+          -- Force ripgrep to use regex (-e) and ignore fixed-strings flags
+          rg_opts = [[--hidden --column --line-number --no-heading --sort-files --max-columns=4096 --color=always --smart-case -g '!{.git,node_modules,vendor,.jj,.worktrees,venv}/*']],
+
+          rg_glob_fn = function(query, opts)
+            if not query or query == "" then
+              return query, ""
+            end
+
+            -- Specifically replaces hyphen (-), underscore (_), percent (%), and spaces with a regex dot (.)
+            -- In Lua pattern matching: %- is hyphen, %% is percent, %s is space
+            local search = query:gsub("[%-_%%%s]", ".")
+            local log_path = vim.fn.stdpath("cache") .. "/fzf_debug.log"
+            local file = io.open(log_path, "a")
+            if file then
+              file:write(string.format("TYPED: '%s' | RIPGREP RECEIVED: '%s'\n", query, search))
+              file:close()
+            end
+
+            return search, ""
+          end,
+        })
+      end,
+      "Live grep with no hyphens",
+    },
     -- ["<leader>fs"] = { "<cmd> FzfLua grep_string <CR>", "Search keyword" },
     ["<leader>fb"] = { "<cmd> FzfLua buffers <CR>", "Find buffers" },
     ["<leader>fh"] = { "<cmd> FzfLua help_tags <CR>", "Help page" },
