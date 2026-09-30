@@ -1,4 +1,5 @@
 return {
+  cmd = { "gopls" },
   fillstruct = "gopls",
   settings = {
     gopls = {

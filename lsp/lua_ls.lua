@@ -25,6 +25,7 @@
 -- - Attached buffers: 1, 18, 6
 --
 return {
+  cmd = { "lua-language-server" },
   -- LuaLS Structure of these settings comes from LuaLS, not Neovim
   settings = {
     root_markers = { "stylua.lua", ".stylua.lua" },
