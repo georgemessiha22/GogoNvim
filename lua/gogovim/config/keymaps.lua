@@ -168,8 +168,8 @@ M.fzflua = {
     -- ["<leader>lts"] = { "<cmd> FzfLua treesitter <CR>", "Show treesitter" },
     ["<leader>qf"] = { "<cmd> FzfLua quickfix <CR>", "Show quickfixes" },
     ["<leader>lca"] = { "<cmd> FzfLua lsp_code_actions <CR>", "Show code actions" },
-    ["<leader>lci"] = { "<cmd> FzfLua lsp_outgoing_calls <CR>", "Show LSP outgoing calls" },
-    ["<leader>lco"] = { "<cmd> FzfLua lsp_incoming_calls <CR>", "Show LSP incoming calls" },
+    ["<leader>lco"] = { "<cmd> FzfLua lsp_outgoing_calls <CR>", "Show LSP outgoing calls" },
+    ["<leader>lci"] = { "<cmd> FzfLua lsp_incoming_calls <CR>", "Show LSP incoming calls" },
     ["<leader>ltd"] = { "<cmd> FzfLua lsp_typedefs <CR>", "Show LSP type definition" },
     ["<leader>lr"] = { "<cmd> FzfLua lsp_references <CR>", "Show LSP references" },
     ["<leader>lf"] = { "<cmd> FzfLua lsp_finder <CR>", "All LSP locations, combined view" },
@@ -381,6 +381,27 @@ M.minifiles = {
   },
 }
 
+M.neotest = {
+  plugin = true,
+  pack = "neotest",
+  n = {
+    ["<leader>ns"] = {
+      function()
+        GogoVIM._ensure_loaded("neotest")
+        require("neotest").summary.toggle()
+      end,
+      "Test summary",
+    },
+    ["<leader>no"] = {
+      function()
+        GogoVIM._ensure_loaded("neotest")
+        require("neotest").output.open({ enter = true, auto_close = false })
+      end,
+      "Test output",
+    },
+  },
+}
+
 M.dap = {
   plugin = true,
   pack = "nvim-dap",
@@ -390,6 +411,12 @@ M.dap = {
     ["<leader>dg"] = { "<cmd> GoBreakToggle <CR>", "Toggle Golang Breakpoint" },
 
     ["<leader>dc"] = { '<cmd> lua require("dap").continue() <CR>', "Debugger continue" },
+    ["<leader>dm"] = {
+      function()
+        GogoVIM.run_nearest_test()
+      end,
+      "Run nearest test",
+    },
 
     ["<leader>di"] = { '<cmd> lua require("dap").step_into() <CR>', "DBG step into" },
 
