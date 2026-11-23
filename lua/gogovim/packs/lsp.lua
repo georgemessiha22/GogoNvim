@@ -70,7 +70,7 @@ GogoVIM.AddPack({
         "html", -- LSP html
         "eslint", -- LSP eslint
         "texlab", -- LSP Latex
-        "taplo", -- LSP TOML
+        "tombi", -- LSP TOML
         "pbls", -- LSP PROTO
         "pyright", -- LSP Python
         "rust_analyzer", -- LSP Rust
