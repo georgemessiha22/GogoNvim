@@ -15,10 +15,20 @@ GogoVIM.AddPack({
 })
 
 local _dap_cmds = {
-  "DapNew", "DapContinue", "DapToggleBreakpoint", "DapToggleRepl",
-  "DapStepInto", "DapStepOver", "DapStepOut", "DapTerminate", "DapDisconnect",
-  "DapShowLog", "DapRestartFrame",
-  "GoBreakToggle", "GoDebug", "GoDbgStop",
+  "DapNew",
+  "DapContinue",
+  "DapToggleBreakpoint",
+  "DapToggleRepl",
+  "DapStepInto",
+  "DapStepOver",
+  "DapStepOut",
+  "DapTerminate",
+  "DapDisconnect",
+  "DapShowLog",
+  "DapRestartFrame",
+  "GoBreakToggle",
+  "GoDebug",
+  "GoDbgStop",
 }
 
 local _dap_keys = {
@@ -555,6 +565,24 @@ function GogoVIM.run_nearest_test()
   require("neotest").run.run({ strategy = "dap" })
 end
 
+
+GogoVIM.AddPack({
+  src = GogoVIM.GH("nvim-neotest/neotest-python"),
+  name = "neotest-python",
+  data = {
+    skip_load = true,
+  },
+})
+
+GogoVIM.AddPack({
+  src = GogoVIM.GH("fredrikaverpil/neotest-golang"),
+  name = "neotest-golang",
+  data = {
+    skip_load = true,
+  },
+})
+
+
 GogoVIM.AddPack({
   src = GogoVIM.GH("nvim-neotest/neotest"),
   name = "neotest",
@@ -585,6 +613,7 @@ GogoVIM.AddPack({
             end,
           }),
           require("neotest-golang")({
+            runner = "gotestsum",
             go_test_args = {
               "-v",
               "-count=1",
@@ -618,5 +647,8 @@ GogoVIM.AddPack({
   name = "neotest-golang",
   data = {
     skip_load = true,
+    build = function()
+      vim.system({ "go", "install", "gotest.tools/gotestsum@latest" }):wait()
+    end,
   },
 })

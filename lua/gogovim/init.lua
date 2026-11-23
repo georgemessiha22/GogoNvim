@@ -35,8 +35,8 @@ end
 
 -- Forward declarations: these locals are defined in the lazy-load section below,
 -- but the mapping helpers (defined here) reference them.
-local _pack_index   -- pack name -> GogoVIM.packs.pack.data
-local _do_load      -- function(pack_name, data)
+local _pack_index -- pack name -> GogoVIM.packs.pack.data
+local _do_load -- function(pack_name, data)
 local _ensure_loaded -- function(pack_name) -> boolean
 
 -- Keys in a mapping section that are metadata, not Vim modes.
@@ -151,7 +151,7 @@ end
 --- @field name? string           -- module name to `require(...).setup()` (defaults to the pack name)
 --- @field confirm? boolean
 --- @field skip_load? boolean
---- @field build? string[]        -- command + args run via vim.system on PackChanged
+--- @field build? string[]|function        -- command + args run via vim.system on PackChanged
 --- @field config? function
 --- @field opts? any
 --- @field cmd? string|string[]   -- lazy: load on first invocation of any of these user commands
@@ -173,20 +173,26 @@ M.packs = {}
 
 -- Lazy-load infrastructure ----------------------------------------------------
 -- Shared cmd/event/ft/key triggers can fire loaders for multiple packs.
-local _cmd_loaders = {}   -- cmd  -> { loader, ... }
-local _ft_loaders = {}    -- ft   -> { loader, ... }
-local _key_loaders = {}   -- key  -> { mode -> { loader, ... } }
-_pack_index = {}          -- pack name -> GogoVIM.packs.pack.data (built in InstallPacks)
+local _cmd_loaders = {} -- cmd  -> { loader, ... }
+local _ft_loaders = {} -- ft   -> { loader, ... }
+local _key_loaders = {} -- key  -> { mode -> { loader, ... } }
+_pack_index = {} -- pack name -> GogoVIM.packs.pack.data (built in InstallPacks)
 
 local function _as_list(v)
-  if v == nil then return {} end
-  if type(v) == "table" then return v end
+  if v == nil then
+    return {}
+  end
+  if type(v) == "table" then
+    return v
+  end
   return { v }
 end
 
 _do_load = function(pack_name, data)
   -- Idempotent loader: packadd + run config/setup once.
-  if data._loaded then return end
+  if data._loaded then
+    return
+  end
   data._loaded = true
 
   vim.cmd.packadd({ vim.fn.escape(pack_name, " ") })
@@ -327,14 +333,26 @@ end
 --- Register lazy triggers for a pack. Returns true if any lazy trigger was set.
 local function _register_lazy(pack_name, data)
   local has_lazy = data.cmd or data.event or data.ft or data.keys
-  if not has_lazy then return false end
+  if not has_lazy then
+    return false
+  end
 
-  local loader = function() _do_load(pack_name, data) end
+  local loader = function()
+    _do_load(pack_name, data)
+  end
 
-  for _, c in ipairs(_as_list(data.cmd)) do _register_cmd(c, loader) end
-  if data.event then _register_event(_as_list(data.event), loader) end
-  if data.ft then _register_ft(_as_list(data.ft), loader) end
-  if data.keys then _register_keys(data.keys, loader, pack_name) end
+  for _, c in ipairs(_as_list(data.cmd)) do
+    _register_cmd(c, loader)
+  end
+  if data.event then
+    _register_event(_as_list(data.event), loader)
+  end
+  if data.ft then
+    _register_ft(_as_list(data.ft), loader)
+  end
+  if data.keys then
+    _register_keys(data.keys, loader, pack_name)
+  end
 
   return true
 end
@@ -411,7 +429,10 @@ function M.InstallPacks()
           else
             vim.notify("Building " .. name .. " failed", vim.log.levels.ERROR)
           end
+        elseif type(data.build) == "function" then
+            data.build()
         end
+
       end
     end,
   })
