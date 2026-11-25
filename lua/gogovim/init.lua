@@ -440,9 +440,9 @@ function M.InstallPacks()
   -- Register packs to be installed
   require("gogovim.packs.editor")
   require("gogovim.packs.code")
+  require("gogovim.packs.ai")
   require("gogovim.packs.lsp")
   require("gogovim.packs.dap")
-  require("gogovim.packs.ai")
 
   -- Build the name -> data index so keymap stubs can load packs on demand,
   -- regardless of whether the pack has been (lazily) loaded yet.
